@@ -6,7 +6,7 @@ Container stylings for the button and slider
     display: grid;
     position: relative;
     left: 5%;
-    grid-template-columns: 1fr 1fr 1fr 2fr; 
+    grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-template-rows: 1fr;
     column-gap: 15%;
     
@@ -93,7 +93,7 @@ Styling for the container below the shot chart
 */
 .containerB {
     display: grid;
-    grid-template-columns: 2fr 1fr; 
+    grid-template-columns: 1fr 1fr; 
     grid-template-rows: 1fr;
     column-gap: 5%;
     
