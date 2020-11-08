@@ -68,6 +68,11 @@ class HeatMap {
     }   
 
     drawHeatMapRight(){
+        d3.select('#heatmap-div')
+            .append('div')
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         let that = this;
 
         let hexbin = d3.hexbin()
@@ -136,25 +141,18 @@ class HeatMap {
                 }
             });
 
-        d3.select('#heatmap-div')
-            .append('div')
-            .attr("class", "tooltip")
-            .style("opacity", 0);
-
         let tooltip = d3.select('.tooltip');
 
         // tooltip for the circles in the bubblechart
         hexbins.on('mouseover', function(d,i) {
-            let pageX = d3.event.pageX;
-            let pageY = d3.event.pageY;
-
+            
             tooltip.transition()
                 .duration(200)
                 .style("opacity", 0.9);
         
             tooltip.html(that.tooltipDivRender(d))
-                .style("left", (pageX) + "px")
-                .style("top", (pageY - 28) + "px");
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
             });
 
         hexbins.on("mouseout", function(d,i) {
