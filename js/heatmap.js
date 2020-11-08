@@ -244,6 +244,16 @@ class HeatMap {
 
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +"</h5>";
-}
+    }
+
+    drawYearBar () {
+        let that = this;
+
+        let yearScale = d3.scaleLinear()
+                            .domain([1800, 2020])
+                            .range([30, 730]);
+        
+        
+    }
     
 }
