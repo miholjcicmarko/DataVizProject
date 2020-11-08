@@ -145,8 +145,8 @@ class HeatMap {
 
         // tooltip for the circles in the bubblechart
         hexbins.on('mouseover', function(d,i) {
-            let pageX = that.xScale(d.currentTarget.__data__.x);
-            let pageY = that.yScale(d.currentTarget.__data__.y);
+            let pageX = d.clientX;
+            let pageY = d.clientY;
 
             tooltip.transition()
                 .duration(200)
