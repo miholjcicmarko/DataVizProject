@@ -193,4 +193,9 @@ class HeatMap {
             });
     }
 
+TooltipRender (){
+    
+}
+    
+
 }
