@@ -182,7 +182,7 @@ class HeatMap {
         console.log(binsL)
         let svg = d3.select("#heatmap-svg");
 
-        svg.append("g")
+        let hexabins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke","black")
            .selectAll("path")
@@ -227,6 +227,8 @@ class HeatMap {
                     return 0.75;
                 }
             });
+
+            that.tooltip(hexabins);
     }
 
 tooltipDivRender (data){
