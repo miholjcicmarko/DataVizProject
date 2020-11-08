@@ -222,20 +222,11 @@ class HeatMap {
     }
 
 tooltipDivRender (data){
-    let percentage = data.fg_perc;
-    let shot_range = data[i].SHOT_ZONE_RANGE;
+    let percentage = data.currentTarget.__data__.fg_perc;
+    let shot_range = data.currentTarget.__data__[0].zone_range;
 
-    if (pos > 0) {
-        party = party + "R+"
-    }
-    else if (pos < 0) {
-        party = party + "D+"
-        let pos_val = pos * -1;
-        pos = pos_val.toFixed(3);
-    }
-    return "<h5>" + phrase + "<br/>" + 
-        party + " " + pos + "%" +"<br/>" + 
-        "In " + frequency_fixed + "%" + " of speeches" + "</h5>";
+    return "<h5>" + percentage + "%" + "<br/>" + 
+        "Distance " + shot_range +"</h5>";
 }
     
 
