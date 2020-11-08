@@ -141,12 +141,17 @@ class HeatMap {
                 }
             });
 
+            that.tooltip(hexbins);
+    }
+
+    tooltip (hexbins) {
+        let that = this;
         let tooltip = d3.select('.tooltip');
 
-        // tooltip for the circles in the bubblechart
+        // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
             let pageX = d.clientX;
-            let pageY = d.clientY;
+            let pageY = d.clientY +250;
 
             tooltip.transition()
                 .duration(200)
@@ -154,7 +159,7 @@ class HeatMap {
         
             tooltip.html(that.tooltipDivRender(d))
                 .style("left", (pageX) + "px")
-                .style("top", (pageY - 28) + "px");
+                .style("top", (pageY) + "px");
             });
 
         hexbins.on("mouseout", function(d,i) {
@@ -227,10 +232,14 @@ class HeatMap {
 tooltipDivRender (data){
     let percentage = data.currentTarget.__data__.fg_perc;
     let shot_range = data.currentTarget.__data__[0].zone_range;
+    let percent = percentage.toFixed(1);
 
-    return "<h5>" + percentage + "%" + "<br/>" + 
-        "Distance " + shot_range +"</h5>";
+    if (shot_range === "Less Than 8 ft.") {
+        shot_range = "< 8 ft."
+    }
+
+    return "<h5>" + percent + "%" + "<br/>" + 
+        "Distance: " + shot_range +"</h5>";
 }
     
-
 }
