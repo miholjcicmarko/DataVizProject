@@ -221,7 +221,7 @@ class HeatMap {
             });
     }
 
-TooltipRender (data){
+TooltipDivRender (data){
     let percentage = data.fg_perc;
     let shot_range = data[i].SHOT_ZONE_RANGE;
 
