@@ -144,15 +144,15 @@ class HeatMap {
             that.tooltip(hexbins);
     }
 
-// creates the tooltip
-tooltip (hexbins) {
-    let that = this;
-    let tooltip = d3.select('.tooltip');
+    // creates the tooltip
+    tooltip (hexbins) {
+        let that = this;
+        let tooltip = d3.select('.tooltip');
 
-    // tooltip for the hexagons
-    hexbins.on('mouseover', function(d,i) {
-        let pageX = d.clientX;
-        let pageY = d.clientY +20;
+        // tooltip for the hexagons
+        hexbins.on('mouseover', function(d,i) {
+            let pageX = d.clientX;
+            let pageY = d.clientY + 35;
 
         tooltip.transition()
             .duration(200)
@@ -163,7 +163,7 @@ tooltip (hexbins) {
             .style("top", (pageY) + "px");
         });
 
-    hexbins.on("mouseout", function(d,i) {
+        hexbins.on("mouseout", function(d,i) {
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
@@ -232,18 +232,18 @@ tooltip (hexbins) {
             that.tooltip(hexabins);
     }
 
-// creates the words in the tooltip
-tooltipDivRender (data){
-    let percentage = data.currentTarget.__data__.fg_perc;
-    let shot_range = data.currentTarget.__data__[0].zone_range;
-    let percent = percentage.toFixed(1);
+    // creates the words in the tooltip
+    tooltipDivRender (data){
+        let percentage = data.currentTarget.__data__.fg_perc;
+        let shot_range = data.currentTarget.__data__[0].zone_range;
+            let percent = percentage.toFixed(1);
 
-    if (shot_range === "Less Than 8 ft.") {
-        shot_range = "< 8 ft."
-    }
+        if (shot_range === "Less Than 8 ft.") {
+            shot_range = "< 8 ft."
+        }
 
-    return "<h5>" + percent + "%" + "<br/>" + 
-        "Distance: " + shot_range +"</h5>";
+        return "<h5>" + percent + "%" + "<br/>" + 
+            "Distance: " + shot_range +"</h5>";
 }
     
 }
