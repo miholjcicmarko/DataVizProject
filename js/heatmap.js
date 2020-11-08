@@ -152,7 +152,7 @@ tooltip (hexbins) {
     // tooltip for the hexagons
     hexbins.on('mouseover', function(d,i) {
         let pageX = d.clientX;
-        let pageY = d.clientY +250;
+        let pageY = d.clientY +20;
 
         tooltip.transition()
             .duration(200)
