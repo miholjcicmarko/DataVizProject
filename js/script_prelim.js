@@ -12,5 +12,6 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
     
     let heatMap = new HeatMap(data);
 
-    heatMap.drawHeatMap();
+    heatMap.drawHeatMapRight();
+    heatMap.drawHeatMapLeft();
 })
