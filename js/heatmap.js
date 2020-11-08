@@ -131,6 +131,14 @@ class HeatMap {
                     return 0.75;
                 }
             });
+
+        d3.select('#heatmap-div')
+            .append('div')
+            .attr("class", "tooltip")
+            .attr("id", "tooltip")
+            .style("opacity", 0);
+
+        
     }
 
     drawHeatMapLeft(){
@@ -193,7 +201,7 @@ class HeatMap {
             });
     }
 
-TooltipRender (){
+TooltipRender (data){
     
 }
     
