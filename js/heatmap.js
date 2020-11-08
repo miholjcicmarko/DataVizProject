@@ -86,7 +86,7 @@ class HeatMap {
             .attr("height",this.vizHeight-2*this.margin)
             .attr("transform","translate(25,25)");
 
-        svg.append("g")
+        let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke","black")
            .selectAll("path")
@@ -137,7 +137,24 @@ class HeatMap {
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+        let tooltip = d3.select('.tooltip');
+
+        // tooltip for the circles in the bubblechart
+        hexbins.on('mouseover', function(d,i) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0.9);
         
+            tooltip.html(that.tooltipDivRender(d))
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 28) + "px");
+            });
+
+        hexbin.on("mouseout", function(d,i) {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
     }
 
     drawHeatMapLeft(){
@@ -201,7 +218,19 @@ class HeatMap {
     }
 
 TooltipRender (data){
+    let percentage = data.fg_perc;
     
+    if (pos > 0) {
+        party = party + "R+"
+    }
+    else if (pos < 0) {
+        party = party + "D+"
+        let pos_val = pos * -1;
+        pos = pos_val.toFixed(3);
+    }
+    return "<h5>" + phrase + "<br/>" + 
+        party + " " + pos + "%" +"<br/>" + 
+        "In " + frequency_fixed + "%" + " of speeches" + "</h5>";
 }
     
 
