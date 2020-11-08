@@ -154,7 +154,7 @@ class HeatMap {
                 .style("top", (d3.event.pageY - 28) + "px");
             });
 
-        hexbin.on("mouseout", function(d,i) {
+        hexbins.on("mouseout", function(d,i) {
                 tooltip.transition()
                     .duration(500)
                     .style("opacity", 0);
@@ -223,6 +223,7 @@ class HeatMap {
 
 TooltipRender (data){
     let percentage = data.fg_perc;
+    let shot_range = data[i].SHOT_ZONE_RANGE;
 
     if (pos > 0) {
         party = party + "R+"
