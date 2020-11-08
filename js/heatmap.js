@@ -7,12 +7,14 @@ class ShotData{
      * @param shotFlag binary representation of result
      */
 
-     constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG){
+     constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
+        SHOT_ZONE_RANGE){
          this.locX = +LOC_X;
          this.locY = +LOC_Y;
          this.result = EVENT_TYPE;
          this.zone = SHOT_ZONE_BASIC;
          this.shotFlag = +SHOT_MADE_FLAG;
+         this.zone_range = SHOT_ZONE_RANGE;
      }
 }
 
@@ -27,7 +29,9 @@ class HeatMap {
         let distList = [];
         for(let i = 0; i < this.data.length; i++){
             let node = new ShotData(this.data[i].LOC_X,
-                this.data[i].LOC_Y,this.data[i].EVENT_TYPE,this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG);
+                this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
+                this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
+                this.data[i].SHOT_ZONE_RANGE);
             this.shotData.push(node);
 
             xlist.push(+this.data[i].LOC_X);
@@ -219,7 +223,7 @@ class HeatMap {
 
 TooltipRender (data){
     let percentage = data.fg_perc;
-    
+
     if (pos > 0) {
         party = party + "R+"
     }
