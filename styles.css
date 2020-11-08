@@ -6,7 +6,7 @@ Container stylings for the button and slider
     display: grid;
     position: relative;
     left: 5%;
-    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 1fr 2fr; 
     grid-template-rows: 1fr;
     column-gap: 15%;
     
@@ -50,6 +50,42 @@ Styling for the wrapper containing the svg
     margin: auto;
     height: fit-content;
     display: inline-block;
+}
+
+/* 
+Styling for the container below the shot chart
+*/
+.containerB {
+    display: grid;
+    position: relative;
+    left: 5%;
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: 1fr;
+    column-gap: 5%;
+    
+    grid-template-areas: "button slider";
+}
+
+/*
+Styling for the button
+*/
+.button {
+    grid-area: "button";
+    position: relative;
+    background-color: gold;
+    padding: 1% 1%;
+    text-align: center;
+    font-size: 12px;
+}
+
+.button:active {
+    box-shadow: 0 5px gold;
+    transform: translateY(4px);
+}
+
+#slider {
+    grid-area: "slider";
+    border: 2px solid purple;
 }
 
 /* 
