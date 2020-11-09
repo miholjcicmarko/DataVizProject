@@ -276,7 +276,6 @@ class HeatMap {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYear);
 
-        
             sliderText.attr('x', yearScale(this.activeYear));
             sliderText.attr('y', 25);
 
@@ -286,7 +285,9 @@ class HeatMap {
                 .text(this.value)
                 .attr('x', yearScale(this.value))
                 .attr('y', 25); 
-        
+
+            that.updateYearKobe(this.value);
+            
         })
         }
     }
