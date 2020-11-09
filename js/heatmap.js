@@ -5,6 +5,8 @@ class ShotData{
      * @param result whether shot was made or missed
      * @param zone basic area on court shot was taken from
      * @param shotFlag binary representation of result
+     * @param zone_range distance of shot
+     * @param year Year that the shot event occured
      */
 
      constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
@@ -279,7 +281,6 @@ class HeatMap {
             sliderText.attr('y', 25);
 
         yearSlider.on('input', function () {
-            //TODO - your code goes here -
 
             sliderText
                 .text(this.value)
@@ -291,7 +292,7 @@ class HeatMap {
     }
 
     updateYearKobe (year) {
-        
+        let p = year;
     }
     
 }

@@ -109,7 +109,7 @@ div.tooltip {
     width: 725px;
     height: 15px;
     border-radius: 5px;
-    background: #d3d3d3;
+    background:purple;
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -123,7 +123,7 @@ div.tooltip {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: #4CAF50;
+    background: gold;
     cursor: pointer;
 }
 
