@@ -378,6 +378,14 @@ class HeatMap {
         });
         }
 
+        let story_div = d3.select('#overlay')
+                          .style("top", 250 + "px");
+
+            story_div
+                .append("iframe")
+                .attr("width", that.svgWidth/2.25)
+                .attr("height", that.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed?v=3cGTf57VV7I");
         
 
     }
