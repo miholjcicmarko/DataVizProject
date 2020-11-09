@@ -10,13 +10,14 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
 {
     this.activeYear = null;
 
-    this.story = false;
+    //this.story = false;
 
     let that = this;
     
     function updateYearKobe (year) {
         if (year === null) {
-            let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+            //let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+            let heatMap = new HeatMap(data,updateYearKobe);
 
             heatMap.drawHeatMapLeft();
         }
@@ -26,20 +27,21 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
         }
     }
 
-    function storyTell (story) {
-        if (story === false) {
-            let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    // function storyTell (story) {
+    //     if (story === false) {
+    //         let heatMap = new HeatMap(data, updateYearKobe, storyTell);
 
-            heatMap.drawHeatMapLeft();
-        }
-        else {
-            that.story = true;
-            let storyFile = new storyFile(story);
-            storyFile.depict();
-        }
-    }
+    //         heatMap.drawHeatMapLeft();
+    //     }
+    //     else {
+    //         that.story = true;
+    //         let storyFile = new storyFile(story);
+    //         storyFile.depict();
+    //     }
+    // }
     
-    let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    //let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    let heatMap = new HeatMap(data,updateYearKobe);
 
     heatMap.drawHeatMapLeft();
 })
