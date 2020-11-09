@@ -15,7 +15,7 @@ class ShotData{
          this.zone = SHOT_ZONE_BASIC;
          this.shotFlag = +SHOT_MADE_FLAG;
          this.zone_range = SHOT_ZONE_RANGE;
-         //this.year = 
+         this.year = GAME_DATE;
      }
 }
 
@@ -32,7 +32,7 @@ class HeatMap {
             let node = new ShotData(this.data[i].LOC_X,
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
                 this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
-                this.data[i].SHOT_ZONE_RANGE);
+                this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE);
             this.shotData.push(node);
 
             xlist.push(+this.data[i].LOC_X);
