@@ -383,7 +383,9 @@ class HeatMap {
         d3.select("#next-button").remove();
         d3.select("#back-button").remove();
 
-        
+        this.shotData = this.resetData;
+        this.drawHeatMapRight();
+        this.drawHeatMapLeft();
     }
     
 }
