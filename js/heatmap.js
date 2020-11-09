@@ -18,6 +18,20 @@ class ShotData{
          this.shotFlag = +SHOT_MADE_FLAG;
          this.zone_range = SHOT_ZONE_RANGE;
          let stringyear = GAME_DATE.slice(0,4);
+         let yearnumber = +stringyear;
+         let stringmonth = +GAME_DATE.slice(5,6);
+            if (stringmonth > 7) {
+                yearnumber = yearnumber+1;
+                yearnumberstring = "" + yearnumber
+                yearnumberstringformatted = yearnumberstring.slice(2,3);
+                this.year = stringyear + "-" + yearnumberstringformatted;
+            }
+            else if (stringmonth < 7) {
+                yearnumber = yearnumber-1;
+                yearnumberstring = "" + yearnumber
+                yearnumberstringformatted = stringyear.slice(2,3);
+                this.year = yearnumberstringformatted + "-" + stringyear;
+            }
          this.year = +stringyear;
      }
 }
@@ -70,6 +84,7 @@ class HeatMap {
             .domain(this.typeList)
             .range(d3.schemeSet2);
 
+        this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
     }   
@@ -294,6 +309,8 @@ class HeatMap {
     }
 
     updateChartKobe (year) {
+
+        this.shotData = this.resetData;
 
         let newData = [];
         
