@@ -15,7 +15,8 @@ class ShotData{
          this.zone = SHOT_ZONE_BASIC;
          this.shotFlag = +SHOT_MADE_FLAG;
          this.zone_range = SHOT_ZONE_RANGE;
-         this.year = GAME_DATE;
+         let stringyear = GAME_DATE.slice(0,4);
+         this.year = +stringyear;
      }
 }
 
