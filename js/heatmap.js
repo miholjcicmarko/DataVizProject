@@ -18,22 +18,24 @@ class ShotData{
          this.shotFlag = +SHOT_MADE_FLAG;
          this.zone_range = SHOT_ZONE_RANGE;
          let stringyear = GAME_DATE.slice(0,4);
-         let yearnumber = +stringyear;
-         let stringmonth = +GAME_DATE.slice(5,6);
-            if (stringmonth > 7) {
-                let yearnumber = yearnumber+1;
-                let yearnumberstring = "" + yearnumber
-                let yearnumberstringformatted = yearnumberstring.slice(2,3);
-                this.year = stringyear + "-" + yearnumberstringformatted;
-            }
-            else if (stringmonth < 7) {
-                let yearnumber = yearnumber-1;
-                let yearnumberstring = "" + yearnumber
-                let yearnumberstringformatted = stringyear.slice(2,3);
-                this.year = yearnumberstring + "-" + yearnumberstringformatted;
-            }
          this.year = +stringyear;
-     }
+
+        //  let stringyear = GAME_DATE.slice(0,4);
+        //  let yearnumber = +stringyear;
+        //  let stringmonth = +GAME_DATE.slice(4,6);
+        //     if (stringmonth > 7) {
+        //         yearnumber = yearnumber+1;
+        //         let yearnumberstring = "" + yearnumber
+        //         let yearnumberstringformatted = yearnumberstring.slice(2,4);
+        //         this.year = stringyear + "-" + yearnumberstringformatted;
+        //     }
+        //     else if (stringmonth < 7) {
+        //         yearnumber = yearnumber-1;
+        //         let yearnumberstring = "" + yearnumber
+        //         let yearnumberstringformatted = stringyear.slice(2,3);
+        //         this.year = yearnumberstring + "-" + yearnumberstringformatted;
+        //     }
+    }
 }
 
 class HeatMap {
@@ -47,7 +49,7 @@ class HeatMap {
         let typeList = [];
         let distList = [];
         for(let i = 0; i < this.data.length; i++){
-            let node = lnew ShotData(this.data[i].LOC_X,
+            let node = new ShotData(this.data[i].LOC_X,
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
                 this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
                 this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE);
@@ -175,7 +177,7 @@ class HeatMap {
         // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
             let pageX = d.clientX;
-            let pageY = d.clientY + 35;
+            let pageY = d.clientY + 25;
 
         tooltip.transition()
             .duration(200)

@@ -88,14 +88,14 @@ tool tip stylings
 */
 
 div.tooltip {
-    position: absolute;
+    position: relative;
     text-align: center;
-    min-width: 60px;
-    height: 35px;
+    width: 5%;
+    height: 5%;
     padding: 2px;
     background: white;
     stroke: gray;
-    border-radius: 8px;
+    border-radius: 6px;
     pointer-events: none;
 }
 
