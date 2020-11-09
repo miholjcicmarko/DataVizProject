@@ -21,7 +21,8 @@ class ShotData{
 }
 
 class HeatMap {
-    constructor(data){
+    constructor(data, updateYearKobe){
+        this.updateYearKobe = updateYearKobe;
         this.data = data[0];
         
         this.shotData = [];
@@ -66,6 +67,8 @@ class HeatMap {
         this.scaleColor = d3.scaleOrdinal()
             .domain(this.typeList)
             .range(d3.schemeSet2);
+
+        this.drawYearBar(updateYearKobe);
 
     }   
 
@@ -267,10 +270,13 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg');
 
-        let sliderText = sliderLabel.append('text').text(this.activeYear);
+        if (this.activeYear !== "null") {
+        let sliderText = sliderLabel.append('text')
+            .text(this.activeYear);
 
-        sliderText.attr('x', yearScale(this.activeYear));
-        sliderText.attr('y', 25);
+        
+            sliderText.attr('x', yearScale(this.activeYear));
+            sliderText.attr('y', 25);
 
         yearSlider.on('input', function () {
             //TODO - your code goes here -
@@ -281,6 +287,7 @@ class HeatMap {
                 .attr('y', 25); 
         
         })
+        }
     }
 
     updateYearKobe (year) {
