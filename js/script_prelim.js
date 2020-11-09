@@ -21,7 +21,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
         }
         else {
             that.activeYear = year;
-            heatMap.updateYearKobe(year);
+            heatMap.updateChartKobe(year);
         }
     }
     

@@ -287,12 +287,12 @@ class HeatMap {
                 .attr('y', 25); 
 
             that.updateYearKobe(this.value);
-            
+
         })
         }
     }
 
-    updateYearKobe (year) {
+    updateChartKobe (year) {
         let p = year;
     }
     
