@@ -78,6 +78,7 @@ class HeatMap {
         d3.select('#heatmap-div')
             .append('div')
             .attr("class", "tooltip")
+            .attr("id", "tooltip")
             .style("opacity", 0);
 
         let that = this;
@@ -303,6 +304,9 @@ class HeatMap {
         }
 
         this.shotData = newData;
+
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
 
         this.drawHeatMapRight();
         this.drawHeatMapLeft();
