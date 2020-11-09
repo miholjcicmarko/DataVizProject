@@ -78,14 +78,14 @@ Styling for the buttons
     font-size: 12px;
 }
 
-/* button {
+button {
     grid-area: "button";
     position: relative;
     background-color: gold;
     padding: 1% 1%;
     text-align: center;
     font-size: 12px;
-} */
+}
 
 .button:active {
     box-shadow: 0 5px gold;

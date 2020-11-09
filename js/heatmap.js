@@ -356,30 +356,34 @@ class HeatMap {
             that.story = true;
             d3.select("#leftCourt").remove();
 
-        // let buttonBack = document.createElement("button");
-        //     buttonBack.innerHTML = "Back";
+        let buttonBack = document.createElement("button");
+            buttonBack.innerHTML = "Back";
+            buttonBack.id = "back-button";
         
-        // let body = document.getElementsByTagName("body")[0];
-        //     body.appendChild(buttonBack);
+        let body = document.getElementsByTagName("body")[0];
+            body.appendChild(buttonBack);
 
-        // buttonBack.addEventListener ("click", function() {
-        //     alert("Backwards");
-        // });
+        buttonBack.addEventListener ("click", function() {
+            alert("Backwards");
+        });
 
-        // let buttonNext = document.createElement("button");
-        // buttonNext.innerHTML = "Next";
+        let buttonNext = document.createElement("button");
+            buttonNext.innerHTML = "Next";
+            buttonNext.id = "next-button";
 
-        // body.appendChild(buttonNext);
+        body.appendChild(buttonNext);
 
-        // buttonNext.addEventListener ("click", function() {
-        //     alert("Forwards");
-        // });
-        // }
+        buttonNext.addEventListener ("click", function() {
+            alert("Forwards");
+        });
         }
     }
 
     resetViz () {
+        d3.select("#next-button").remove();
+        d3.select("#back-button").remove();
 
+        
     }
     
 }
