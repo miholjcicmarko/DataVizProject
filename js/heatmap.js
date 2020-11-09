@@ -383,6 +383,11 @@ class HeatMap {
         d3.select("#next-button").remove();
         d3.select("#back-button").remove();
 
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
+
+        d3.select('.slider-wrap').selectAll("text").remove();
+
         this.shotData = this.resetData;
         this.drawHeatMapRight();
         this.drawHeatMapLeft();
