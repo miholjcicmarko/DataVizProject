@@ -385,9 +385,8 @@ class HeatMap {
                 .append("iframe")
                 .attr("width", that.svgWidth/2.25)
                 .attr("height", that.vizHeight/2)
-                .attr("src", "https://www.youtube.com/watch?v=3cGTf57VV7I");
+                .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
         
-
     }
 
     resetViz () {
