@@ -89,6 +89,8 @@ class HeatMap {
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
+        this.story = false;
+        this.drawHeatMapRight();
     }   
 
     drawHeatMapRight(){
@@ -123,6 +125,7 @@ class HeatMap {
         let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke","black")
+            .attr("id", "rightCourt")
            .selectAll("path")
            .data(bins)
            .join("path")
@@ -166,7 +169,19 @@ class HeatMap {
                 }
             });
 
-            that.tooltip(hexbins);
+        that.tooltip(hexbins);
+
+        let toggleStory = d3.select("#story-button");
+
+        let resetButton = d3.select("#reset-button");
+
+        toggleStory.on("click", function() {
+            that.storyMode();
+        });
+
+        resetButton.on("click", function() {
+            that.resetViz();
+        });
     }
 
     // creates the tooltip
@@ -176,11 +191,9 @@ class HeatMap {
 
         // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
-            let scrollvert = window.pageYOffset;
-            let scrollside = window.pageXOffset;
 
-            let pageX = d.clientX + scrollvert;
-            let pageY = d.clientY + 5 + scrollside;
+            let pageX = d.clientX;
+            let pageY = d.clientY + 5;
 
         tooltip.transition()
             .duration(200)
@@ -214,6 +227,7 @@ class HeatMap {
         let hexabins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke","black")
+            .attr("id", "leftCourt")
            .selectAll("path")
            .data(binsL)
            .join("path")
@@ -332,6 +346,14 @@ class HeatMap {
 
         this.drawHeatMapRight();
         this.drawHeatMapLeft();
+
+    }
+
+    storyMode () {
+
+    }
+
+    resetViz () {
 
     }
     
