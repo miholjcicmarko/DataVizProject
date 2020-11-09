@@ -379,7 +379,8 @@ class HeatMap {
         }
 
         let story_div = d3.select('#overlay')
-                          .style("top", 250 + "px");
+                          .style("top", 250 + "px")
+                          .style("z-index", 1);
 
             story_div
                 .append("iframe")
