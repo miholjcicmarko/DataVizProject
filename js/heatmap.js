@@ -350,7 +350,32 @@ class HeatMap {
     }
 
     storyMode () {
+        let that = this;
 
+        if (that.story === false) {
+            that.story = true;
+            d3.select("#leftCourt").remove();
+
+        // let buttonBack = document.createElement("button");
+        //     buttonBack.innerHTML = "Back";
+        
+        // let body = document.getElementsByTagName("body")[0];
+        //     body.appendChild(buttonBack);
+
+        // buttonBack.addEventListener ("click", function() {
+        //     alert("Backwards");
+        // });
+
+        // let buttonNext = document.createElement("button");
+        // buttonNext.innerHTML = "Next";
+
+        // body.appendChild(buttonNext);
+
+        // buttonNext.addEventListener ("click", function() {
+        //     alert("Forwards");
+        // });
+        // }
+        }
     }
 
     resetViz () {
