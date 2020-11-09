@@ -297,7 +297,7 @@ class HeatMap {
         let newData = [];
         
         for (let i = 0; i < this.shotData.length; i++) {
-            if (this.shotData[0].year === year) {
+            if (this.shotData[i].year === year) {
                 newData.push(this.shotData[i]);
             }
         }
