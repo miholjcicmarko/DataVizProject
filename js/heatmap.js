@@ -305,9 +305,9 @@ class HeatMap {
 
         let sliderLabel = d3.select('.slider-wrap')
             .append('div').classed('slider-label', true)
-            .append('svg');
+            .append('svg').attr("id", "slider-text");
 
-        if (this.activeYear !== "null") {
+        if (this.activeYear !== null) {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYear);
 
@@ -377,16 +377,23 @@ class HeatMap {
             alert("Forwards");
         });
         }
+
+        
+
     }
 
     resetViz () {
+        this.story = false;
+
         d3.select("#next-button").remove();
         d3.select("#back-button").remove();
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        d3.select('.slider-wrap').selectAll("text").remove();
+        this.activeYear = null;
+
+        d3.select("#slider-text").selectAll("text").text("");
 
         this.shotData = this.resetData;
         this.drawHeatMapRight();
