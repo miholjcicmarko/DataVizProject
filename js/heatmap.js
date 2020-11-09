@@ -8,13 +8,14 @@ class ShotData{
      */
 
      constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
-        SHOT_ZONE_RANGE){
+        SHOT_ZONE_RANGE, GAME_DATE){
          this.locX = +LOC_X;
          this.locY = +LOC_Y;
          this.result = EVENT_TYPE;
          this.zone = SHOT_ZONE_BASIC;
          this.shotFlag = +SHOT_MADE_FLAG;
          this.zone_range = SHOT_ZONE_RANGE;
+         //this.year = 
      }
 }
 
@@ -250,9 +251,38 @@ class HeatMap {
         let that = this;
 
         let yearScale = d3.scaleLinear()
-                            .domain([1800, 2020])
+                            .domain([1996, 2016])
                             .range([30, 730]);
         
+        let yearSlider = d3.select('#slider')
+            .append('div').classed('slider-wrap', true)
+            .append('input').classed('slider', true)
+            .attr('type', 'range')
+            .attr('min', 1996)
+            .attr('max', 2016)
+            .attr('value', this.activeYear);
+
+        let sliderLabel = d3.select('.slider-wrap')
+            .append('div').classed('slider-label', true)
+            .append('svg');
+
+        let sliderText = sliderLabel.append('text').text(this.activeYear);
+
+        sliderText.attr('x', yearScale(this.activeYear));
+        sliderText.attr('y', 25);
+
+        yearSlider.on('input', function () {
+            //TODO - your code goes here -
+
+            sliderText
+                .text(this.value)
+                .attr('x', yearScale(this.value))
+                .attr('y', 25); 
+        
+        })
+    }
+
+    updateYearKobe (year) {
         
     }
     
