@@ -12,7 +12,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
 
     let that = this;
     
-    function updateYear (year) {
+    function updateYearKobe (year) {
         if (year === null) {
             let heatMap = new HeatMap(data);
 
@@ -25,7 +25,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
         }
     }
     
-    let heatMap = new HeatMap(data);
+    let heatMap = new HeatMap(data, updateYearKobe);
 
     heatMap.drawHeatMapRight();
     heatMap.drawHeatMapLeft();
