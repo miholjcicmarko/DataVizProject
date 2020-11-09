@@ -176,8 +176,11 @@ class HeatMap {
 
         // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
-            let pageX = d.clientX;
-            let pageY = d.clientY + 25;
+            let scrollvert = window.pageYOffset;
+            let scrollside = window.pageXOffset;
+
+            let pageX = d.clientX + scrollvert;
+            let pageY = d.clientY + 5 + scrollside;
 
         tooltip.transition()
             .duration(200)
