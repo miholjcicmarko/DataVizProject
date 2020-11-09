@@ -293,7 +293,20 @@ class HeatMap {
     }
 
     updateChartKobe (year) {
-        let p = year;
+
+        let newData = [];
+        
+        for (let i = 0; i < this.shotData.length; i++) {
+            if (this.shotData[0].year === year) {
+                newData.push(this.shotData[i]);
+            }
+        }
+
+        this.shotData = newData;
+
+        this.drawHeatMapRight();
+        this.drawHeatMapLeft();
+
     }
     
 }
