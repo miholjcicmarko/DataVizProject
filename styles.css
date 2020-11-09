@@ -97,7 +97,7 @@ tool tip stylings
 */
 
 div.tooltip {
-    position: absolute;
+    position: fixed;
     text-align: center;
     width: 5%;
     height: 5%;
