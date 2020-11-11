@@ -27,8 +27,8 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
         }
     }
 
-    // function storyTell (story) {
-    //     if (story === false) {
+    // function storyTell (boolean) {
+    //     if (boolean === false) {
     //         let heatMap = new HeatMap(data, updateYearKobe, storyTell);
 
     //         heatMap.drawHeatMapLeft();
