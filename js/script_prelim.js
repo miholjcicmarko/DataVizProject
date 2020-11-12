@@ -36,7 +36,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
          else if (boolean === true) {
              that.storyOn = true;
              heatMap.storyMode();
-             let story = new StoryFile(storyOn);
+             let story = new storyFile(boolean);
              story.drawStory();
          }
     }

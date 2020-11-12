@@ -1,4 +1,4 @@
-class StoryFile {
+class storyFile {
     constructor(storyOn) {
 
         this.storyOn = storyOn;
