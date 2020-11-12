@@ -10,14 +10,14 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
 {
     this.activeYear = null;
 
-    //this.story = false;
+    this.storyOn = false;
 
     let that = this;
     
     function updateYearKobe (year) {
         if (year === null) {
-            //let heatMap = new HeatMap(data, updateYearKobe, storyTell);
-            let heatMap = new HeatMap(data,updateYearKobe);
+            let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+            //let heatMap = new HeatMap(data,updateYearKobe);
 
             heatMap.drawHeatMapLeft();
         }
@@ -27,21 +27,21 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
         }
     }
 
-    // function storyTell (boolean) {
-    //     if (boolean === false) {
-    //         let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    function storyTell (boolean) {
+         if (boolean === false) {
+             let heatMap = new HeatMap(data, updateYearKobe, storyTell);
 
-    //         heatMap.drawHeatMapLeft();
-    //     }
-    //     else {
-    //         that.story = true;
-    //         let storyFile = new storyFile(story);
-    //         storyFile.depict();
-    //     }
-    // }
+             heatMap.drawHeatMapLeft();
+         }
+         else if (boolean === true) {
+             that.storyOn = true;
+             heatMap.storyMode();
+             let storyFile = new Story(storyOn);
+         }
+    }
     
-    //let heatMap = new HeatMap(data, updateYearKobe, storyTell);
-    let heatMap = new HeatMap(data,updateYearKobe);
+    let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    //let heatMap = new HeatMap(data,updateYearKobe);
 
     heatMap.drawHeatMapLeft();
 })

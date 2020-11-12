@@ -39,8 +39,10 @@ class ShotData{
 }
 
 class HeatMap {
-    constructor(data, updateYearKobe){
+    constructor(data, updateYearKobe, storyTell){
         this.updateYearKobe = updateYearKobe;
+        this.storyTell = storyTell;
+
         this.data = data[0];
         
         this.shotData = [];
@@ -89,7 +91,6 @@ class HeatMap {
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
-        this.story = false;
         this.drawHeatMapRight();
     }   
 
@@ -176,7 +177,8 @@ class HeatMap {
         let resetButton = d3.select("#reset-button");
 
         toggleStory.on("click", function() {
-            that.storyMode();
+            let pressed = true;
+            that.storyTell(pressed);
         });
 
         resetButton.on("click", function() {
@@ -350,44 +352,11 @@ class HeatMap {
     }
 
     storyMode () {
-        let that = this;
-
-        if (that.story === false) {
-            that.story = true;
-            d3.select("#leftCourt").remove();
-
-        let buttonBack = document.createElement("button");
-            buttonBack.innerHTML = "Back";
-            buttonBack.id = "back-button";
         
-        let body = document.getElementsByTagName("body")[0];
-            body.appendChild(buttonBack);
+        d3.select("#leftCourt").remove();
+        d3.select("#rightCourt").remove();
+        d3.select(".slider-wrap").remove();
 
-        buttonBack.addEventListener ("click", function() {
-            alert("Backwards");
-        });
-
-        let buttonNext = document.createElement("button");
-            buttonNext.innerHTML = "Next";
-            buttonNext.id = "next-button";
-
-        body.appendChild(buttonNext);
-
-        buttonNext.addEventListener ("click", function() {
-            alert("Forwards");
-        });
-        }
-
-        let story_div = d3.select('#overlay')
-                          .style("top", 250 + "px")
-                          .style("z-index", 1);
-
-            story_div
-                .append("iframe")
-                .attr("width", that.svgWidth/2.25)
-                .attr("height", that.vizHeight/2)
-                .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
-        
     }
 
     resetViz () {
