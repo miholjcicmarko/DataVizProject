@@ -290,6 +290,10 @@ class HeatMap {
             "Distance: " + shot_range +"</h5>";
     }
 
+    drawDropDown () {
+        
+    }
+
     drawYearBar () {
         let that = this;
 
