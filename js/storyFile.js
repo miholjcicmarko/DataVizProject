@@ -45,7 +45,6 @@ class storyFile {
                 .attr("height", that.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
         
-
         }
         
     }
