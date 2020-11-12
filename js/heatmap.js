@@ -170,6 +170,10 @@ class HeatMap {
                 }
             });
 
+        let drawDropDownWrap = d3.select('#dropdown').append('div')
+                                 .classed('dropdown-wrapper', true);
+
+
         that.tooltip(hexbins);
 
         let toggleStory = d3.select("#story-button");
@@ -291,7 +295,7 @@ class HeatMap {
     }
 
     drawDropDown () {
-        
+
     }
 
     drawYearBar () {

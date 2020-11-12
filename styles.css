@@ -175,6 +175,14 @@ div.tooltip {
     z-index: -1;
 }
 
+div.dropdown-wrapper {
+    display: inline-block;
+    margin-left: 75px;
+    width: 320px;
+    height: 130px;
+    padding: 2px;
+}
+
 /*
 #heatmap-div{
     background-image: url("data/basicHalfCourt.gif");
