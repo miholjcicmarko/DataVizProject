@@ -1,11 +1,9 @@
-class Story {
+class StoryFile {
     constructor(storyOn) {
 
         this.storyOn = storyOn;
 
         this.counter = 0;
-
-        this.drawStory();
 
     }
 
