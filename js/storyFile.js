@@ -5,9 +5,13 @@ class storyFile {
 
         this.counter = 0;
 
+        this.vizHeight = 900;
+        this.svgWidth = 1200;
+
     }
 
     drawStory () {
+        let that = this;
 
         if (this.storyOn === true) {
             let buttonBack = document.createElement("button");
