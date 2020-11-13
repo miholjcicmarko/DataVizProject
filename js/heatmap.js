@@ -91,7 +91,6 @@ class HeatMap {
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
-        this.drawHeatMapRight();
     }   
 
     drawHeatMapRight(){
@@ -169,10 +168,6 @@ class HeatMap {
                     return 0.75;
                 }
             });
-
-        let drawDropDownWrap = d3.select('#dropdown').append('div')
-                                 .classed('dropdown-wrapper', true);
-
 
         that.tooltip(hexbins);
 
@@ -292,10 +287,6 @@ class HeatMap {
 
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +"</h5>";
-    }
-
-    drawDropDown () {
-
     }
 
     drawYearBar () {

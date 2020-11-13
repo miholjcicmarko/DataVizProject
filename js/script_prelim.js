@@ -6,7 +6,7 @@
 //     })
 
 // reading in as csv results in much more useful data structure
-Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
+Promise.all([d3.csv("./data/Kobedata.csv")]).then(data =>
 {
     this.activeYear = null;
 
@@ -19,6 +19,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
             let heatMap = new HeatMap(data, updateYearKobe, storyTell);
             //let heatMap = new HeatMap(data,updateYearKobe);
 
+            heatMap.drawHeatMapRight();
             heatMap.drawHeatMapLeft();
         }
         else {
@@ -31,6 +32,7 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
          if (boolean === false) {
              let heatMap = new HeatMap(data, updateYearKobe, storyTell);
 
+             heatMap.drawHeatMapRight();
              heatMap.drawHeatMapLeft();
          }
          else if (boolean === true) {
@@ -43,6 +45,14 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then( data =>
     
     let heatMap = new HeatMap(data, updateYearKobe, storyTell);
     //let heatMap = new HeatMap(data,updateYearKobe);
-
+    heatMap.drawHeatMapRight();
     heatMap.drawHeatMapLeft();
+})
+
+let luka = d3.csv("./data/Doncicdata.csv");
+let harden = d3.csv("./data/Hardendata.csv");
+let curry = d3.csv("./data/Currydata.csv");
+
+Promise.all([luka, harden, curry]).then(datasets => {
+    console.log(datasets);
 })
