@@ -6,17 +6,28 @@
 //     })
 
 // reading in as csv results in much more useful data structure
-Promise.all([d3.csv("./data/Kobedata.csv")]).then(data =>
+
+let kobe = d3.csv("./data/Kobedata.csv");
+let luka = d3.csv("./data/Doncicdata.csv");
+let harden = d3.csv("./data/Hardendata.csv");
+let curry = d3.csv("./data/Currydata.csv");
+
+Promise.all([kobe, curry, harden, luka]).then(data =>
 {
+    let Kobedata = data[0];
+
     this.activeYear = null;
 
     this.storyOn = false;
+
+    this.playerComp = false;
 
     let that = this;
     
     function updateYearKobe (year) {
         if (year === null) {
-            let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+            let heatMap = new HeatMap(Kobedata, updateYearKobe, 
+                storyTell);
             //let heatMap = new HeatMap(data,updateYearKobe);
 
             heatMap.drawHeatMapRight();
@@ -30,7 +41,8 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then(data =>
 
     function storyTell (boolean) {
          if (boolean === false) {
-             let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+             let heatMap = new HeatMap(Kobedata, updateYearKobe, 
+                storyTell, playerComp);
 
              heatMap.drawHeatMapRight();
              heatMap.drawHeatMapLeft();
@@ -42,17 +54,34 @@ Promise.all([d3.csv("./data/Kobedata.csv")]).then(data =>
              story.drawStory();
          }
     }
+
+    function playerComp (name) {
+        if (name === "Stephen Curry") {
+            that.playerComp = true;
+            let playerData = data[1];
+            let playerDisplay = new playerComparison(playerData, playerComp);
+            playerDisplay.drawHeatMap();
+        }
+        else if (name === "James Harden") {
+            that.playerComp = true;
+            let playerData = data[2];
+            let playerDisplay = new playerComparison(playerData, playerComp);
+            playerDisplay.drawHeatMap();
+        }
+        else if (name === "Luka Doncic") {
+            that.playerComp = true;
+            let playerData = data[3];
+            let playerDisplay = new playerComparison(playerData, playerComp);
+            playerDisplay.drawHeatMap();
+        }
+
+
+    }
     
-    let heatMap = new HeatMap(data, updateYearKobe, storyTell);
+    let heatMap = new HeatMap(Kobedata, updateYearKobe, 
+        storyTell, playerComp);
     //let heatMap = new HeatMap(data,updateYearKobe);
     heatMap.drawHeatMapRight();
     heatMap.drawHeatMapLeft();
 })
 
-let luka = d3.csv("./data/Doncicdata.csv");
-let harden = d3.csv("./data/Hardendata.csv");
-let curry = d3.csv("./data/Currydata.csv");
-
-Promise.all([luka, harden, curry]).then(datasets => {
-    console.log(datasets);
-})

@@ -39,11 +39,12 @@ class ShotData{
 }
 
 class HeatMap {
-    constructor(data, updateYearKobe, storyTell){
+    constructor(data, updateYearKobe, storyTell, playerComp){
         this.updateYearKobe = updateYearKobe;
         this.storyTell = storyTell;
+        this.playerComp = playerComp;
 
-        this.data = data[0];
+        this.data = data;
         
         this.shotData = [];
         let xlist = [];
@@ -167,6 +168,13 @@ class HeatMap {
                 else{
                     return 0.75;
                 }
+            });
+
+        let dropdown = d3.select("#selectNow");
+            dropdown.on("change", function () {
+                let player = this.value;
+
+                that.playerComp(player);
             });
 
         that.tooltip(hexbins);
