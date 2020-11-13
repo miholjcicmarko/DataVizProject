@@ -89,13 +89,13 @@ class HeatMap {
         this.scaleColor = d3.scaleOrdinal()
             .domain(this.typeList)
             .range(d3.schemeSet2);
-
+        this.leftShotData = this.shotData;
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
     }   
 
-    drawHeatMapRight(){
+    drawHeatMapRight(hexRad,strokeLim){
         d3.select('#heatmap-div')
             .append('div')
             .attr("class", "tooltip")
@@ -107,7 +107,7 @@ class HeatMap {
         let hexbin = d3.hexbin()
             .x(d => this.xScale(d.locX))
             .y(d => this.yScale(d.locY))
-            .radius(4)
+            .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
         let bins = hexbin(this.shotData);
@@ -126,7 +126,7 @@ class HeatMap {
 
         let hexbins = svg.append("g")
             .attr("class","hexbins")
-            .attr("stroke","black")
+            .attr("stroke-width",hexRad/4)
             .attr("id", "rightCourt")
            .selectAll("path")
            .data(bins)
@@ -139,6 +139,8 @@ class HeatMap {
                 let sumFlag = 0;
                     d.forEach(element => sumFlag = sumFlag+element.shotFlag);
                     d.fg_perc = (sumFlag/d.length)*100;
+                    d.made_shots = sumFlag;
+                    d.num_shots = d.length;
                 let purples = d3.scaleSequential(d3.interpolatePurples).domain([-20,75]);
                 let purples2 = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
@@ -147,19 +149,23 @@ class HeatMap {
                     // return that.scaleColor(d[0].zone)
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return purples2(30);
+                    return purples2(d.fg_perc);
                 }
                 else{
                     return "none";
                 }
             })
+            .attr("stroke",function(d){
+                // gold is rgb(253,185,39)
+                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"]).domain([0,strokeLim]).clamp(true);
+                return strokeColor(d.num_shots);
+            })
             .attr("opacity",function(d){
-                if(d.length >= 7){
-                    return d.length/12;
-                // return 0.5;
+                if(d.length >= 3){
+                    return 1;
                 }
                 else{
-                    return 0.55
+                    return 0.75
                 }
             })
             .attr("stroke-opacity",function(d){
@@ -167,7 +173,7 @@ class HeatMap {
                     return 0;
                 }
                 else{
-                    return 0.75;
+                    return d.num_shots/3;
                 }
             });
 
@@ -221,23 +227,23 @@ class HeatMap {
         });
     }
 
-    drawHeatMapLeft(){
+    drawHeatMapLeft(hexRad,strokeLim){
         let that = this;
 
         let hexbinL = d3.hexbin()
             .x(d => this.xScale(d.locX))
             .y(d => this.yScale(d.locY))
-            .radius(4)
+            .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        let binsL = hexbinL(this.shotData);
+        let binsL = hexbinL(this.leftShotData);
         console.log(binsL)
         let svg = d3.select("#heatmap-svg");
 
         let hexabins = svg.append("g")
             .attr("class","hexbins")
-            .attr("stroke","black")
             .attr("id", "leftCourt")
+            .attr("stroke-width",hexRad/4)
            .selectAll("path")
            .data(binsL)
            .join("path")
@@ -249,27 +255,29 @@ class HeatMap {
                 let sumFlag = 0;
                     d.forEach(element => sumFlag = sumFlag+element.shotFlag);
                     d.fg_perc = (sumFlag/d.length)*100;
-                let purples = d3.scaleSequential(d3.interpolatePurples).domain([-20,75]);
+                    d.made_shots = sumFlag;
+                    d.num_shots = d.length;
                 let purples2 = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
-                    // return purples(d.fg_perc);
                     return purples2(d.fg_perc);
-                    // return that.scaleColor(d[0].zone)
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return purples2(30);
+                    return purples2(d.fg_perc);
                 }
                 else{
                     return "none";
                 }
             })
+            .attr("stroke",function(d){
+                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"]).domain([0,strokeLim]).clamp(true);
+                return strokeColor(d.num_shots);
+            })
             .attr("opacity",function(d){
                 if(d.length >= 7){
-                    return d.length/12;
-                // return 0.5;
+                    return 1;
                 }
                 else{
-                    return 0.55
+                    return 0.75
                 }
             })
             .attr("stroke-opacity",function(d){
@@ -277,7 +285,7 @@ class HeatMap {
                     return 0;
                 }
                 else{
-                    return 0.75;
+                    return 1;
                 }
             });
 
@@ -289,13 +297,15 @@ class HeatMap {
         let percentage = data.currentTarget.__data__.fg_perc;
         let shot_range = data.currentTarget.__data__[0].zone_range;
             let percent = percentage.toFixed(1);
-
+        let attempts = data.currentTarget.__data__.num_shots;
+        let made = data.currentTarget.__data__.made_shots;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
 
         return "<h5>" + percent + "%" + "<br/>" + 
-            "Distance: " + shot_range +"</h5>";
+            "Distance: " + shot_range +" <br/>" +
+            "Made: "+made+" Attempted: "+attempts+"</h5>";
     }
 
     drawYearBar () {
@@ -354,8 +364,8 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        this.drawHeatMapRight();
-        this.drawHeatMapLeft();
+        this.drawHeatMapRight(8,5);
+        this.drawHeatMapLeft(8,5);
 
     }
 
@@ -372,15 +382,16 @@ class HeatMap {
 
         this.leftShotData = [];
 
-        for(let i = 0; i < this.newData.length; i++){
-            let node = new ShotData(this.newData[i].LOC_X,
-                this.newData[i].LOC_Y,this.newData[i].EVENT_TYPE,
-                this.newData[i].SHOT_ZONE_BASIC,this.newData[i].SHOT_MADE_FLAG,
-                this.newData[i].SHOT_ZONE_RANGE, this.newData[i].GAME_DATE);
+        for(let i = 0; i < newData.length; i++){
+            let node = new ShotData(newData[i].LOC_X,
+                newData[i].LOC_Y,newData[i].EVENT_TYPE,
+                newData[i].SHOT_ZONE_BASIC,newData[i].SHOT_MADE_FLAG,
+                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE);
             this.leftShotData.push(node);
 
         }
-
+        d3.select("#leftCourt").remove();
+        this.drawHeatMapLeft(4,15);
 
     }
 
