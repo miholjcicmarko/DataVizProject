@@ -20,7 +20,7 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
 
     this.storyOn = false;
 
-    this.playerComp = false;
+    this.playerCompON = false;
 
     let that = this;
     
@@ -57,24 +57,20 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
 
     function playerComp (name) {
         if (name === "Stephen Curry") {
-            that.playerComp = true;
+            that.playerCompON = true;
             let playerData = data[1];
-            let playerDisplay = new playerComparison(playerData, playerComp);
-            playerDisplay.drawHeatMap();
+            heatMap.playerCompChart(playerData);
         }
         else if (name === "James Harden") {
-            that.playerComp = true;
+            that.playerCompON = true;
             let playerData = data[2];
-            let playerDisplay = new playerComparison(playerData, playerComp);
-            playerDisplay.drawHeatMap();
+            heatMap.playerCompChart(playerData);
         }
         else if (name === "Luka Doncic") {
-            that.playerComp = true;
+            that.playerCompON = true;
             let playerData = data[3];
-            let playerDisplay = new playerComparison(playerData, playerComp);
-            playerDisplay.drawHeatMap();
+            heatMap.playerCompChart(playerData);
         }
-
 
     }
     

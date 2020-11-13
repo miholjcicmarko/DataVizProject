@@ -43,6 +43,7 @@ class HeatMap {
         this.updateYearKobe = updateYearKobe;
         this.storyTell = storyTell;
         this.playerComp = playerComp;
+        this.playerCompON = false;
 
         this.data = data;
         
@@ -363,6 +364,23 @@ class HeatMap {
         d3.select("#leftCourt").remove();
         d3.select("#rightCourt").remove();
         d3.select(".slider-wrap").remove();
+
+    }
+
+    playerCompChart(newData) {
+        this.playerCompON = true;
+
+        this.leftShotData = [];
+
+        for(let i = 0; i < this.newData.length; i++){
+            let node = new ShotData(this.newData[i].LOC_X,
+                this.newData[i].LOC_Y,this.newData[i].EVENT_TYPE,
+                this.newData[i].SHOT_ZONE_BASIC,this.newData[i].SHOT_MADE_FLAG,
+                this.newData[i].SHOT_ZONE_RANGE, this.newData[i].GAME_DATE);
+            this.leftShotData.push(node);
+
+        }
+
 
     }
 
