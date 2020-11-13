@@ -99,13 +99,14 @@ tool tip stylings
 div.tooltip {
     position: fixed;
     text-align: center;
-    width: 5%;
-    height: 5%;
+    min-width: 5%;
+    min-height: 5%;
     padding: 2px;
     background: white;
     stroke: gray;
     border-radius: 6px;
     pointer-events: none;
+    margin: auto;
 }
 
 .tooltip h5 {
