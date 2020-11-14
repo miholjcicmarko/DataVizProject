@@ -198,8 +198,6 @@ class HeatMap {
 
         resetButton.on("click", function() {
             that.resetViz();
-            let pressed = false;
-            that.storyTell(pressed);
         });
     }
 
@@ -412,9 +410,12 @@ class HeatMap {
 
         d3.select("#slider-text").selectAll("text").text("");
 
-        this.shotData = this.resetData;
-        this.drawHeatMapRight(4,15);
-        this.drawHeatMapLeft(4,15);
+        let pressed = false;
+        this.storyTell(pressed);
+
+        // this.shotData = this.resetData;
+        // this.drawHeatMapRight(4,15);
+        // this.drawHeatMapLeft(4,15);
     }
     
 }
