@@ -44,6 +44,7 @@ class HeatMap {
         this.storyTell = storyTell;
         this.playerComp = playerComp;
         this.playerCompON = false;
+        this.storyON = false;
 
         this.data = data;
         
@@ -370,7 +371,8 @@ class HeatMap {
     }
 
     storyMode () {
-        
+        this.storyON = true;
+
         d3.select("#leftCourt").remove();
         d3.select("#rightCourt").remove();
         d3.select(".slider-wrap").remove();
@@ -396,7 +398,7 @@ class HeatMap {
     }
 
     resetViz () {
-        this.story = false;
+        this.storyON = false;
 
         d3.select("#next-button").remove();
         d3.select("#back-button").remove();
