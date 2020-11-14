@@ -411,8 +411,8 @@ class HeatMap {
         d3.select("#slider-text").selectAll("text").text("");
 
         this.shotData = this.resetData;
-        this.drawHeatMapRight();
-        this.drawHeatMapLeft();
+        this.drawHeatMapRight(4,15);
+        this.drawHeatMapLeft(4,15);
     }
     
 }
