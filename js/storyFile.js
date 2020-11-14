@@ -18,7 +18,7 @@ class storyFile {
             buttonBack.innerHTML = "Back";
             buttonBack.id = "back-button";
         
-        let body = document.getElementsByTagName("body")[0];
+        let body = document.getElementById("back");
             body.appendChild(buttonBack);
 
         buttonBack.addEventListener ("click", function() {
@@ -29,13 +29,16 @@ class storyFile {
             buttonNext.innerHTML = "Next";
             buttonNext.id = "next-button";
 
-        body.appendChild(buttonNext);
+        body = document.getElementById("front");
+            body.appendChild(buttonNext);
 
         buttonNext.addEventListener ("click", function() {
             alert("Forwards");
         });
 
         let story_div = d3.select('#overlay')
+                          .attr("width", that.svgWidth/2)
+                          .attr("height", that.vizHeight/2)
                           .style("top", 250 + "px")
                           .style("z-index", 1);
 
@@ -47,5 +50,9 @@ class storyFile {
         
         }
         
+    }
+
+    removeStory () {
+
     }
 }

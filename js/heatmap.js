@@ -198,6 +198,8 @@ class HeatMap {
 
         resetButton.on("click", function() {
             that.resetViz();
+            let pressed = false;
+            that.storyTell(pressed);
         });
     }
 
