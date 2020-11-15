@@ -39,7 +39,7 @@ class storyFile {
             body.appendChild(buttonNext);
 
             buttonNext.addEventListener ("click", function() {
-                if (that.counter < 8) {
+                if (that.counter < 7) {
                     that.counter = that.counter + 1;
                     that.alterStory();
                 }
