@@ -18,17 +18,32 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
 
     this.activeYear = null;
 
+    this.activeYearPlayer = null;
+
     this.storyOn = false;
 
     this.playerCompON = false;
 
     let that = this;
+
+    function updateYearPlayer (year) {
+        if (year === null) {
+            let heatMap = new HeatMap(Kobedata, updateYearKobe, storyTell,
+                playerComp, updateYearPlayer);
+
+            heatMap.drawHeatMapRight();
+            heatMap.drawHeatMapLeft();
+        }
+        else {
+            that.activeYearPlayer = year;
+            heatMap.updateChartPlayer(year);
+        }
+    }
     
     function updateYearKobe (year) {
         if (year === null) {
             let heatMap = new HeatMap(Kobedata, updateYearKobe, 
-                storyTell);
-            //let heatMap = new HeatMap(data,updateYearKobe);
+                storyTell, playerComp, updateYearPlayer);
 
             heatMap.drawHeatMapRight();
             heatMap.drawHeatMapLeft();
@@ -42,7 +57,7 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
     function storyTell (boolean) {
          if (boolean === false) {
              let heatMap = new HeatMap(Kobedata, updateYearKobe, 
-                storyTell, playerComp);
+                storyTell, playerComp, updateYearPlayer);
 
             let story = new storyFile(boolean);
             story.removeStory();

@@ -291,26 +291,26 @@ class HeatMap {
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
         
-        let leftShots = [];
+        this.leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Playoffs") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
         else if (that.playoffOn === false && that.playerCompON === true) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Regular") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
         else if (that.playerCompON === false) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Playoffs") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
@@ -422,7 +422,7 @@ class HeatMap {
             that.updateYearKobe(this.value);
 
         })
-        //test this
+        
         yearSlider.on('click', function() {
             sliderText
                 .text(this.value)
@@ -432,6 +432,38 @@ class HeatMap {
             that.updateYearKobe(this.value);
         })
         }
+    }
+
+    drawYearBarPlayer () {
+        let that = this;
+
+        let min = d3.min(this.leftShots);
+        let max = d3.max(this.leftShots);
+
+        let yearScale = d3.scaleLinear()
+                            .domain([min, max])
+                            .range([30, 730]);
+        
+        let yearSlider = d3.select('#playerCompSlider')
+            .append('div').classed('slider-wrap', true)
+            .append('input').classed('slider', true)
+            .attr('type', 'range')
+            .attr('min', 1996)
+            .attr('max', 2016)
+            .attr('value', this.activeYear);
+
+        let sliderLabel = d3.select('.slider-wrap')
+            .append('div').classed('slider-label', true)
+            .append('svg').attr("id", "slider-text-player");
+
+        if (this.activeYear !== null) {
+        let sliderText = sliderLabel.append('text')
+            .text(this.activeYear);
+
+            sliderText.attr('x', yearScale(this.activeYear));
+            sliderText.attr('y', 25);
+        }
+        
     }
 
     updateChartKobe (year) {
