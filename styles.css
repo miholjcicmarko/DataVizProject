@@ -46,10 +46,15 @@ Container stylings for the button and slider
 Styling for the wrapper containing the svg
 */
 .wrapper {
+    display: grid;
     width: 100%;
     margin: auto;
     height: fit-content;
     display: inline-block;
+    grid-template-columns: 1fr 0.5fr;
+    column-gap: 2.5%;
+
+    grid-template-areas: "heatmap subVis";
 }
 
 /* 
@@ -202,8 +207,62 @@ select {
     font-size: 125%;
 }
 
-/*
-#heatmap-div{
-    background-image: url("data/basicHalfCourt.gif");
-    background-color: #cccccc;
-}*/
+/* selection styling */
+.selectedHex{
+    opacity: 1;
+    stroke-opacity: 1;
+}
+
+.not-selected{
+    opacity: 0.3;
+    /* fill: grey; */
+    stroke-opacity: 1;
+    stroke: black;
+}
+
+/* sub vis styling */
+/* #heatmap-div{
+    display: grid;
+    position: relative;
+    left: 0%;
+    grid-template-columns: 1fr 0.5fr;
+    grid-template-rows: 1fr;
+    column-gap: 2.5%;
+
+    grid-template-areas: "heatmap subVis";
+}
+
+#heatmap-svg-div {
+    grid-area: "heatmap";
+    position: relative;
+} */
+
+div.subVis {
+    display: grid;
+    position: fixed;
+    align-self: center;
+    width: 400px;
+    height: 600px;
+    padding: 2px;
+    background: rgb(253, 232, 185);
+    border-style: solid;
+    border-color: rgb(241, 207, 134);
+    border-radius: 6px;
+    pointer-events: none;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    grid-template-areas: "subSVG-1"
+    "subSVG-2";
+}
+
+#subSVG-1 {
+    grid-area: "subSVG-1";
+    place-self: center;
+}
+
+#subSVG-2 {
+    grid-area: "subSVG-2";
+    place-self: center;
+}
+
