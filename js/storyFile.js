@@ -79,7 +79,8 @@ class storyFile {
             .attr("id", "storyID")
             .attr("width", this.svgWidth/2.25)
             .attr("height", this.vizHeight/2)
-            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
+            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I")
+            .attr("allowfullscreen", true);
         }
         else if (this.counter === 1) {
 
@@ -116,34 +117,13 @@ class storyFile {
                 .attr("id", "storyID")
                 .attr("width", this.svgWidth/2.25)
                 .attr("height", this.vizHeight/2)
-                .attr("src", "https://www.youtube.com/embed/GSrUPHVi44c");
+                .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
         }
 
         else if (this.counter === 4) {
             let story_div = d3.select('#overlay');
-
-            story_div
-                .append("iframe")
-                .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
-                .attr("height", this.vizHeight/2)
-                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0");
-        }
-
-        else if (this.counter === 5) {
-            let story_div = d3.select('#overlay');
-
-            story_div
-                .append("iframe")
-                .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
-                .attr("height", this.vizHeight/2)
-                .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88");
-        }
-
-        else if (this.counter === 6) {
-            let story_div = d3.select('#overlay');
-
+            // Suns buzzer beater
+            
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
@@ -152,8 +132,9 @@ class storyFile {
                 .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
         }
 
-        else if (this.counter === 7) {
+        else if (this.counter === 5) {
             let story_div = d3.select('#overlay');
+            // Heat Buzzer Beater
 
             story_div
                 .append("iframe")
@@ -161,6 +142,30 @@ class storyFile {
                 .attr("width", this.svgWidth/2.25)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
+        }
+
+        else if (this.counter === 6) {
+            let story_div = d3.select('#overlay');
+            // Bucks buzzer beater
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0"); 
+        }
+
+        else if (this.counter === 7) {
+            // Kings Buzzer Beater
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
         }
     }
 

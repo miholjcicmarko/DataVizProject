@@ -181,10 +181,10 @@ Styling for the container containing the story buttons and sliders
 
 #overlay {
     position: absolute;
-    width: 550px;
+    width: 600px;
     height: 800px;
     top: 0;
-    left: 5%;
+    left: 1.5%;
     right: 0;
     bottom: 0;
     z-index: -1;
