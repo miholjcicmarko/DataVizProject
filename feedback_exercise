@@ -1,0 +1,31 @@
+The group that we were paired with for the peer feedback sessions was Joining the Fantasy Football Elite: Jon Peacock, Trevor Dalton, and Miles May.
+
+Overall we were met with rather positive feedback - given the similar subject matter for our projects they had a lot of interest.
+
+Jon: 
+  - Suggested that rather than using a button to turn on the story mode we could highlight the locations that the shots were taken from so that if these were clicked it would 
+    pull up that shots video and context
+  - Suggested that we use a single color from year to year on barcharts rather than having an alternating colorscheme - colors wouldn't have meant anything
+  - Pointed out that comparison between players could be difficult spatially because if heatmaps are on opposite ends of the court spatial location is reflected across the origin
+      - Suggested overalaying the heatmaps or having the brushing selections work on both heatmaps at the same time
+  
+Miles: 
+  - Our visualization is innovative in the combination of information it provides
+      - able to both compare players as well as look at aggregate statistics
+      - a set of buzzer beaters are explained/shown in combination with overall shot selection
+  - Suggested that we use opacity to encode the total number of shots within a hex-tile
+  - Suggested that as a way to improve the storytelling we could include preset views of games that were interesting
+      - show shot chart for important games like championships, tight conference finals, etc. 
+      
+Together:
+  - Recommended focusing on the primary shot heatmap and video playback rather than on the player comparison feature due to having only 2 teammembers
+  - Pointed out that the color scheme of the Lakers, primarily gold and purple, could be difficults to blend and use together 
+  
+  Analysis of Feedback:
+      Overall we believe the feedback given to us was both fair and useful. Jon and Miles pointed out things that could help our visualization turn out better and their enthusiasm
+    was motivating. The two things that were suggested that seem most important are the difficulty in comparing between players due to the reflection in location across the court
+    and the need for a way to encode the number of shots taken within a hex-tile. To address these we plan on creating a second brush that when you are selecting on one side of 
+    the court is reflected across the origin and selects the other players data, and to use opacity as an encoding for number of shots taken, respectively. Also, as Jon suggested, 
+    we will use a single color, perhaps colorscaled similar to the heatmap, on secondary visualizations. Other aspects of their feedback, such as highlighting the location of 
+    shots that can be clicked to open the story for that shot, or having shot charts for specific games as part of the story, will be added as nice to haves as they add to the 
+    complexity of the project and we are unsure if we will have enough time to implement them.
