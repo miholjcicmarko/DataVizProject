@@ -603,7 +603,11 @@ class HeatMap {
         subVis1.selectAll("rect")
             .data(yearAvgFg)
             .join("rect")
-            
+            .attr("height",d => d*100)
+            .attr("width",19)
+            .attr("x",(d,i) => (i*20)+10)
+            .attr("y", d => 250-(d*100));
+
         
         console.log(yearsListR)
         console.log(yearAvgFg)
