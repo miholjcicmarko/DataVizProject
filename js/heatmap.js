@@ -164,12 +164,12 @@ class HeatMap {
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
                     if(i  == 3){d.flag = "This is the test Hex"};
-                let purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
+                that.purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
-                    return purples(d.fg_perc);
+                    return that.purples(d.fg_perc);
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return purples(d.fg_perc);
+                    return that.purples(d.fg_perc);
                 }
                 else{
                     return "none";
@@ -335,12 +335,12 @@ class HeatMap {
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                let grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
+                that.grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
-                    return grays(d.fg_perc);
+                    return that.grays(d.fg_perc);
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return grays(d.fg_perc);
+                    return that.grays(d.fg_perc);
                 }
                 else{
                     return "none";
@@ -695,7 +695,7 @@ class HeatMap {
                     }
                 })   
             })
-            yearAvgFgR.push(numMadeYear/numShotYear);
+            yearAvgFgR.push((numMadeYear/numShotYear)*100);
 
             numShotYear = 0;
             numMadeYear = 0;
@@ -707,23 +707,25 @@ class HeatMap {
                     }
                 })   
             })
-            yearAvgFgL.push(numMadeYear/numShotYear);
+            yearAvgFgL.push((numMadeYear/numShotYear)*100);
         }
 
         subVis1.selectAll("rect")
             .data(yearAvgFgR)
             .join("rect")
-            .attr("height",d => d*200)
+            .attr("height",d => d*2)
             .attr("width",19)
             .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-(d*200));
+            .attr("y", d => 250-(d*2))
+            .attr("fill",d => this.purples(d));
         subVis2.selectAll("rect")
             .data(yearAvgFgL)
             .join("rect")
-            .attr("height",d => d*200)
+            .attr("height",d => d*2)
             .attr("width",19)
             .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-(d*200));
+            .attr("y", d => 250-(d*2))
+            .attr("fill",d => this.grays(d));
         
         // console.log(yearsListR)
         // console.log(yearAvgFg)
