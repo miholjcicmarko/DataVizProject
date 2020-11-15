@@ -113,7 +113,7 @@ class HeatMap {
 
         if (that.playoffOn === true && that.playerCompON === true) {
             for (let i = 0; i < that.shotData.length; i++) {
-                if (that.shotData[i].season === "Playoff") {
+                if (that.shotData[i].season === "Playoffs") {
                     rightShotData.push(that.shotData[i]);
                 }
             }
@@ -279,7 +279,7 @@ class HeatMap {
 
         if (that.playoffOn === true && that.playerCompON === true) {
             for (let i = 0; i < that.leftShotData.length; i++) {
-                if (that.leftShotData[i].season === "Playoff") {
+                if (that.leftShotData[i].season === "Playoffs") {
                     leftShots.push(that.leftShotData[i]);
                 }
             }
@@ -291,9 +291,9 @@ class HeatMap {
                 }
             }
         }
-        else if (that.playerComp = false) {
+        else if (that.playerCompON === false) {
             for (let i = 0; i < that.leftShotData.length; i++) {
-                if (that.leftShotData[i].season === "Playoff") {
+                if (that.leftShotData[i].season === "Playoffs") {
                     leftShots.push(that.leftShotData[i]);
                 }
             }
@@ -423,6 +423,7 @@ class HeatMap {
         }
 
         this.shotData = newData;
+        this.leftShotData = newData;
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
