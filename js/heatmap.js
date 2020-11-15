@@ -8,10 +8,11 @@ class ShotData{
      * @param SHOT_ZONE_RANGE distance of shot
      * @param GAME_DATE date of game
      * @param SEASON regular/playoff
+     * @param NAME name of player
      */
 
      constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
-        SHOT_ZONE_RANGE, GAME_DATE, SEASON){
+        SHOT_ZONE_RANGE, GAME_DATE, SEASON, NAME){
          this.locX = +LOC_X;
          this.locY = +LOC_Y;
          this.result = EVENT_TYPE;
@@ -21,6 +22,7 @@ class ShotData{
          let stringyear = GAME_DATE.slice(0,4);
          this.year = +stringyear;
          this.season = SEASON;
+         this.name = NAME;
 
         //  let stringyear = GAME_DATE.slice(0,4);
         //  let yearnumber = +stringyear;
@@ -50,6 +52,8 @@ class HeatMap {
         this.storyON = false;
         this.playoffOn = false;
 
+        this.slider2 = false;
+
         this.data = data;
         
         this.shotData = [];
@@ -62,7 +66,7 @@ class HeatMap {
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
                 this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
                 this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE, 
-                this.data[i].Season);
+                this.data[i].Season, this.data[i].PLAYER_NAME);
             this.shotData.push(node);
 
             xlist.push(+this.data[i].LOC_X);
@@ -384,13 +388,15 @@ class HeatMap {
             let percent = percentage.toFixed(1);
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
+        let name = data.currentTarget.__data__.name;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
 
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
-            "Made: "+made+" Attempted: "+attempts+"</h5>";
+            "Made: "+made+" Attempted: "+attempts+
+            " "+ name+"</h5>";
     }
 
     drawYearBar () {
@@ -529,7 +535,7 @@ class HeatMap {
         
         for (let i = 0; i < this.leftShotData.length; i++) {
             if (this.leftShotData[i].year === +year) {
-                newData.push(this.shotData[i]);
+                newData.push(this.leftShotData[i]);
             }
         }
 
