@@ -317,7 +317,7 @@ class HeatMap {
             }
         }
         
-        this.binsL = hexbinL(leftShots);
+        this.binsL = hexbinL(this.leftShots);
         let svg = d3.select(".fullCourt");
 
         let hexbins = svg.append("g")
@@ -368,6 +368,10 @@ class HeatMap {
                     return 1;
                 }
             });
+
+            if (this.playerCompON === true) {
+                that.drawYearBarPlayer();
+            }
 
             that.tooltip(hexbins);
     }
@@ -450,8 +454,8 @@ class HeatMap {
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider', true)
             .attr('type', 'range')
-            .attr('min', 1996)
-            .attr('max', 2016)
+            .attr('min', min)
+            .attr('max', 2020)
             .attr('value', this.activeYear);
 
         let sliderLabel = d3.select('#slider-wrap-Comp')
@@ -523,6 +527,12 @@ class HeatMap {
         }
 
         this.leftShotData = newData;
+
+        d3.select("#back").attr("width", "50px")
+            .attr("height", "50px");
+
+        d3.select("#next").attr("width", "50px")
+            .attr("height", "50px");
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();

@@ -93,7 +93,7 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
     }
     
     let heatMap = new HeatMap(Kobedata, updateYearKobe, 
-        storyTell, playerComp);
+        storyTell, playerComp, updateYearPlayer);
     //let heatMap = new HeatMap(data,updateYearKobe);
     heatMap.drawHeatMapRight(4,12);
     heatMap.drawHeatMapLeft(4,12);

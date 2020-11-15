@@ -182,11 +182,11 @@ Styling for the container containing the story buttons and sliders
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 15fr 15fr; 
+    grid-template-columns: 1fr 1fr 15fr 1fr 1fr 5fr; 
     grid-template-rows: 1fr;
     column-gap: 0%;
     
-    grid-template-areas: "button button . slider";
+    grid-template-areas: "button button . . . slider";
 }
 
 #overlay {
