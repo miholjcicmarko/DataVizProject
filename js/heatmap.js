@@ -452,7 +452,7 @@ class HeatMap {
         
         let yearSlider = d3.select('#playerCompSlider')
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
-            .append('input').classed('slider', true)
+            .append('input').classed('slider2', true)
             .attr('type', 'range')
             .attr('min', min)
             .attr('max', 2020)
@@ -555,6 +555,25 @@ class HeatMap {
             this.leftShotData.push(node);
 
         }
+
+        let buttonBack = document.createElement("button");
+            buttonBack.innerHTML = "Back";
+            buttonBack.id = "back-button";
+        
+            let body = document.getElementById("back");
+            body.appendChild(buttonBack);
+
+        d3.select("#back-button").style("opacity", "0");
+
+        let buttonNext = document.createElement("button");
+            buttonNext.innerHTML = "Next";
+            buttonNext.id = "next-button";
+
+            body = document.getElementById("front");
+            body.appendChild(buttonNext);
+
+        d3.select("#next-button").style("opacity", "0");
+
         d3.select("#leftCourt").remove();
         this.drawHeatMapLeft(4,15);
         this.drawBrush();
