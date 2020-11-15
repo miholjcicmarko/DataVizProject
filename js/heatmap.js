@@ -415,6 +415,15 @@ class HeatMap {
             that.updateYearKobe(this.value);
 
         })
+        //test this
+        yearSlider.on('click', function() {
+            sliderText
+                .text(this.value)
+                .attr('x', yearScale(this.value))
+                .attr('y', 25); 
+
+            that.updateYearKobe(this.value);
+        })
         }
     }
 
