@@ -1,16 +1,17 @@
 class ShotData{
     /**
-     * @param locX x-location on court
-     * @param locY y-location on court
-     * @param result whether shot was made or missed
-     * @param zone basic area on court shot was taken from
-     * @param shotFlag binary representation of result
-     * @param zone_range distance of shot
-     * @param year Year that the shot event occured
+     * @param LOC_X x-location on court
+     * @param LOC_Y y-location on court
+     * @param EVENT_TYPE whether shot was made or missed
+     * @param SHOT_ZONE_BASIC basic area on court shot was taken from
+     * @param SHOT_MADE_FLAG binary representation of result
+     * @param SHOT_ZONE_RANGE distance of shot
+     * @param GAME_DATE date of game
+     * @param SEASON regular/playoff
      */
 
      constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
-        SHOT_ZONE_RANGE, GAME_DATE){
+        SHOT_ZONE_RANGE, GAME_DATE, SEASON){
          this.locX = +LOC_X;
          this.locY = +LOC_Y;
          this.result = EVENT_TYPE;
@@ -19,6 +20,7 @@ class ShotData{
          this.zone_range = SHOT_ZONE_RANGE;
          let stringyear = GAME_DATE.slice(0,4);
          this.year = +stringyear;
+         this.season = SEASON;
 
         //  let stringyear = GAME_DATE.slice(0,4);
         //  let yearnumber = +stringyear;
@@ -45,6 +47,7 @@ class HeatMap {
         this.playerComp = playerComp;
         this.playerCompON = false;
         this.storyON = false;
+        this.playoffOn = false;
 
         this.data = data;
         
@@ -57,7 +60,8 @@ class HeatMap {
             let node = new ShotData(this.data[i].LOC_X,
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
                 this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
-                this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE);
+                this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE, 
+                this.data[i].Season);
             this.shotData.push(node);
 
             xlist.push(+this.data[i].LOC_X);
@@ -105,13 +109,30 @@ class HeatMap {
 
         let that = this;
 
+        let rightShotData = [];
+
+        if (that.playoffOn === true && that.playerCompON === true) {
+            for (let i = 0; i < that.shotData.length; i++) {
+                if (that.shotData[i].season === "Playoff") {
+                    rightShotData.push(that.shotData[i]);
+                }
+            }
+        }
+        else if (that.playoffOn === false) {
+            for (let i = 0; i < that.shotData.length; i++) {
+                if (that.shotData[i].season === "Regular") {
+                    rightShotData.push(that.shotData[i]);
+                }
+            }
+        }
+
         let hexbin = d3.hexbin()
             .x(d => this.xScale(d.locX))
             .y(d => this.yScale(d.locY))
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        let bins = hexbin(this.shotData);
+        let bins = hexbin(rightShotData);
         console.log(bins)
         d3.select("#heatmap-div").append("svg")
             .attr("height",this.vizHeight)
@@ -189,6 +210,8 @@ class HeatMap {
 
         let toggleStory = d3.select("#story-button");
 
+        let playoffButton = d3.select(".toggle-button");
+
         let resetButton = d3.select("#reset-button");
 
         toggleStory.on("click", function() {
@@ -197,6 +220,19 @@ class HeatMap {
                 that.storyTell(pressed);
             }
         });
+
+        playoffButton.on("click", function() {
+            if (that.playoffOn === false) {
+                that.playoffOn = true;
+                that.drawHeatMapRight(4,15);
+                that.drawHeatMapLeft(4,15);
+            }
+            else if (that.playoffOn === true) {
+                that.playoffOn = false;
+                that.drawHeatMapRight(4,15);
+                that.drawHeatMapLeft(4,15);
+            }
+        })
 
         resetButton.on("click", function() {
             that.resetViz();
@@ -239,7 +275,31 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        let binsL = hexbinL(this.leftShotData);
+        let leftShots = [];
+
+        if (that.playoffOn === true && that.playerCompON === true) {
+            for (let i = 0; i < that.leftShotData.length; i++) {
+                if (that.leftShotData[i].season === "Playoff") {
+                    leftShots.push(that.leftShotData[i]);
+                }
+            }
+        }
+        else if (that.playoffOn === false && that.playerCompON === true) {
+            for (let i = 0; i < that.leftShotData.length; i++) {
+                if (that.leftShotData[i].season === "Regular") {
+                    leftShots.push(that.leftShotData[i]);
+                }
+            }
+        }
+        else if (that.playerComp = false) {
+            for (let i = 0; i < that.leftShotData.length; i++) {
+                if (that.leftShotData[i].season === "Playoff") {
+                    leftShots.push(that.leftShotData[i]);
+                }
+            }
+        }
+
+        let binsL = hexbinL(leftShots);
         console.log(binsL)
         let svg = d3.select("#heatmap-svg");
 
