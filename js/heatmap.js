@@ -280,9 +280,7 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-
         
-
         let leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
@@ -306,7 +304,7 @@ class HeatMap {
                 }
             }
         }
-
+        
         this.binsL = hexbinL(leftShots);
         let svg = d3.select(".fullCourt");
 
