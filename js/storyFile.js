@@ -51,6 +51,7 @@ class storyFile {
                           .style("top", 250 + "px")
                           .style("z-index", 1);
 
+            // Hornets buzzer beater
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
@@ -69,7 +70,8 @@ class storyFile {
         d3.select("#storyID").remove();
 
         if (this.counter === 0) {
-            
+        
+        // Hornets buzzer beater
         let story_div = d3.select('#overlay');
             
             story_div
@@ -81,13 +83,84 @@ class storyFile {
         }
         else if (this.counter === 1) {
 
+        // Grizzlies buzzer beater
         let story_div = d3.select('#overlay');
+
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
                 .attr("width", this.svgWidth/2.25)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
+        }
+
+        else if (this.counter === 2) {
+            // Nuggets buzzer beater
+
+            let story_div = d3.select('#overlay');
+    
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
+        }
+
+        else if (this.counter === 3) {
+            let story_div = d3.select('#overlay');
+            // Blazers buzzer beater
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/GSrUPHVi44c");
+        }
+
+        else if (this.counter === 4) {
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0");
+        }
+
+        else if (this.counter === 5) {
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88");
+        }
+
+        else if (this.counter === 6) {
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
+        }
+
+        else if (this.counter === 7) {
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
         }
     }
 
