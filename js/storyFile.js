@@ -55,7 +55,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.25)
+                .attr("width", that.svgWidth/2.1)
                 .attr("height", that.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
             }
@@ -77,7 +77,7 @@ class storyFile {
             story_div
             .append("iframe")
             .attr("id", "storyID")
-            .attr("width", this.svgWidth/2.25)
+            .attr("width", this.svgWidth/2.1)
             .attr("height", this.vizHeight/2)
             .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I")
             .attr("allowfullscreen", true);
@@ -90,7 +90,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
         }
@@ -103,7 +103,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
         }
@@ -115,7 +115,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
         }
@@ -127,7 +127,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
         }
@@ -139,7 +139,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
         }
@@ -151,7 +151,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0"); 
         }
@@ -163,7 +163,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.25)
+                .attr("width", this.svgWidth/2.1)
                 .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
         }
