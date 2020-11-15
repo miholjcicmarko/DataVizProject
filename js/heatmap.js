@@ -70,15 +70,12 @@ class HeatMap {
             distList.push(this.data[i].SHOT_ZONE_RANGE);
 
         }
-        console.log(this.data)
         this.typeList = [...new Set(typeList)];
         this.distList = [...new Set(distList)];
         let xMax = d3.max(xlist);
         let xMin = d3.min(xlist);
         let yMax = d3.max(ylist);
         let yMin = d3.min(ylist);
-        console.log(this.typeList)
-        console.log(this.distList)
 
         this.vizHeight = 900;
         this.svgWidth = 1200;
@@ -132,46 +129,47 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        let bins = hexbin(rightShotData);
-        console.log(bins)
-        d3.select("#heatmap-div").append("svg")
+
+        this.binsR = hexbin(rightShotData);
+        d3.select("#heatmap-div").append("div")
+            .attr("id","heatmap-svg-div");
+        d3.select("#heatmap-svg-div").append("svg")
+
             .attr("height",this.vizHeight)
             .attr("width",this.vizWidth)
             .attr("id","heatmap-svg");
 
-        let svg = d3.select("#heatmap-svg");
+        let svg = d3.select("#heatmap-svg").append("g").attr("class","fullCourt");
         svg.append("image")
             .attr("href","data/LakersCourt.jpg")
             .attr("width",this.vizWidth-2*this.margin)
             .attr("height",this.vizHeight-2*this.margin)
             .attr("transform","translate(25,25)");
-
+            
         let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke-width",hexRad/4)
             .attr("id", "rightCourt")
            .selectAll("path")
-           .data(bins)
+           .data(this.binsR)
            .join("path")
             .attr("transform", function(d) {
-                return "rotate(90,"+that.vizWidth/2+","+that.vizHeight/2+") translate("+(d.x+277)+","+(d.y-112)+")";
+                return "rotate(90,"+that.vizWidth/2+","+that.vizHeight/2+") translate(277,-112)";
             })
-            .attr("d",hexbin.hexagon())
-            .attr("fill",function(d){
+            .attr("d",function(d) { return "M"+d.x+","+d.y+hexbin.hexagon();})
+            .attr("fill",function(d,i){
                 let sumFlag = 0;
                     d.forEach(element => sumFlag = sumFlag+element.shotFlag);
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                let purples = d3.scaleSequential(d3.interpolatePurples).domain([-20,75]);
-                let purples2 = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
+                    if(i  == 3){d.flag = "This is the test Hex"};
+                let purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
-                    // return purples(d.fg_perc);
-                    return purples2(d.fg_perc);
-                    // return that.scaleColor(d[0].zone)
+                    return purples(d.fg_perc);
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return purples2(d.fg_perc);
+                    return purples(d.fg_perc);
                 }
                 else{
                     return "none";
@@ -195,7 +193,7 @@ class HeatMap {
                     return 0;
                 }
                 else{
-                    return d.num_shots/3;
+                    return 1;
                 }
             });
 
@@ -206,13 +204,15 @@ class HeatMap {
                 that.playerComp(player);
             });
 
-        that.tooltip(hexbins);
+        this.tooltip(hexbins);
 
         let toggleStory = d3.select("#story-button");
 
         let playoffButton = d3.select(".toggle-button");
 
         let resetButton = d3.select("#reset-button");
+
+        let regionSelect = d3.select("#brush-button");
 
         toggleStory.on("click", function() {
             if (that.storyON === false) {
@@ -237,6 +237,11 @@ class HeatMap {
         resetButton.on("click", function() {
             that.resetViz();
         });
+
+        regionSelect.on("change", function(){
+            that.drawBrush();
+        })
+        
     }
 
     // creates the tooltip
@@ -275,6 +280,9 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
+
+        
+
         let leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
@@ -299,33 +307,33 @@ class HeatMap {
             }
         }
 
-        let binsL = hexbinL(leftShots);
-        console.log(binsL)
-        let svg = d3.select("#heatmap-svg");
+        this.binsL = hexbinL(leftShots);
+        let svg = d3.select(".fullCourt");
 
-        let hexabins = svg.append("g")
+
+        let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("id", "leftCourt")
             .attr("stroke-width",hexRad/4)
            .selectAll("path")
-           .data(binsL)
+           .data(this.binsL)
            .join("path")
             .attr("transform", function(d) {
-                return "rotate(-90,"+that.vizWidth/2+","+that.vizHeight/2+") translate("+(d.x+277)+","+(d.y-112)+")";
+                return "rotate(-90,"+that.vizWidth/2+","+that.vizHeight/2+") translate(277,-112)"
             })
-            .attr("d",hexbinL.hexagon())
+            .attr("d",function(d) { return "M"+d.x+","+d.y+hexbinL.hexagon();})
             .attr("fill",function(d){
                 let sumFlag = 0;
                     d.forEach(element => sumFlag = sumFlag+element.shotFlag);
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                let purples2 = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
+                let grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
                 if(d.fg_perc > 0 & d.length > 2){
-                    return purples2(d.fg_perc);
+                    return grays(d.fg_perc);
                 }
                 else if (d.fg_perc > 0 & d.length <= 2){
-                    return purples2(d.fg_perc);
+                    return grays(d.fg_perc);
                 }
                 else{
                     return "none";
@@ -352,7 +360,7 @@ class HeatMap {
                 }
             });
 
-            that.tooltip(hexabins);
+            that.tooltip(hexbins);
     }
 
     // creates the words in the tooltip
@@ -457,6 +465,7 @@ class HeatMap {
         }
         d3.select("#leftCourt").remove();
         this.drawHeatMapLeft(4,15);
+        this.drawBrush();
 
     }
 
@@ -482,5 +491,204 @@ class HeatMap {
         // this.drawHeatMapRight(4,15);
         // this.drawHeatMapLeft(4,15);
     }
+
+    // rotation function to use in draw brush to convert between pixel location and d.x d.y 
+    // this rotates in the opposite direction of d3's rotation transform
+    rotate(cx, cy, x, y, angle) {
+        var radians = (Math.PI / 180) * angle,
+            cos = Math.cos(radians),
+            sin = Math.sin(radians),
+            nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
+            ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
+        return [nx, ny];
+    }
     
+    // draws two brushes - one offset to match the data flipped onto the other half of the court
+    drawBrush(){
+        let that = this;
+        
+        let brush1 = d3.select(".fullCourt").classed("brush",true);
+        let brushBinsR = [...this.binsR];
+        let brushBinsL = [...this.binsL];
+    
+        let courtBrush = d3.brush().extent([[that.margin,that.margin],[that.vizWidth-that.margin,that.vizHeight-that.margin]])
+            .on("start",function(){
+                d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",false);
+            })
+            .on("brush",function(){
+                let brSelect = d3.brushSelection(this);
+
+                let selectedIndicesR = [];
+                let selectedIndicesL = [];
+                let [x1,y1] = [0,0];
+                let [x2,y2] = [0,0];
+                
+                if(brSelect){
+                    [x1,y1] = brSelect[0];
+                    [x2,y2] = brSelect[1];
+
+                    if(x1 > 0){
+                        d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",true)
+                    }
+                    
+                    let xavg = (x1+x2)/2;
+                    let yavg = (y1+y2)/2;
+                    let brShiftX = (2*((that.vizWidth/2)-xavg));
+                    let brShiftY = (2*((that.vizHeight/2)-yavg));
+                    d3.select(".fullCourt2").attr("transform","translate("+brShiftX+","+brShiftY+")");
+
+                    let [x1R,y1R] = [0,0];
+                    let [x2R,y2R] = [0,0];
+
+                    if(x1 > that.vizWidth/2){
+                        [x1R,y1R] = that.rotate(600,450,x1,y1,90);
+                        [x2R,y2R] = that.rotate(600,450,x2,y2,90);
+                    }
+
+                    let x1Rt = x1R-277;
+                    let x2Rt = x2R-277;
+                    let y1Rt = y1R+112;
+                    let y2Rt = y2R+112;
+                    
+                    brushBinsR.forEach((d,i) => {
+                        if((d.x >= x1Rt && d.x <= x2Rt) &&
+                            (d.y <= y1Rt && d.y >= y2Rt)
+                        ){selectedIndicesR.push(i)}
+                    })
+                    brushBinsL.forEach((d,i) => {
+                        if((d.x >= x1Rt && d.x <= x2Rt) &&
+                            (d.y <= y1Rt && d.y >= y2Rt)
+                        ){selectedIndicesL.push(i)}
+                    })
+                }
+                if(selectedIndicesR.length > 0){
+                    let selectedHexR = d3.select("#rightCourt").selectAll("path");
+                    let selectedHexL = d3.select("#leftCourt").selectAll("path");
+                    selectedHexR.filter((_,i) => {
+                        return selectedIndicesR.includes(i);
+                    })
+                    .classed("selectedHex",true).classed("not-selected",false);
+                    selectedHexL.filter((_,i) => {
+                        return selectedIndicesL.includes(i);
+                    })
+                    .classed("selectedHex",true).classed("not-selected",false);
+                }
+                that.drawSubVis(selectedIndicesR,selectedIndicesL,x2,y1);
+            })
+            .on("end",function(){
+
+            });
+        
+        let courtBrush2 = d3.brush().extent([[that.margin,that.margin],[that.vizWidth-that.margin,that.vizHeight-that.margin]]);
+        d3.select(".fullCourt").append("g").attr("class","fullCourt2");
+        let brush2 = d3.select(".fullCourt2").classed("brush",true);
+        
+        brush1.call(courtBrush).call(courtBrush.move,[0,0])
+        brush2.call(courtBrush2).call(courtBrush2.move,[0,0]);
+        
+        // this.testTransform();
+    }
+
+    // to figure out what tranformation exactly was necessary to make the brushing able to select correctly
+    testTransform(){
+        let x = 322;
+        let y = 78;
+       
+        let xt = x+277;
+        let yt = y-112;
+        let [xr,yr] = this.rotate(600,450,xt,yt,-90);
+    
+        console.log("x-test",x,xt,xr)
+        console.log("y-test",y,yt,yr)
+
+        let xrev = 1084;
+        let yrev = 450;
+        let [xrevr,yrevr] = this.rotate(600,450,xrev,yrev,90);
+        let xrevt = xrevr-277;
+        let yrevt = yrevr+112;
+        console.log("rev",xrevt,yrevt)
+    }
+
+    drawSubVis(indR,indL,x,y){
+        let that = this;
+        d3.select(".subVis").remove();
+        if(x > 0){
+            d3.select("#heatmap-div")
+                .append("div")
+                .attr("class","subVis")
+                .attr("id","subVis-div")
+                .style("left",(x+100)+"px")
+                .style("top",function(){
+                    // if(y<that.vizHeight/2){
+                    //     return (y+50)+"px"
+                    // }
+                    // else{
+                        return (y-(y/2)+100)+"px"
+                    // }
+                })
+                // .style("opacity",0)
+                // .transition()
+                // .duration(250)
+                .style("opacity",1);
+            d3.select("#subVis-div")
+                .append("svg")
+                .attr("height",250)
+                .attr("width",350)
+                .attr("x",that.margin)
+                .attr("y",that.margin)
+                .attr("id","subSVG-1");
+            d3.select("#subVis-div")
+                .append("svg")
+                .attr("height",250)
+                .attr("width",350)
+                .attr("x",that.margin)
+                .attr("y",300+that.margin)
+                .attr("id","subSVG-2")
+        }
+
+        let selectBinsR = this.binsR.filter((_,i) => {
+            return indR.includes(i);
+        })
+
+        let subVis1 = d3.select("#subSVG-1");
+        let totalShotsR = 0;
+        let totalMadeR = 0;
+        let yearsListR = [];
+        selectBinsR.forEach(function(d){
+            totalShotsR = totalShotsR+d.num_shots;
+            totalMadeR = totalMadeR+d.made_shots;
+            yearsListR.push(d[0].year);
+        })
+        yearsListR = [...new Set(yearsListR)];
+        let yearAvgFg = [];
+        for(let i = 0; i < yearsListR.length; i++){
+            let numShotYear = 0;
+            let numMadeYear = 0;
+            selectBinsR.forEach(function(d){
+                d.forEach(function(d){
+                    if(d.year == yearsListR[i]){
+                        numShotYear = numShotYear+1;
+                        numMadeYear = numMadeYear+d.shotFlag;
+                    }
+                })   
+            })
+            yearAvgFg.push(numMadeYear/numShotYear);
+        }
+
+        subVis1.selectAll("rect")
+            .data(yearAvgFg)
+            .join("rect")
+            .attr("height",d => d*100)
+            .attr("width",19)
+            .attr("x",(d,i) => (i*20)+10)
+            .attr("y", d => 250-(d*100));
+
+        
+        console.log(yearsListR)
+        console.log(yearAvgFg)
+
+        let avgFgPercR = (totalMadeR/totalShotsR)*100;
+        // console.log(avgFgPercR,totalMadeR,totalShotsR)
+    }
+
 }
