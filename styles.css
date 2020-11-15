@@ -104,13 +104,14 @@ tool tip stylings
 div.tooltip {
     position: fixed;
     text-align: center;
-    width: 5%;
-    height: 5%;
+    min-width: 5%;
+    min-height: 5%;
     padding: 2px;
     background: white;
     stroke: gray;
     border-radius: 6px;
     pointer-events: none;
+    margin: auto;
 }
 
 .tooltip h5 {
@@ -169,12 +170,26 @@ div.tooltip {
     margin-left: 50px;
 }
 
+/* 
+Styling for the container containing the story buttons and sliders
+*/
+.containerC {
+    display: grid;
+    position: relative;
+    left: 0%;
+    grid-template-columns: 1fr 1fr 15fr 15fr; 
+    grid-template-rows: 1fr;
+    column-gap: 0%;
+    
+    grid-template-areas: "button button . slider";
+}
+
 #overlay {
     position: absolute;
-    width: 550px;
-    height: 900px;
+    width: 600px;
+    height: 800px;
     top: 0;
-    left: 5%;
+    left: 1.5%;
     right: 0;
     bottom: 0;
     z-index: -1;

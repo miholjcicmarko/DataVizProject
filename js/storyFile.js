@@ -14,38 +14,162 @@ class storyFile {
         let that = this;
 
         if (this.storyOn === true) {
+
+            if (that.counter === 0) {
+            
             let buttonBack = document.createElement("button");
             buttonBack.innerHTML = "Back";
             buttonBack.id = "back-button";
         
-        let body = document.getElementsByTagName("body")[0];
+            let body = document.getElementById("back");
             body.appendChild(buttonBack);
 
-        buttonBack.addEventListener ("click", function() {
-            alert("Backwards");
-        });
+            buttonBack.addEventListener ("click", function() {
+                if (that.counter !== 0) {
+                    that.counter = that.counter - 1;
+                    that.alterStory();
+                }
+            });
 
-        let buttonNext = document.createElement("button");
+            let buttonNext = document.createElement("button");
             buttonNext.innerHTML = "Next";
             buttonNext.id = "next-button";
 
-        body.appendChild(buttonNext);
+            body = document.getElementById("front");
+            body.appendChild(buttonNext);
 
-        buttonNext.addEventListener ("click", function() {
-            alert("Forwards");
-        });
+            buttonNext.addEventListener ("click", function() {
+                if (that.counter < 7) {
+                    that.counter = that.counter + 1;
+                    that.alterStory();
+                }
+            });
 
-        let story_div = d3.select('#overlay')
+            let story_div = d3.select('#overlay')
+                          .attr("width", that.svgWidth/2)
+                          .attr("height", that.vizHeight/2)
                           .style("top", 250 + "px")
                           .style("z-index", 1);
 
+            // Hornets buzzer beater
             story_div
                 .append("iframe")
-                .attr("width", that.svgWidth/2.25)
+                .attr("id", "storyID")
+                .attr("width", that.svgWidth/2.1)
                 .attr("height", that.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
-        
+            }
+
+            
         }
         
+    }
+
+    alterStory() {
+
+        d3.select("#storyID").remove();
+
+        if (this.counter === 0) {
+        
+        // Hornets buzzer beater
+        let story_div = d3.select('#overlay');
+            
+            story_div
+            .append("iframe")
+            .attr("id", "storyID")
+            .attr("width", this.svgWidth/2.1)
+            .attr("height", this.vizHeight/2)
+            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I")
+            .attr("allowfullscreen", true);
+        }
+        else if (this.counter === 1) {
+
+        // Grizzlies buzzer beater
+        let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
+        }
+
+        else if (this.counter === 2) {
+            // Nuggets buzzer beater
+
+            let story_div = d3.select('#overlay');
+    
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
+        }
+
+        else if (this.counter === 3) {
+            let story_div = d3.select('#overlay');
+            // Blazers buzzer beater
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
+        }
+
+        else if (this.counter === 4) {
+            let story_div = d3.select('#overlay');
+            // Suns buzzer beater
+            
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
+        }
+
+        else if (this.counter === 5) {
+            let story_div = d3.select('#overlay');
+            // Heat Buzzer Beater
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
+        }
+
+        else if (this.counter === 6) {
+            let story_div = d3.select('#overlay');
+            // Bucks buzzer beater
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0"); 
+        }
+
+        else if (this.counter === 7) {
+            // Kings Buzzer Beater
+            let story_div = d3.select('#overlay');
+
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", this.svgWidth/2.1)
+                .attr("height", this.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
+        }
+    }
+
+    removeStory () {
+        d3.select("#storyID").remove();
     }
 }
