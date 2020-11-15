@@ -185,7 +185,7 @@ class HeatMap {
                     return 1;
                 }
                 else{
-                    return 0.75
+                    return 0.7;
                 }
             })
             .attr("stroke-opacity",function(d){
@@ -193,7 +193,7 @@ class HeatMap {
                     return 0;
                 }
                 else{
-                    return 1;
+                    return d.length/4;
                 }
             });
 
@@ -254,6 +254,8 @@ class HeatMap {
 
             let pageX = d.clientX;
             let pageY = d.clientY + 5;
+            
+            d3.select(this).classed("hovered",true);
 
         tooltip.transition()
             .duration(200)
@@ -265,6 +267,8 @@ class HeatMap {
         });
 
         hexbins.on("mouseout", function(d,i) {
+            d3.select(this).classed("hovered",false);
+
             tooltip.transition()
                 .duration(500)
                 .style("opacity", 0);
@@ -348,7 +352,7 @@ class HeatMap {
                     return 1;
                 }
                 else{
-                    return 0.75
+                    return 0.7;
                 }
             })
             .attr("stroke-opacity",function(d){
@@ -618,17 +622,7 @@ class HeatMap {
                 .attr("class","subVis")
                 .attr("id","subVis-div")
                 .style("left",(x+100)+"px")
-                .style("top",function(){
-                    // if(y<that.vizHeight/2){
-                    //     return (y+50)+"px"
-                    // }
-                    // else{
-                        return (y-(y/2)+100)+"px"
-                    // }
-                })
-                // .style("opacity",0)
-                // .transition()
-                // .duration(250)
+                .style("top", (y-(y/2)+100)+"px")
                 .style("opacity",1);
             d3.select("#subVis-div")
                 .append("svg")
@@ -649,8 +643,13 @@ class HeatMap {
         let selectBinsR = this.binsR.filter((_,i) => {
             return indR.includes(i);
         })
+        let selectBinsL = this.binsL.filter((_,i) => {
+            return indL.includes(i);
+        })
 
         let subVis1 = d3.select("#subSVG-1");
+        let subVis2 = d3.select("#subSVG-2");
+
         let totalShotsR = 0;
         let totalMadeR = 0;
         let yearsListR = [];
@@ -660,7 +659,19 @@ class HeatMap {
             yearsListR.push(d[0].year);
         })
         yearsListR = [...new Set(yearsListR)];
-        let yearAvgFg = [];
+
+        let totalShotsL = 0;
+        let totalMadeL = 0;
+        let yearsListL = [];
+        selectBinsL.forEach(function(d){
+            totalShotsL = totalShotsL+d.num_shots;
+            totalMadeL = totalMadeL+d.made_shots;
+            yearsListL.push(d[0].year);
+        })
+        yearsListL = [...new Set(yearsListL)];
+        
+        let yearAvgFgR = [];
+        let yearAvgFgL = [];
         for(let i = 0; i < yearsListR.length; i++){
             let numShotYear = 0;
             let numMadeYear = 0;
@@ -672,20 +683,38 @@ class HeatMap {
                     }
                 })   
             })
-            yearAvgFg.push(numMadeYear/numShotYear);
+            yearAvgFgR.push(numMadeYear/numShotYear);
+
+            numShotYear = 0;
+            numMadeYear = 0;
+            selectBinsL.forEach(function(d){
+                d.forEach(function(d){
+                    if(d.year == yearsListL[i]){
+                        numShotYear = numShotYear+1;
+                        numMadeYear = numMadeYear+d.shotFlag;
+                    }
+                })   
+            })
+            yearAvgFgL.push(numMadeYear/numShotYear);
         }
 
         subVis1.selectAll("rect")
-            .data(yearAvgFg)
+            .data(yearAvgFgR)
             .join("rect")
-            .attr("height",d => d*100)
+            .attr("height",d => d*200)
             .attr("width",19)
             .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-(d*100));
-
+            .attr("y", d => 250-(d*200));
+        subVis2.selectAll("rect")
+            .data(yearAvgFgL)
+            .join("rect")
+            .attr("height",d => d*200)
+            .attr("width",19)
+            .attr("x",(d,i) => (i*20)+10)
+            .attr("y", d => 250-(d*200));
         
-        console.log(yearsListR)
-        console.log(yearAvgFg)
+        // console.log(yearsListR)
+        // console.log(yearAvgFg)
 
         let avgFgPercR = (totalMadeR/totalShotsR)*100;
         // console.log(avgFgPercR,totalMadeR,totalShotsR)
