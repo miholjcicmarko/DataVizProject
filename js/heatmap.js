@@ -369,7 +369,8 @@ class HeatMap {
                 }
             });
 
-            if (this.playerCompON === true) {
+            if (this.playerCompON === true && this.slider2 === false) {
+                this.slider2 = true;
                 that.drawYearBarPlayer();
             }
 
@@ -443,8 +444,14 @@ class HeatMap {
     drawYearBarPlayer () {
         let that = this;
 
-        let min = d3.min(this.leftShots);
-        let max = d3.max(this.leftShots);
+        let yearArray = []
+
+        for (let i = 0; i < this.leftShotData.length; i++) {
+            yearArray.push(this.leftShotData[i].year);
+        }
+
+        let min = d3.min(yearArray);
+        let max = d3.max(yearArray);
 
         let yearScale = d3.scaleLinear()
                             .domain([min, max])
@@ -456,7 +463,7 @@ class HeatMap {
             .attr('type', 'range')
             .attr('min', min)
             .attr('max', 2020)
-            .attr('value', this.activeYear);
+            .attr('value', this.activeYearPlayer);
 
         let sliderLabel = d3.select('#slider-wrap-Comp')
             .append('div').classed('slider-label', true)
@@ -464,9 +471,9 @@ class HeatMap {
 
         if (this.activeYear !== null) {
         let sliderText = sliderLabel.append('text')
-            .text(this.activeYear);
+            .text(this.activeYearPlayer);
 
-            sliderText.attr('x', yearScale(this.activeYear));
+            sliderText.attr('x', yearScale(this.activeYearPlayer));
             sliderText.attr('y', 25);
         
             yearSlider.on('input', function () {
@@ -598,6 +605,10 @@ class HeatMap {
         d3.select("#tooltip").remove();
 
         this.activeYear = null;
+
+        this.activeYearPlayer = null;
+
+        this.slider2 = false;
 
         d3.select(".slider-wrap").remove();
 
