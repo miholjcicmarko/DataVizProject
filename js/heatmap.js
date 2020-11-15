@@ -224,11 +224,17 @@ class HeatMap {
         playoffButton.on("click", function() {
             if (that.playoffOn === false) {
                 that.playoffOn = true;
+                d3.select("#tooltip").remove();
+                d3.select("#heatmap-svg-div").remove();
+
                 that.drawHeatMapRight(4,15);
                 that.drawHeatMapLeft(4,15);
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
+                d3.select("#tooltip").remove();
+                d3.select("#heatmap-svg-div").remove();
+
                 that.drawHeatMapRight(4,15);
                 that.drawHeatMapLeft(4,15);
             }
@@ -311,7 +317,6 @@ class HeatMap {
         
         this.binsL = hexbinL(leftShots);
         let svg = d3.select(".fullCourt");
-
 
         let hexbins = svg.append("g")
             .attr("class","hexbins")
@@ -470,7 +475,7 @@ class HeatMap {
             let node = new ShotData(newData[i].LOC_X,
                 newData[i].LOC_Y,newData[i].EVENT_TYPE,
                 newData[i].SHOT_ZONE_BASIC,newData[i].SHOT_MADE_FLAG,
-                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE);
+                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season);
             this.leftShotData.push(node);
 
         }
