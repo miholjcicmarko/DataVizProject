@@ -192,8 +192,10 @@ class HeatMap {
         let resetButton = d3.select("#reset-button");
 
         toggleStory.on("click", function() {
-            let pressed = true;
-            that.storyTell(pressed);
+            if (that.storyON === false) {
+                let pressed = true;
+                that.storyTell(pressed);
+            }
         });
 
         resetButton.on("click", function() {

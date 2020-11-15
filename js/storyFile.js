@@ -75,8 +75,8 @@ class storyFile {
             story_div
             .append("iframe")
             .attr("id", "storyID")
-            .attr("width", that.svgWidth/2.25)
-            .attr("height", that.vizHeight/2)
+            .attr("width", this.svgWidth/2.25)
+            .attr("height", this.vizHeight/2)
             .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
         }
         else if (this.counter === 1) {
@@ -85,8 +85,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.25)
-                .attr("height", that.vizHeight/2)
+                .attr("width", this.svgWidth/2.25)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
         }
     }
