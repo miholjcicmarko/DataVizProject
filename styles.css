@@ -119,6 +119,11 @@ div.tooltip {
     font: 10px sans-serif;
 }
 
+.hovered{
+    fill: rgb(253,185,39);
+    stroke: white;
+}
+
 .slider {
     -webkit-appearance: none;
     width: 725px;
@@ -165,7 +170,7 @@ div.tooltip {
 
 .slider-wrap {
     display: inline-block;
-    float: left;
+    /* float: left; */
     width: 750px;
     margin-left: 50px;
 }
@@ -221,21 +226,6 @@ select {
 }
 
 /* sub vis styling */
-/* #heatmap-div{
-    display: grid;
-    position: relative;
-    left: 0%;
-    grid-template-columns: 1fr 0.5fr;
-    grid-template-rows: 1fr;
-    column-gap: 2.5%;
-
-    grid-template-areas: "heatmap subVis";
-}
-
-#heatmap-svg-div {
-    grid-area: "heatmap";
-    position: relative;
-} */
 
 div.subVis {
     display: grid;
