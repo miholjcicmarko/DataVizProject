@@ -41,10 +41,11 @@ class ShotData{
 }
 
 class HeatMap {
-    constructor(data, updateYearKobe, storyTell, playerComp){
+    constructor(data, updateYearKobe, storyTell, playerComp, updateYearPlayer){
         this.updateYearKobe = updateYearKobe;
         this.storyTell = storyTell;
         this.playerComp = playerComp;
+        this.updateYearPlayer = updateYearPlayer;
         this.playerCompON = false;
         this.storyON = false;
         this.playoffOn = false;
@@ -290,6 +291,7 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
+        this.resetLeftData = this.leftShotData;
         
         this.leftShots = [];
 
@@ -445,16 +447,16 @@ class HeatMap {
                             .range([30, 730]);
         
         let yearSlider = d3.select('#playerCompSlider')
-            .append('div').classed('slider-wrap', true)
+            .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider', true)
             .attr('type', 'range')
             .attr('min', 1996)
             .attr('max', 2016)
             .attr('value', this.activeYear);
 
-        let sliderLabel = d3.select('.slider-wrap')
+        let sliderLabel = d3.select('#slider-wrap-Comp')
             .append('div').classed('slider-label', true)
-            .append('svg').attr("id", "slider-text-player");
+            .append('svg').attr("id", "slider-text-playerComp");
 
         if (this.activeYear !== null) {
         let sliderText = sliderLabel.append('text')
@@ -462,6 +464,26 @@ class HeatMap {
 
             sliderText.attr('x', yearScale(this.activeYear));
             sliderText.attr('y', 25);
+        
+            yearSlider.on('input', function () {
+
+                sliderText
+                    .text(this.value)
+                    .attr('x', yearScale(this.value))
+                    .attr('y', 25); 
+    
+                that.updateYearPlayer(this.value);
+    
+            })
+            
+            yearSlider.on('click', function() {
+                sliderText
+                    .text(this.value)
+                    .attr('x', yearScale(this.value))
+                    .attr('y', 25); 
+    
+                that.updateYearPlayer(this.value);
+            })
         }
         
     }
@@ -489,12 +511,24 @@ class HeatMap {
 
     }
 
-    storyMode () {
-        this.storyON = true;
+    updateChartPlayer (year) {
+        this.leftShotData = this.resetLeftData;
 
-        d3.select("#leftCourt").remove();
-        d3.select("#rightCourt").remove();
-        d3.select(".slider-wrap").remove();
+        let newData = [];
+        
+        for (let i = 0; i < this.leftShotData.length; i++) {
+            if (this.leftShotData[i].year === +year) {
+                newData.push(this.shotData[i]);
+            }
+        }
+
+        this.leftShotData = newData;
+
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
+
+        this.drawHeatMapRight(8,5);
+        this.drawHeatMapLeft(8,5);
 
     }
 
@@ -514,6 +548,15 @@ class HeatMap {
         d3.select("#leftCourt").remove();
         this.drawHeatMapLeft(4,15);
         this.drawBrush();
+
+    }
+
+    storyMode () {
+        this.storyON = true;
+
+        d3.select("#leftCourt").remove();
+        d3.select("#rightCourt").remove();
+        d3.select(".slider-wrap").remove();
 
     }
 
