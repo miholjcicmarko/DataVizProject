@@ -398,7 +398,6 @@ class HeatMap {
     }
 
     resetViz () {
-        this.storyON = false;
 
         d3.select("#next-button").remove();
         d3.select("#back-button").remove();
@@ -408,10 +407,13 @@ class HeatMap {
 
         this.activeYear = null;
 
-        d3.select("#slider-text").selectAll("text").text("");
+        d3.select(".slider-wrap").remove();
 
-        let pressed = false;
-        this.storyTell(pressed);
+        if (this.storyON = true) {
+            this.storyON = false;
+            let pressed = false;
+            this.storyTell(pressed);
+        }
 
         // this.shotData = this.resetData;
         // this.drawHeatMapRight(4,15);

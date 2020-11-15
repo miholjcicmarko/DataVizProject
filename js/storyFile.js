@@ -25,7 +25,10 @@ class storyFile {
             body.appendChild(buttonBack);
 
             buttonBack.addEventListener ("click", function() {
-                alert("Backwards");
+                if (that.counter !== 0) {
+                    that.counter = that.counter - 1;
+                    that.alterStory();
+                }
             });
 
             let buttonNext = document.createElement("button");
@@ -36,7 +39,10 @@ class storyFile {
             body.appendChild(buttonNext);
 
             buttonNext.addEventListener ("click", function() {
-                alert("Forwards");
+                if (that.counter < 8) {
+                    that.counter = that.counter + 1;
+                    that.alterStory();
+                }
             });
 
             let story_div = d3.select('#overlay')
@@ -52,13 +58,40 @@ class storyFile {
                 .attr("height", that.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
             }
+
+            
         }
         
     }
 
+    alterStory() {
+
+        d3.select("#storyID").remove();
+
+        if (this.counter === 0) {
+            
+        let story_div = d3.select('#overlay');
+            
+            story_div
+            .append("iframe")
+            .attr("id", "storyID")
+            .attr("width", that.svgWidth/2.25)
+            .attr("height", that.vizHeight/2)
+            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
+        }
+        else if (this.counter === 1) {
+
+        let story_div = d3.select('#overlay');
+            story_div
+                .append("iframe")
+                .attr("id", "storyID")
+                .attr("width", that.svgWidth/2.25)
+                .attr("height", that.vizHeight/2)
+                .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
+        }
+    }
+
     removeStory () {
-        d3.select("storyID").remove();
-        d3.select("back-button").remove();
-        d3.remove("next-button").remove();
+        d3.select("#storyID").remove();
     }
 }
