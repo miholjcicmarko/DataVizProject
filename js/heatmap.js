@@ -388,7 +388,7 @@ class HeatMap {
             let percent = percentage.toFixed(1);
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
-        let name = data.currentTarget.__data__.name;
+        let name = data.currentTarget.__data__[0].name;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
@@ -396,7 +396,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            " "+ name+"</h5>";
+            "<br/>"+ name+"</h5>";
     }
 
     drawYearBar () {
@@ -564,7 +564,8 @@ class HeatMap {
             let node = new ShotData(newData[i].LOC_X,
                 newData[i].LOC_Y,newData[i].EVENT_TYPE,
                 newData[i].SHOT_ZONE_BASIC,newData[i].SHOT_MADE_FLAG,
-                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season);
+                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season, 
+                newData[i].PLAYER_NAME);
             this.leftShotData.push(node);
 
         }
