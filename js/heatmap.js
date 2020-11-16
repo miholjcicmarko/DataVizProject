@@ -97,6 +97,11 @@ class HeatMap {
 
     }   
 
+    /**
+     * Draws the hexagonal heatmap for Kobe using the data input into the HeatMap class
+     * @param {the radius of the hexagonal bins} hexRad 
+     * @param {the number of shots at which stroke will fully saturate} strokeLim 
+     */
     drawHeatMapRight(hexRad,strokeLim){
         d3.select('#heatmap-div')
             .append('div')
@@ -123,13 +128,13 @@ class HeatMap {
             }
         }
 
+        // defines hexbin function used to determine paths of hexagonal bins
         let hexbin = d3.hexbin()
             .x(d => this.xScale(d.locX))
             .y(d => this.yScale(d.locY))
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
-
-
+        // performs binning process
         this.binsR = hexbin(rightShotData);
         d3.select("#heatmap-div").append("div")
             .attr("id","heatmap-svg-div");
@@ -138,14 +143,14 @@ class HeatMap {
             .attr("height",this.vizHeight)
             .attr("width",this.vizWidth)
             .attr("id","heatmap-svg");
-
+        // inserts image of court into SVG
         let svg = d3.select("#heatmap-svg").append("g").attr("class","fullCourt");
         svg.append("image")
             .attr("href","data/LakersCourt.jpg")
             .attr("width",this.vizWidth-2*this.margin)
             .attr("height",this.vizHeight-2*this.margin)
             .attr("transform","translate(25,25)");
-            
+        // renders hexagonal heatmap into specific group of SVG
         let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("stroke-width",hexRad/4)
@@ -158,17 +163,16 @@ class HeatMap {
             })
             .attr("d",function(d) { return "M"+d.x+","+d.y+hexbin.hexagon();})
             .attr("fill",function(d,i){
+                // calculates teh shot percentage and number of shots made in each bin
                 let sumFlag = 0;
                     d.forEach(element => sumFlag = sumFlag+element.shotFlag);
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
                     if(i  == 3){d.flag = "This is the test Hex"};
+                // defines colorscale for heatmap and applies it to any bins with made shots
                 that.purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
-                if(d.fg_perc > 0 & d.length > 2){
-                    return that.purples(d.fg_perc);
-                }
-                else if (d.fg_perc > 0 & d.length <= 2){
+                if(d.fg_perc > 0){
                     return that.purples(d.fg_perc);
                 }
                 else{
@@ -176,8 +180,9 @@ class HeatMap {
                 }
             })
             .attr("stroke",function(d){
-                // gold is rgb(253,185,39)
-                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"]).domain([0,strokeLim]).clamp(true);
+                // defines color scale for stroke based off number of shots
+                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"])
+                    .domain([0,strokeLim]).clamp(true);
                 return strokeColor(d.num_shots);
             })
             .attr("opacity",function(d){
@@ -281,6 +286,7 @@ class HeatMap {
         });
     }
 
+    // same as drawHeatMapRight w/o the function calls and without appending things like divs/svgs
     drawHeatMapLeft(hexRad,strokeLim){
         let that = this;
 
@@ -519,14 +525,16 @@ class HeatMap {
         return [nx, ny];
     }
     
-    // draws two brushes - one offset to match the data flipped onto the other half of the court
+    /**
+     * draws two brushes - one offset to match the data flipped onto the other half of the court
+     */
     drawBrush(){
         let that = this;
         
         let brush1 = d3.select(".fullCourt").classed("brush",true);
         let brushBinsR = [...this.binsR];
         let brushBinsL = [...this.binsL];
-    
+    // defines the primary brush and performs the selection of bins within brush boundaries
         let courtBrush = d3.brush().extent([[that.margin,that.margin],[that.vizWidth-that.margin,that.vizHeight-that.margin]])
             .on("start",function(){
                 d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",false);
@@ -546,7 +554,7 @@ class HeatMap {
                     if(x1 > 0){
                         d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",true)
                     }
-                    
+                    // translates the group calling the secondary brush to be in its reflected location
                     let xavg = (x1+x2)/2;
                     let yavg = (y1+y2)/2;
                     let brShiftX = (2*((that.vizWidth/2)-xavg));
@@ -589,13 +597,15 @@ class HeatMap {
                     })
                     .classed("selectedHex",true).classed("not-selected",false);
                 }
+                // calls draw subvis and inputs the selected bins as their indices
                 that.drawSubVis(selectedIndicesR,selectedIndicesL,x2,y1);
             })
             .on("end",function(){
 
             });
-        
-        let courtBrush2 = d3.brush().extent([[that.margin,that.margin],[that.vizWidth-that.margin,that.vizHeight-that.margin]]);
+        // defines the secondary brush that is a reflection of the main across the origin
+        let courtBrush2 = d3.brush().extent([[that.margin,that.margin],
+            [that.vizWidth-that.margin,that.vizHeight-that.margin]]);
         d3.select(".fullCourt").append("g").attr("class","fullCourt2");
         let brush2 = d3.select(".fullCourt2").classed("brush",true);
         
@@ -625,6 +635,14 @@ class HeatMap {
         console.log("rev",xrevt,yrevt)
     }
 
+    /**
+     * Calculates the average fg% for the region selected by year an displays it in the subVis div as
+     * a barchart
+     * @ param indR: the indices of the bins being selected in the right heatmap
+     * @ param indL: the indices of the bins being selected in the left heatmap
+     * @ param x: the current x location of the right edge of the brush
+     * @ param y: the current y location of the top edge of the brush
+    */
     drawSubVis(indR,indL,x,y){
         let that = this;
         d3.select(".subVis").remove();
@@ -729,9 +747,6 @@ class HeatMap {
         
         // console.log(yearsListR)
         // console.log(yearAvgFg)
-
-        let avgFgPercR = (totalMadeR/totalShotsR)*100;
-        // console.log(avgFgPercR,totalMadeR,totalShotsR)
     }
 
 }
