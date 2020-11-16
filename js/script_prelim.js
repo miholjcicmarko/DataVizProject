@@ -26,6 +26,10 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
 
     let that = this;
 
+    /**
+     * Callback function filtering the data by year selection
+     * @param {year} year - year recieved from the selected player's slider
+     */
     function updateYearPlayer (year) {
         if (year === null) {
             let heatMap = new HeatMap(Kobedata, updateYearKobe, storyTell,
@@ -39,7 +43,11 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
             heatMap.updateChartPlayer(year);
         }
     }
-    
+
+    /**
+     * Callback function filtering the data by year selection
+     * @param {year} year - year recieved from Kobe's slider
+     */
     function updateYearKobe (year) {
         if (year === null) {
             let heatMap = new HeatMap(Kobedata, updateYearKobe, 
@@ -54,6 +62,10 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
         }
     }
 
+    /**
+     * Callback function calling the story mode object
+     * @param {boolean} boolean - a flag for when the button is selected
+     */
     function storyTell (boolean) {
          if (boolean === false) {
              let heatMap = new HeatMap(Kobedata, updateYearKobe, 
@@ -73,6 +85,10 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
          }
     }
 
+    /**
+     * Callback function importing data for different players
+     * @param {name} name - name recieved from the dropdown menu
+     */
     function playerComp (name) {
         if (name === "Stephen Curry") {
             that.playerCompON = true;
