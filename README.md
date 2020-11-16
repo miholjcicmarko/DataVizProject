@@ -5,3 +5,5 @@ This project visualizes the data gathered over the course of Kobe Bryant's caree
 The visualization offers a story mode to the user at the push of a button. In the story mode, the user can switch between videos all of Kobe's buzzer beaters. 
 
 Additionally, the visualization offers the ability to compare Kobe Bryant to other current players. The selection of players includes the 2020 All Star Starters, Devin Booker, and Stephen Curry. 
+
+All of the code in this project has been completed by Jordan Hendriksen and Marko Miholjcic. The videos shown in this visualization have been gathered from YouTube and are not owned by the creators of this visualization. 
