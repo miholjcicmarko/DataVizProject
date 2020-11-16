@@ -255,7 +255,10 @@ class HeatMap {
         
     }
 
-    // creates the tooltip
+    /**
+     * This function creates the tooltip
+     * @param {hexbins} hexbins - the hexabin that the mouse hovers over
+    */
     tooltip (hexbins) {
         let that = this;
         let tooltip = d3.select('.tooltip');
@@ -381,7 +384,12 @@ class HeatMap {
             that.tooltip(hexbins);
     }
 
-    // creates the words in the tooltip
+    /**
+     * This function creates the tool tip div with all of the information of the 
+     * highlighted hexbin
+     * @param {data} data - the data from the highlighted hexbin
+     * 
+     */
     tooltipDivRender (data){
         let percentage = data.currentTarget.__data__.fg_perc;
         let shot_range = data.currentTarget.__data__[0].zone_range;
@@ -399,6 +407,9 @@ class HeatMap {
             "<br/>"+ name+"</h5>";
     }
 
+    /**
+     * This function draws the year bar slider for Kobe Bryant
+     */
     drawYearBar () {
         let that = this;
 
@@ -447,6 +458,9 @@ class HeatMap {
         }
     }
 
+    /**
+     * This function draws the year bar slider for the selected player
+     */
     drawYearBarPlayer () {
         let that = this;
 
@@ -505,6 +519,10 @@ class HeatMap {
         
     }
 
+    /**
+     * This function filters Kobe's data for the specific year chosen in the slider
+     * @param {year} year - the year inputted using the slider
+     */
     updateChartKobe (year) {
 
         this.shotData = this.resetData;
@@ -528,6 +546,10 @@ class HeatMap {
 
     }
 
+    /**
+    * This function filters Kobe's data for the specific year chosen in the slider
+    * @param {year} year - the year inputted using the slider
+    */ 
     updateChartPlayer (year) {
         this.leftShotData = this.resetLeftData;
 
@@ -555,6 +577,10 @@ class HeatMap {
 
     }
 
+    /**
+     * This functon updates inputs the data into the left side of the court
+     * @param {newData} newData 
+     */
     playerCompChart(newData) {
         this.playerCompON = true;
 
@@ -594,6 +620,9 @@ class HeatMap {
 
     }
 
+    /**
+     * This function signals that the story is on and removes the hexabins from the chart.
+     */
     storyMode () {
         this.storyON = true;
 
@@ -603,6 +632,9 @@ class HeatMap {
 
     }
 
+    /**
+     * This function resets the entire visualization to its default state. 
+     */
     resetViz () {
 
         d3.select("#next-button").remove();
