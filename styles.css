@@ -137,7 +137,21 @@ div.tooltip {
     margin-left: 20px
 }
 
-.slider::-webkit-slider-thumb {
+.slider2 {
+    -webkit-appearance: none;
+    width: 725px;
+    height: 15px;
+    border-radius: 5px;
+    background: black;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-left: 20px
+}
+
+.slider::-webkit-slider-thumb,
+.slider2::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 25px;
@@ -182,11 +196,11 @@ Styling for the container containing the story buttons and sliders
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 15fr 15fr; 
+    grid-template-columns: 1fr 1fr 1fr; 
     grid-template-rows: 1fr;
-    column-gap: 0%;
+    column-gap: 5%;
     
-    grid-template-areas: "button button . slider";
+    grid-template-areas: "button button slider";
 }
 
 #overlay {

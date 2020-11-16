@@ -8,10 +8,11 @@ class ShotData{
      * @param SHOT_ZONE_RANGE distance of shot
      * @param GAME_DATE date of game
      * @param SEASON regular/playoff
+     * @param NAME name of player
      */
 
      constructor(LOC_X,LOC_Y,EVENT_TYPE,SHOT_ZONE_BASIC,SHOT_MADE_FLAG,
-        SHOT_ZONE_RANGE, GAME_DATE, SEASON){
+        SHOT_ZONE_RANGE, GAME_DATE, SEASON, NAME){
          this.locX = +LOC_X;
          this.locY = +LOC_Y;
          this.result = EVENT_TYPE;
@@ -21,6 +22,7 @@ class ShotData{
          let stringyear = GAME_DATE.slice(0,4);
          this.year = +stringyear;
          this.season = SEASON;
+         this.name = NAME;
 
         //  let stringyear = GAME_DATE.slice(0,4);
         //  let yearnumber = +stringyear;
@@ -41,13 +43,16 @@ class ShotData{
 }
 
 class HeatMap {
-    constructor(data, updateYearKobe, storyTell, playerComp){
+    constructor(data, updateYearKobe, storyTell, playerComp, updateYearPlayer){
         this.updateYearKobe = updateYearKobe;
         this.storyTell = storyTell;
         this.playerComp = playerComp;
+        this.updateYearPlayer = updateYearPlayer;
         this.playerCompON = false;
         this.storyON = false;
         this.playoffOn = false;
+
+        this.slider2 = false;
 
         this.data = data;
         
@@ -61,7 +66,7 @@ class HeatMap {
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
                 this.data[i].SHOT_ZONE_BASIC,this.data[i].SHOT_MADE_FLAG,
                 this.data[i].SHOT_ZONE_RANGE, this.data[i].GAME_DATE, 
-                this.data[i].Season);
+                this.data[i].Season, this.data[i].PLAYER_NAME);
             this.shotData.push(node);
 
             xlist.push(+this.data[i].LOC_X);
@@ -255,7 +260,10 @@ class HeatMap {
         
     }
 
-    // creates the tooltip
+    /**
+     * This function creates the tooltip
+     * @param {hexbins} hexbins - the hexabin that the mouse hovers over
+    */
     tooltip (hexbins) {
         let that = this;
         let tooltip = d3.select('.tooltip');
@@ -296,32 +304,33 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
+        this.resetLeftData = this.leftShotData;
         
-        let leftShots = [];
+        this.leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Playoffs") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
         else if (that.playoffOn === false && that.playerCompON === true) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Regular") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
         else if (that.playerCompON === false) {
             for (let i = 0; i < that.leftShotData.length; i++) {
                 if (that.leftShotData[i].season === "Playoffs") {
-                    leftShots.push(that.leftShotData[i]);
+                    this.leftShots.push(that.leftShotData[i]);
                 }
             }
         }
         
-        this.binsL = hexbinL(leftShots);
+        this.binsL = hexbinL(this.leftShots);
         let svg = d3.select(".fullCourt");
 
         let hexbins = svg.append("g")
@@ -373,25 +382,40 @@ class HeatMap {
                 }
             });
 
+            if (this.playerCompON === true && this.slider2 === false) {
+                this.slider2 = true;
+                that.drawYearBarPlayer();
+            }
+
             that.tooltip(hexbins);
     }
 
-    // creates the words in the tooltip
+    /**
+     * This function creates the tool tip div with all of the information of the 
+     * highlighted hexbin
+     * @param {data} data - the data from the highlighted hexbin
+     * 
+     */
     tooltipDivRender (data){
         let percentage = data.currentTarget.__data__.fg_perc;
         let shot_range = data.currentTarget.__data__[0].zone_range;
             let percent = percentage.toFixed(1);
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
+        let name = data.currentTarget.__data__[0].name;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
 
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
-            "Made: "+made+" Attempted: "+attempts+"</h5>";
+            "Made: "+made+" Attempted: "+attempts+
+            "<br/>"+ name+"</h5>";
     }
 
+    /**
+     * This function draws the year bar slider for Kobe Bryant
+     */
     drawYearBar () {
         let that = this;
 
@@ -428,7 +452,7 @@ class HeatMap {
             that.updateYearKobe(this.value);
 
         })
-        //test this
+        
         yearSlider.on('click', function() {
             sliderText
                 .text(this.value)
@@ -440,6 +464,71 @@ class HeatMap {
         }
     }
 
+    /**
+     * This function draws the year bar slider for the selected player
+     */
+    drawYearBarPlayer () {
+        let that = this;
+
+        let yearArray = []
+
+        for (let i = 0; i < this.leftShotData.length; i++) {
+            yearArray.push(this.leftShotData[i].year);
+        }
+
+        let min = d3.min(yearArray);
+        let max = d3.max(yearArray);
+
+        let yearScale = d3.scaleLinear()
+                            .domain([min, max])
+                            .range([30, 730]);
+        
+        let yearSlider = d3.select('#playerCompSlider')
+            .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
+            .append('input').classed('slider2', true)
+            .attr('type', 'range')
+            .attr('min', min)
+            .attr('max', 2020)
+            .attr('value', this.activeYearPlayer);
+
+        let sliderLabel = d3.select('#slider-wrap-Comp')
+            .append('div').classed('slider-label', true)
+            .append('svg').attr("id", "slider-text-playerComp");
+
+        if (this.activeYear !== null) {
+        let sliderText = sliderLabel.append('text')
+            .text(this.activeYearPlayer);
+
+            sliderText.attr('x', yearScale(this.activeYearPlayer));
+            sliderText.attr('y', 25);
+        
+            yearSlider.on('input', function () {
+
+                sliderText
+                    .text(this.value)
+                    .attr('x', yearScale(this.value))
+                    .attr('y', 25); 
+    
+                that.updateYearPlayer(this.value);
+    
+            })
+            
+            yearSlider.on('click', function() {
+                sliderText
+                    .text(this.value)
+                    .attr('x', yearScale(this.value))
+                    .attr('y', 25); 
+    
+                that.updateYearPlayer(this.value);
+            })
+        }
+        
+    }
+
+    /**
+     * This function filters Kobe's data for the specific year chosen in the slider
+     * @param {year} year - the year inputted using the slider
+     */
     updateChartKobe (year) {
 
         this.shotData = this.resetData;
@@ -463,15 +552,41 @@ class HeatMap {
 
     }
 
-    storyMode () {
-        this.storyON = true;
+    /**
+    * This function filters Kobe's data for the specific year chosen in the slider
+    * @param {year} year - the year inputted using the slider
+    */ 
+    updateChartPlayer (year) {
+        this.leftShotData = this.resetLeftData;
 
-        d3.select("#leftCourt").remove();
-        d3.select("#rightCourt").remove();
-        d3.select(".slider-wrap").remove();
+        let newData = [];
+        
+        for (let i = 0; i < this.leftShotData.length; i++) {
+            if (this.leftShotData[i].year === +year) {
+                newData.push(this.leftShotData[i]);
+            }
+        }
+
+        this.leftShotData = newData;
+
+        d3.select("#back").attr("width", "50px")
+            .attr("height", "50px");
+
+        d3.select("#next").attr("width", "50px")
+            .attr("height", "50px");
+
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
+
+        this.drawHeatMapRight(8,5);
+        this.drawHeatMapLeft(8,5);
 
     }
 
+    /**
+     * This functon updates inputs the data into the left side of the court
+     * @param {newData} newData 
+     */
     playerCompChart(newData) {
         this.playerCompON = true;
 
@@ -481,16 +596,51 @@ class HeatMap {
             let node = new ShotData(newData[i].LOC_X,
                 newData[i].LOC_Y,newData[i].EVENT_TYPE,
                 newData[i].SHOT_ZONE_BASIC,newData[i].SHOT_MADE_FLAG,
-                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season);
+                newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season, 
+                newData[i].PLAYER_NAME);
             this.leftShotData.push(node);
 
         }
+
+        let buttonBack = document.createElement("button");
+            buttonBack.innerHTML = "Back";
+            buttonBack.id = "back-button";
+        
+            let body = document.getElementById("back");
+            body.appendChild(buttonBack);
+
+        d3.select("#back-button").style("opacity", "0");
+
+        let buttonNext = document.createElement("button");
+            buttonNext.innerHTML = "Next";
+            buttonNext.id = "next-button";
+
+            body = document.getElementById("front");
+            body.appendChild(buttonNext);
+
+        d3.select("#next-button").style("opacity", "0");
+
         d3.select("#leftCourt").remove();
         this.drawHeatMapLeft(4,15);
         this.drawBrush();
 
     }
 
+    /**
+     * This function signals that the story is on and removes the hexabins from the chart.
+     */
+    storyMode () {
+        this.storyON = true;
+
+        d3.select("#leftCourt").remove();
+        d3.select("#rightCourt").remove();
+        d3.select(".slider-wrap").remove();
+
+    }
+
+    /**
+     * This function resets the entire visualization to its default state. 
+     */
     resetViz () {
 
         d3.select("#next-button").remove();
@@ -500,6 +650,10 @@ class HeatMap {
         d3.select("#tooltip").remove();
 
         this.activeYear = null;
+
+        this.activeYearPlayer = null;
+
+        this.slider2 = false;
 
         d3.select(".slider-wrap").remove();
 
