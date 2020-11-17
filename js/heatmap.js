@@ -421,6 +421,8 @@ class HeatMap {
     drawYearBar () {
         let that = this;
 
+        this.slider = false;
+
         let yearScale = d3.scaleLinear()
                             .domain([1996, 2016])
                             .range([30, 730]);
@@ -475,6 +477,8 @@ class HeatMap {
     drawYearBarPlayer () {
         let that = this;
 
+        this.slider2 = false;
+
         let yearArray = []
 
         for (let i = 0; i < this.leftShotData.length; i++) {
@@ -488,6 +492,7 @@ class HeatMap {
                             .domain([min, max])
                             .range([30, 730]);
         
+        if (this.slider2present === false) {
         let yearSlider = d3.select('#playerCompSlider')
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider2', true)
@@ -499,6 +504,9 @@ class HeatMap {
         let sliderLabel = d3.select('#slider-wrap-Comp')
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text-playerComp");
+
+            this.slider2present = true;
+        }
 
         if (this.activeYearPlayer !== null) {
         let sliderText = sliderLabel.append('text')
