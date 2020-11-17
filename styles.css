@@ -163,7 +163,7 @@ div.tooltip {
 }
 
 .slider::-moz-range-thumb, 
-.slider2::-moz-range-thumb,  {
+.slider2::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 50%;

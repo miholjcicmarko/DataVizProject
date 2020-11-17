@@ -403,6 +403,7 @@ class HeatMap {
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
         let name = data.currentTarget.__data__[0].name;
+        let year = data.currentTarget.__data__[0].year;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
@@ -410,7 +411,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name+"</h5>";
+            "<br/>"+ name+year+"</h5>";
     }
 
     /**
@@ -502,7 +503,7 @@ class HeatMap {
             sliderText.attr('x', yearScale(this.activeYearPlayer));
             sliderText.attr('y', 25);
         
-            yearSlider.on('input', function () {
+            yearSlider.on('change', function () {
 
                 sliderText
                     .text(this.value)
@@ -552,6 +553,9 @@ class HeatMap {
             this.leftShotData = newData;
             this.drawHeatMapLeft(8,5);
         }
+        else if (this.playerCompON === true) {
+            this.drawHeatMapLeft(8,5);
+        }
 
     }
 
@@ -581,7 +585,7 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        //this.drawHeatMapRight(8,5);
+        this.drawHeatMapRight(8,5);
         this.drawHeatMapLeft(8,5);
 
     }
@@ -623,8 +627,13 @@ class HeatMap {
 
         d3.select("#next-button").style("opacity", "0");
 
-        d3.select("#leftCourt").remove();
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
+
         this.drawHeatMapLeft(4,15);
+
+        this.shotData = this.resetData;
+        this.drawHeatMapRight(4,15);
         //this.drawBrush();
 
     }
