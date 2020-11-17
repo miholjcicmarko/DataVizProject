@@ -52,6 +52,7 @@ class HeatMap {
         this.storyON = false;
         this.playoffOn = false;
 
+        this.slider = false;
         this.slider2 = false;
 
         this.data = data;
@@ -444,6 +445,7 @@ class HeatMap {
             sliderText.attr('y', 25);
 
         yearSlider.on('change', function () {
+            that.slider = true;
 
             sliderText
                 .text(this.value)
@@ -455,6 +457,8 @@ class HeatMap {
         })
         
         yearSlider.on('click', function() {
+            that.slider = true;
+
             sliderText
                 .text(this.value)
                 .attr('x', yearScale(this.value))
@@ -496,7 +500,7 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text-playerComp");
 
-        if (this.activeYear !== null) {
+        if (this.activeYearPlayer !== null) {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYearPlayer);
 
@@ -504,6 +508,7 @@ class HeatMap {
             sliderText.attr('y', 25);
         
             yearSlider.on('change', function () {
+                this.slider2 = true;
 
                 sliderText
                     .text(this.value)
@@ -515,6 +520,8 @@ class HeatMap {
             })
             
             yearSlider.on('click', function() {
+                this.slider2 = true;
+                
                 sliderText
                     .text(this.value)
                     .attr('x', yearScale(this.value))
@@ -553,8 +560,11 @@ class HeatMap {
             this.leftShotData = newData;
             this.drawHeatMapLeft(8,5);
         }
-        else if (this.playerCompON === true) {
+        else if (this.playerCompON === true && this.slider2 === false) {
             this.drawHeatMapLeft(4,15);
+        }
+        else if (this.playerCompON === true && this.slider2 === true) {
+            this.drawHeatMapLeft(8,5);
         }
 
     }
@@ -585,7 +595,7 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        if (this.activeYear === null) {
+        if (this.slider === false) {
             this.drawHeatMapRight(4,15);
         }
         this.drawHeatMapRight(8,5);
@@ -653,6 +663,9 @@ class HeatMap {
         d3.select("#rightCourt").remove();
         d3.select(".slider-wrap").remove();
 
+        this.slider = false;
+        this.slider2 = false;
+
     }
 
     /**
@@ -670,6 +683,7 @@ class HeatMap {
 
         this.activeYearPlayer = null;
 
+        this.slider = false;
         this.slider2 = false;
 
         d3.select(".slider-wrap").remove();
