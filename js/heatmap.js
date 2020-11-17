@@ -237,8 +237,8 @@ class HeatMap {
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-                that.drawHeatMapRight(4,15);
-                that.drawHeatMapLeft(4,15);
+                that.drawHeatMapRight(8,5);
+                that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
@@ -554,7 +554,7 @@ class HeatMap {
             this.drawHeatMapLeft(8,5);
         }
         else if (this.playerCompON === true) {
-            this.drawHeatMapLeft(8,5);
+            this.drawHeatMapLeft(4,15);
         }
 
     }
@@ -632,9 +632,9 @@ class HeatMap {
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
+        d3.select(".slider-wrap").remove();
         
-        this.activeYear = null;
-        this.drawYearBar(this.activeYear);
+        this.drawYearBar(this.updateYearKobe);
 
         this.shotData = this.resetData;
         this.drawHeatMapRight(4,15);
