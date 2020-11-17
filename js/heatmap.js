@@ -542,20 +542,21 @@ class HeatMap {
         }
 
         this.shotData = newData;
-        this.leftShotData = newData;
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
         this.drawHeatMapRight(8,5);
+
         if (this.playerCompON === false) {
+            this.leftShotData = newData;
             this.drawHeatMapLeft(8,5);
         }
 
     }
 
     /**
-    * This function filters Kobe's data for the specific year chosen in the slider
+    * This function filters Player's data for the specific year chosen in the slider
     * @param {year} year - the year inputted using the slider
     */ 
     updateChartPlayer (year) {
@@ -580,7 +581,7 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        this.drawHeatMapRight(8,5);
+        //this.drawHeatMapRight(8,5);
         this.drawHeatMapLeft(8,5);
 
     }
@@ -624,7 +625,7 @@ class HeatMap {
 
         d3.select("#leftCourt").remove();
         this.drawHeatMapLeft(4,15);
-        this.drawBrush();
+        //this.drawBrush();
 
     }
 
