@@ -585,6 +585,9 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
+        if (this.activeYear === null) {
+            this.drawHeatMapRight(4,15);
+        }
         this.drawHeatMapRight(8,5);
         this.drawHeatMapLeft(8,5);
 
@@ -629,11 +632,13 @@ class HeatMap {
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
-
-        this.drawHeatMapLeft(4,15);
+        
+        this.activeYear = null;
+        this.drawYearBar(this.activeYear);
 
         this.shotData = this.resetData;
         this.drawHeatMapRight(4,15);
+        this.drawHeatMapLeft(4,15);
         //this.drawBrush();
 
     }
