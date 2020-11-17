@@ -68,6 +68,8 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
      */
     function storyTell (boolean) {
          if (boolean === false) {
+            that.storyOn = false;
+
              let heatMap = new HeatMap(Kobedata, updateYearKobe, 
                 storyTell, playerComp, updateYearPlayer);
 
@@ -78,10 +80,12 @@ Promise.all([kobe, curry, harden, luka]).then(data =>
             heatMap.drawHeatMapLeft(4,12);
          }
          else if (boolean === true) {
-             that.storyOn = true;
-             heatMap.storyMode();
-             let story = new storyFile(boolean);
-             story.drawStory();
+            if (that.storyOn === false) {
+                that.storyOn = true;
+                heatMap.storyMode();
+                let story = new storyFile(boolean);
+                story.drawStory();
+            }
          }
     }
 

@@ -442,7 +442,7 @@ class HeatMap {
             sliderText.attr('x', yearScale(this.activeYear));
             sliderText.attr('y', 25);
 
-        yearSlider.on('input', function () {
+        yearSlider.on('change', function () {
 
             sliderText
                 .text(this.value)
@@ -548,7 +548,9 @@ class HeatMap {
         d3.select("#tooltip").remove();
 
         this.drawHeatMapRight(8,5);
-        this.drawHeatMapLeft(8,5);
+        if (this.playerCompON === false) {
+            this.drawHeatMapLeft(8,5);
+        }
 
     }
 

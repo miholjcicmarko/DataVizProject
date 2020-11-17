@@ -138,6 +138,7 @@ div.tooltip {
 }
 
 .slider2 {
+    justify-content: right;
     -webkit-appearance: none;
     width: 725px;
     height: 15px;
@@ -161,7 +162,8 @@ div.tooltip {
     cursor: pointer;
 }
 
-.slider::-moz-range-thumb {
+.slider::-moz-range-thumb, 
+.slider2::-moz-range-thumb,  {
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -169,7 +171,8 @@ div.tooltip {
     cursor: pointer;
 }
 
-.slider:hover {
+.slider:hover,
+.slider2:hover {
     opacity: 1;
 }
 
@@ -196,9 +199,9 @@ Styling for the container containing the story buttons and sliders
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 25fr; 
     grid-template-rows: 1fr;
-    column-gap: 5%;
+    column-gap: 0%;
     
     grid-template-areas: "button button slider";
 }
