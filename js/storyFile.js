@@ -47,20 +47,34 @@ class storyFile {
 
             let story_div = d3.select('#overlay')
                           .attr("width", that.svgWidth/2)
-                          .attr("height", that.vizHeight/2)
-                          .style("top", 250 + "px")
-                          .style("z-index", 1);
+                          .attr("height", that.vizHeight/3)
+                          .style("top", 420 + "px")
+                          .style("left", 110 + "px")
+                          .style("z-index", 2);
 
             // Hornets buzzer beater
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.1)
-                .attr("height", that.vizHeight/2)
+                .attr("width", that.svgWidth/2.55)
+                .attr("height", that.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
 
-            }
+            let tv = d3.select('#tv')
+                .style("z-index", 1);
 
+            tv.style("opacity", 1);
+
+            let ball = d3.select("#ball")
+                .attr("width", that.svgWidth/5)
+                .attr("height", that.vizHeight/5)
+                .style("top", 880 + "px")
+                .style("left", 970+ "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            }
             
         }
         
