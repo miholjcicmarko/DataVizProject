@@ -740,7 +740,11 @@ class HeatMap {
 
         this.playerCompON = false;
         
-        this.playoffOn = false;
+        if (this.playoffOn === true) {
+            this.playoffOn = false;
+            document.getElementById("checkbox").checked = false;
+        }
+        
         this.slider2present = false;
 
         d3.selectAll(".slider-wrap").remove();
