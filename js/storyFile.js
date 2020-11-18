@@ -63,7 +63,9 @@ class storyFile {
             let tv = d3.select('#tv')
                 .style("z-index", 1);
 
-            tv.style("opacity", 1);
+            tv
+                .style("top", 380 +"px")
+                .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
