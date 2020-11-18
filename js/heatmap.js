@@ -247,8 +247,22 @@ class HeatMap {
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-                that.drawHeatMapRight(4,15);
-                that.drawHeatMapLeft(4,15);
+                if (slider === true && slider2 === true) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (slider === true && slider2 === false) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(4,15);
+                }
+                else if (slider === false && slider2 === true) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (slider === false && slider2 === false) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(4,15);
+                }
             }
         })
 
