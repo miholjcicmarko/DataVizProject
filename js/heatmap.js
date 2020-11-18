@@ -709,7 +709,7 @@ class HeatMap {
 
         d3.select("#leftCourt").remove();
         d3.select("#rightCourt").remove();
-        d3.select(".slider-wrap").remove();
+        d3.selectAll(".slider-wrap").remove();
 
         this.playerCompON = false;
         this.playoffOn = false;
@@ -725,8 +725,9 @@ class HeatMap {
      */
     resetViz () {
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg-div").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         this.activeYear = null;
 
