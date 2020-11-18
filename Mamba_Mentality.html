@@ -15,6 +15,8 @@
     <script src="js/storyFile.js"></script>
     
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
 </head>
 
 <body>
@@ -29,26 +31,22 @@
     <div class="containerA">
 
         <div id="playoff-season-labelA">
-            <p>
-                Playoff Kobe
-            </p>
+            
         </div>
         
-        <div class="toggle-button"> Playoffs
-            <input type="checkbox">
-            <span class="checkmark" class="box-position"></span>
-        </div>
+        <label class="toggle-button" id = "playoff-button"> Playoffs
+            <input type="checkbox" id="playoff-check">
+            <span class="checkmark"></span>
+        </label>
         
         <div id="playoff-season-labelB">
-            <p>
-                Season Kobe
-            </p>
+            
         </div>
         
-        <div class="toggle-button" id = "brush-button"> Select Region
+        <label class="toggle-button" id = "brush-button"> Select Region
             <input type="checkbox">
-            <span class="checkmark" class="box-position"></span>
-        </div>
+            <span class="checkmark"></span>
+        </label>
         
     </div> 
 
@@ -70,6 +68,9 @@
     </form>
 
     <div id = "overlay"></div>
+    <div id = "tv"> <i class="fa fa-television"></i></div>
+    <div id = "ball"> <i class = "fas fa-basketball-ball"></i></div>
+
     <div id="heatmap-div"></div>
 
     <div class="containerB">

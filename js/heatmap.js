@@ -52,7 +52,9 @@ class HeatMap {
         this.storyON = false;
         this.playoffOn = false;
 
+        this.slider = false;
         this.slider2 = false;
+        this.slider2present = false;
 
         this.data = data;
         
@@ -99,6 +101,23 @@ class HeatMap {
         this.leftShotData = this.shotData;
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
+
+        let leftLabel = d3.select("#playoff-season-labelA")
+                .append("svg").attr("id", "left-label")
+                .classed("svg-text", true);
+        
+        leftLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Playoff Kobe");
+
+        let rightLabel = d3.select("#playoff-season-labelB")
+            .append("svg").attr("id", "right-label")
+            .classed("svg-text", true);
+
+        rightLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Season Kobe")
+            .attr("fill", "rgb(85,37,130)");
 
     }   
 
@@ -211,7 +230,14 @@ class HeatMap {
             dropdown.on("change", function () {
                 let player = this.value;
 
-                that.playerComp(player);
+                that.playerCompON = true;
+
+                if (player === '-') {
+                    that.resetViz();
+                }
+                else {
+                    that.playerComp(player);
+                }
             });
 
         this.tooltip(hexbins);
@@ -237,17 +263,50 @@ class HeatMap {
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-                that.drawHeatMapRight(4,15);
-                that.drawHeatMapLeft(4,15);
+                that.drawHeatMapRight(8,5);
+                if (that.playerCompON === true) {
+                    that.leftShotData = that.resetLeftData;
+                }
+                // else {
+                //     that.leftShotData = that.resetLeftDataKobe;
+                // }
+                that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-                that.drawHeatMapRight(4,15);
-                that.drawHeatMapLeft(4,15);
+            if (that.playerCompON === true) {
+
+                if (that.slider === true && that.slider2 === true) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (that.slider === true && that.slider2 === false) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(4,15);
+                }
+                else if (that.slider === false && that.slider2 === true) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (that.slider === false && that.slider2 === false) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(4,15);
+                }
             }
+            else if (that.playerCompON === false) {
+                if (that.slider === true) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (that.slider === false) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(4,15);
+                }
+            }
+        }
         })
 
         resetButton.on("click", function() {
@@ -304,8 +363,6 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        this.resetLeftData = this.leftShotData;
-        
         this.leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
@@ -329,7 +386,11 @@ class HeatMap {
                 }
             }
         }
-        
+
+        if (this.slider === false && this.slider2 === false) {
+            that.resetLeftDataKobe = this.leftShotData;
+        }
+
         this.binsL = hexbinL(this.leftShots);
         let svg = d3.select(".fullCourt");
 
@@ -382,9 +443,8 @@ class HeatMap {
                 }
             });
 
-            if (this.playerCompON === true && this.slider2 === false) {
-                this.slider2 = true;
-                that.drawYearBarPlayer();
+            if (this.playerCompON === true && this.slider2present === false) {
+                that.drawYearBarPlayer(this.updateYearPlayer);
             }
 
             that.tooltip(hexbins);
@@ -403,6 +463,8 @@ class HeatMap {
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
         let name = data.currentTarget.__data__[0].name;
+        let year = data.currentTarget.__data__[0].year;
+        let season_playoff = data.currentTarget.__data__[0].season;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
@@ -410,7 +472,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name+"</h5>";
+            "<br/>"+ name+year+ "</br>"+ season_playoff+ "</h5>";
     }
 
     /**
@@ -418,6 +480,8 @@ class HeatMap {
      */
     drawYearBar () {
         let that = this;
+
+        this.slider = false;
 
         let yearScale = d3.scaleLinear()
                             .domain([1996, 2016])
@@ -435,7 +499,7 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text");
 
-        if (this.activeYear !== null) {
+        if (this.activeYear !== null || this.reset === true || this.activeYear === null) {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYear);
 
@@ -443,6 +507,7 @@ class HeatMap {
             sliderText.attr('y', 25);
 
         yearSlider.on('input', function () {
+            that.slider = true;
 
             sliderText
                 .text(this.value)
@@ -453,14 +518,16 @@ class HeatMap {
 
         })
         
-        yearSlider.on('click', function() {
-            sliderText
-                .text(this.value)
-                .attr('x', yearScale(this.value))
-                .attr('y', 25); 
+        // yearSlider.on('click', function() {
+        //     that.slider = true;
 
-            that.updateYearKobe(this.value);
-        })
+        //     sliderText
+        //         .text(this.value)
+        //         .attr('x', yearScale(this.value))
+        //         .attr('y', 25); 
+
+        //     that.updateYearKobe(this.value);
+        // })
         }
     }
 
@@ -469,6 +536,8 @@ class HeatMap {
      */
     drawYearBarPlayer () {
         let that = this;
+
+        this.slider2 = false;
 
         let yearArray = []
 
@@ -483,6 +552,7 @@ class HeatMap {
                             .domain([min, max])
                             .range([30, 730]);
         
+        if (this.slider2present === false) {
         let yearSlider = d3.select('#playerCompSlider')
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider2', true)
@@ -495,7 +565,12 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text-playerComp");
 
-        if (this.activeYear !== null) {
+            this.slider2present = true;
+ 
+        if (this.activeYearPlayer !== null || this.slider2present === true) {
+        //let sliderLabelpresent = d3.select('#slider-wrap-Comp');
+        //let yearSlider = d3.select('#playerCompSlider');
+        
         let sliderText = sliderLabel.append('text')
             .text(this.activeYearPlayer);
 
@@ -503,6 +578,7 @@ class HeatMap {
             sliderText.attr('y', 25);
         
             yearSlider.on('input', function () {
+                that.slider2 = true;
 
                 sliderText
                     .text(this.value)
@@ -513,17 +589,21 @@ class HeatMap {
     
             })
             
-            yearSlider.on('click', function() {
-                sliderText
-                    .text(this.value)
-                    .attr('x', yearScale(this.value))
-                    .attr('y', 25); 
+            // yearSlider.on('click', function() {
+            //     that.slider2 = true;
+                
+            //     sliderText
+            //         .text(this.value)
+            //         .attr('x', yearScale(this.value))
+            //         .attr('y', 25); 
     
-                that.updateYearPlayer(this.value);
-            })
+            //     that.updateYearPlayer(this.value);
+            // })
+        }
         }
         
     }
+
 
     /**
      * This function filters Kobe's data for the specific year chosen in the slider
@@ -542,18 +622,27 @@ class HeatMap {
         }
 
         this.shotData = newData;
-        this.leftShotData = newData;
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
         this.drawHeatMapRight(8,5);
-        this.drawHeatMapLeft(8,5);
+
+        if (this.playerCompON === false) {
+            this.leftShotData = newData;
+            this.drawHeatMapLeft(8,5);
+        }
+        else if (this.playerCompON === true && this.slider2 === false) {
+            this.drawHeatMapLeft(4,15);
+        }
+        else if (this.playerCompON === true && this.slider2 === true) {
+            this.drawHeatMapLeft(8,5);
+        }
 
     }
 
     /**
-    * This function filters Kobe's data for the specific year chosen in the slider
+    * This function filters Player's data for the specific year chosen in the slider
     * @param {year} year - the year inputted using the slider
     */ 
     updateChartPlayer (year) {
@@ -578,7 +667,12 @@ class HeatMap {
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
-        this.drawHeatMapRight(8,5);
+        if (this.slider === false) {
+            this.drawHeatMapRight(4,15);
+        }
+        else if (this.slider = true) {
+            this.drawHeatMapRight(8,5);
+        }
         this.drawHeatMapLeft(8,5);
 
     }
@@ -588,7 +682,6 @@ class HeatMap {
      * @param {newData} newData 
      */
     playerCompChart(newData) {
-        this.playerCompON = true;
 
         this.leftShotData = [];
 
@@ -602,27 +695,26 @@ class HeatMap {
 
         }
 
-        let buttonBack = document.createElement("button");
-            buttonBack.innerHTML = "Back";
-            buttonBack.id = "back-button";
+        this.resetLeftData = this.leftShotData;
+
+        d3.select("#heatmap-svg").remove();
+        d3.select("#tooltip").remove();
+        d3.selectAll(".slider-wrap").remove();
         
-            let body = document.getElementById("back");
-            body.appendChild(buttonBack);
+        this.drawYearBar(this.updateYearKobe);
+        this.slider2present = false;
+        this.drawYearBarPlayer(this.updateYearPlayer);
 
-        d3.select("#back-button").style("opacity", "0");
-
-        let buttonNext = document.createElement("button");
-            buttonNext.innerHTML = "Next";
-            buttonNext.id = "next-button";
-
-            body = document.getElementById("front");
-            body.appendChild(buttonNext);
-
-        d3.select("#next-button").style("opacity", "0");
-
-        d3.select("#leftCourt").remove();
-        this.drawHeatMapLeft(4,15);
-        this.drawBrush();
+        this.shotData = this.resetData;
+        if (this.playoffOn === true) {
+            this.drawHeatMapRight(8,5);
+            this.drawHeatMapLeft(8,5);
+        }
+        else if (this.playoffOn === false) {
+            this.drawHeatMapRight(4,15);
+            this.drawHeatMapLeft(4,15);
+        }
+        //this.drawBrush();
 
     }
 
@@ -634,7 +726,17 @@ class HeatMap {
 
         d3.select("#leftCourt").remove();
         d3.select("#rightCourt").remove();
-        d3.select(".slider-wrap").remove();
+        d3.selectAll(".slider-wrap").remove();
+
+        this.playerCompON = false;
+        this.playoffOn = false;
+
+        this.slider = false;
+        this.slider2 = false;
+        this.slider2present = false;
+
+        document.getElementById("playoff-check").checked = false;
+        document.getElementById("selectNow").selectedIndex = 0;
 
     }
 
@@ -643,29 +745,46 @@ class HeatMap {
      */
     resetViz () {
 
-        d3.select("#next-button").remove();
-        d3.select("#back-button").remove();
-
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg-div").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         this.activeYear = null;
 
         this.activeYearPlayer = null;
 
+        this.slider = false;
         this.slider2 = false;
+        
+        //if (this.playoffOn === true) {
+            this.playoffOn = false;
+            document.getElementById("playoff-check").checked = false;
+        //}
+        
+        //if (this.playerCompON === true) {
+            this.playerCompON = false;
+            document.getElementById("selectNow").selectedIndex = 0;
+        //}
 
-        d3.select(".slider-wrap").remove();
+        this.slider2present = false;
 
-        if (this.storyON = true) {
+        d3.selectAll(".slider-wrap").remove();
+
+        if (this.storyON === true) {
+            d3.select("#next-button").remove();
+            d3.select("#back-button").remove();
             this.storyON = false;
             let pressed = false;
             this.storyTell(pressed);
         }
 
-        // this.shotData = this.resetData;
-        // this.drawHeatMapRight(4,15);
-        // this.drawHeatMapLeft(4,15);
+        this.shotData = this.resetData;
+        this.leftShotData = this.resetData;
+        this.drawHeatMapRight(4,15);
+        this.drawHeatMapLeft(4,15);
+        this.reset = true;
+        this.drawYearBar(this.updateYearKobe);
+        this.reset = false;
     }
 
     // rotation function to use in draw brush to convert between pixel location and d.x d.y 
