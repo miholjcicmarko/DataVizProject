@@ -54,6 +54,7 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
+        this.slider2present = false;
 
         this.data = data;
         
@@ -305,8 +306,10 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        this.resetLeftData = this.leftShotData;
-        
+        if (this.slider2 !== true) {
+            this.resetLeftData = this.leftShotData;
+        }
+
         this.leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
@@ -383,9 +386,8 @@ class HeatMap {
                 }
             });
 
-            if (this.playerCompON === true && this.slider2 === false) {
-                this.slider2 = true;
-                that.drawYearBarPlayer();
+            if (this.playerCompON === true && this.slider2present === false) {
+                that.drawYearBarPlayer(this.updateYearPlayer);
             }
 
             that.tooltip(hexbins);
@@ -405,6 +407,7 @@ class HeatMap {
         let made = data.currentTarget.__data__.made_shots;
         let name = data.currentTarget.__data__[0].name;
         let year = data.currentTarget.__data__[0].year;
+        let season_playoff = data.currentTarget.__data__[0].season;
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
@@ -412,7 +415,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name+year+"</h5>";
+            "<br/>"+ name+year+ "</br>"+ season_playoff+ "</h5>";
     }
 
     /**
@@ -446,7 +449,7 @@ class HeatMap {
             sliderText.attr('x', yearScale(this.activeYear));
             sliderText.attr('y', 25);
 
-        yearSlider.on('change', function () {
+        yearSlider.on('input', function () {
             that.slider = true;
 
             sliderText
@@ -458,16 +461,16 @@ class HeatMap {
 
         })
         
-        yearSlider.on('click', function() {
-            that.slider = true;
+        // yearSlider.on('click', function() {
+        //     that.slider = true;
 
-            sliderText
-                .text(this.value)
-                .attr('x', yearScale(this.value))
-                .attr('y', 25); 
+        //     sliderText
+        //         .text(this.value)
+        //         .attr('x', yearScale(this.value))
+        //         .attr('y', 25); 
 
-            that.updateYearKobe(this.value);
-        })
+        //     that.updateYearKobe(this.value);
+        // })
         }
     }
 
@@ -506,17 +509,19 @@ class HeatMap {
             .append('svg').attr("id", "slider-text-playerComp");
 
             this.slider2present = true;
-        }
 
-        if (this.activeYearPlayer !== null) {
+        if (this.activeYearPlayer !== null && this.slider2present === true) {
+        //let sliderLabelpresent = d3.select('#slider-wrap-Comp');
+        //let yearSlider = d3.select('#playerCompSlider');
+        
         let sliderText = sliderLabel.append('text')
             .text(this.activeYearPlayer);
 
             sliderText.attr('x', yearScale(this.activeYearPlayer));
             sliderText.attr('y', 25);
         
-            yearSlider.on('change', function () {
-                this.slider2 = true;
+            yearSlider.on('input', function () {
+                that.slider2 = true;
 
                 sliderText
                     .text(this.value)
@@ -527,19 +532,21 @@ class HeatMap {
     
             })
             
-            yearSlider.on('click', function() {
-                this.slider2 = true;
+            // yearSlider.on('click', function() {
+            //     that.slider2 = true;
                 
-                sliderText
-                    .text(this.value)
-                    .attr('x', yearScale(this.value))
-                    .attr('y', 25); 
+            //     sliderText
+            //         .text(this.value)
+            //         .attr('x', yearScale(this.value))
+            //         .attr('y', 25); 
     
-                that.updateYearPlayer(this.value);
-            })
+            //     that.updateYearPlayer(this.value);
+            // })
+        }
         }
         
     }
+
 
     /**
      * This function filters Kobe's data for the specific year chosen in the slider
@@ -606,7 +613,9 @@ class HeatMap {
         if (this.slider === false) {
             this.drawHeatMapRight(4,15);
         }
-        this.drawHeatMapRight(8,5);
+        else if (this.slider = true) {
+            this.drawHeatMapRight(8,5);
+        }
         this.drawHeatMapLeft(8,5);
 
     }
