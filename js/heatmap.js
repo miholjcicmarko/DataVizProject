@@ -736,15 +736,15 @@ class HeatMap {
         this.slider = false;
         this.slider2 = false;
         
-        if (this.playoffOn === true) {
+        //if (this.playoffOn === true) {
             this.playoffOn = false;
             document.getElementById("playoff-check").checked = false;
-        }
+        //}
         
-        if (this.playerCompON === true) {
+        //if (this.playerCompON === true) {
             this.playerCompON = false;
             document.getElementById("selectNow").selectedIndex = 0;
-        }
+        //}
 
         this.slider2present = false;
 
