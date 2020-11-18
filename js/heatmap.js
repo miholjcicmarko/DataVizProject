@@ -213,7 +213,14 @@ class HeatMap {
             dropdown.on("change", function () {
                 let player = this.value;
 
-                that.playerComp(player);
+                that.playerCompON = true;
+
+                if (player === '-') {
+                    that.resetViz();
+                }
+                else {
+                    that.playerComp(player);
+                }
             });
 
         this.tooltip(hexbins);
@@ -665,28 +672,6 @@ class HeatMap {
 
         }
 
-        if (this.playerCompON === false) {
-        let buttonBack = document.createElement("button");
-            buttonBack.innerHTML = "Back";
-            buttonBack.id = "back-button";
-        
-            let body = document.getElementById("back");
-            body.appendChild(buttonBack);
-
-        d3.select("#back-button").style("opacity", "0");
-
-        let buttonNext = document.createElement("button");
-            buttonNext.innerHTML = "Next";
-            buttonNext.id = "next-button";
-
-            body = document.getElementById("front");
-            body.appendChild(buttonNext);
-
-        d3.select("#next-button").style("opacity", "0");
-
-        this.playerCompON = true;
-        }
-
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
         d3.selectAll(".slider-wrap").remove();
@@ -737,14 +722,17 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
-
-        this.playerCompON = false;
         
         if (this.playoffOn === true) {
             this.playoffOn = false;
-            document.getElementById("checkbox").checked = false;
+            document.getElementById("playoff-check").checked = false;
         }
         
+        if (this.playerCompON === true) {
+            this.playerCompON = false;
+            document.getElementById("selectNow").selectedIndex = 0;
+        }
+
         this.slider2present = false;
 
         d3.selectAll(".slider-wrap").remove();
@@ -758,7 +746,7 @@ class HeatMap {
         }
 
         this.shotData = this.resetData;
-        this.leftShotData = this.resetLeftData;
+        this.leftShotData = this.resetData;
         this.drawHeatMapRight(4,15);
         this.drawHeatMapLeft(4,15);
         this.reset = true;
