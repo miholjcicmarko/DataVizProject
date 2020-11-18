@@ -16,8 +16,6 @@ Container stylings for the button and slider
 /* label stylings */
 #playoff-season-labelA {
     grid-area: "playoff-season-labelA";
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: bold;
 }
 
 #playoff-season-labelB {
@@ -26,21 +24,34 @@ Container stylings for the button and slider
     font-weight: bold;
 }
 
-/* checkbox stylings */
-.checkmark {
-    grid-area: "checkbox";
-    position: relative;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-}
-
 .toggle-button {
     display: block;
     position: relative;
     cursor: pointer;
-    padding-top: 10%;
+    padding-top: 20%;
+    font-size: 35px;
+    font-weight: bold
 }
+
+.toggle-button input {
+    position: absolute;
+    opacity: 1;
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+}
+
+  /* .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  } */
+  
+
+
 
 /* 
 Styling for the wrapper containing the svg
@@ -273,3 +284,9 @@ div.subVis {
     place-self: center;
 }
 
+.svg-text {
+    text-anchor: middle;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 45px;
+}

@@ -102,6 +102,23 @@ class HeatMap {
         this.resetData = this.shotData;
         this.drawYearBar(updateYearKobe);
 
+        let leftLabel = d3.select("#playoff-season-labelA")
+                .append("svg").attr("id", "left-label")
+                .classed("svg-text", true);
+        
+        leftLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Playoff Kobe");
+
+        let rightLabel = d3.select("#playoff-season-labelB")
+            .append("svg").attr("id", "right-label")
+            .classed("svg-text", true);
+
+        rightLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Season Kobe")
+            .attr("fill", "rgb(85,37,130)");
+
     }   
 
     /**
@@ -717,6 +734,9 @@ class HeatMap {
         this.slider = false;
         this.slider2 = false;
         this.slider2present = false;
+
+        document.getElementById("playoff-check").checked = false;
+        document.getElementById("selectNow").selectedIndex = 0;
 
     }
 
