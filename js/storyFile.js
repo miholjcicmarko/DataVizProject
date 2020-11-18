@@ -171,5 +171,6 @@ class storyFile {
 
     removeStory () {
         d3.select("#storyID").remove();
+        d3.select('#overlay').style("z-index", -1);
     }
 }
