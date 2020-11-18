@@ -247,7 +247,7 @@ class HeatMap {
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-            if (that.playerComp === true) {
+            if (that.playerCompON === true) {
 
                 if (that.slider === true && that.slider2 === true) {
                     that.drawHeatMapRight(8,5);
@@ -266,7 +266,7 @@ class HeatMap {
                     that.drawHeatMapLeft(4,15);
                 }
             }
-            else if (that.playerComp === false) {
+            else if (that.playerCompON === false) {
                 if (that.slider === true) {
                     that.drawHeatMapRight(8,5);
                     that.drawHeatMapLeft(8,5);
@@ -333,10 +333,6 @@ class HeatMap {
             .radius(hexRad)
             .extent([0,0],[this.vizHeight,this.vizWidth]);
 
-        if (this.slider2 !== true) {
-            this.resetLeftData = this.leftShotData;
-        }
-
         this.leftShots = [];
 
         if (that.playoffOn === true && that.playerCompON === true) {
@@ -361,6 +357,10 @@ class HeatMap {
             }
         }
         
+        if (this.slider2 === false && this.slider === false) {
+            this.resetLeftData = this.leftShots;
+        }
+
         this.binsL = hexbinL(this.leftShots);
         let svg = d3.select(".fullCourt");
 
@@ -652,7 +652,6 @@ class HeatMap {
      * @param {newData} newData 
      */
     playerCompChart(newData) {
-        this.playerCompON = true;
 
         this.leftShotData = [];
 
@@ -666,6 +665,7 @@ class HeatMap {
 
         }
 
+        if (this.playerCompON === false) {
         let buttonBack = document.createElement("button");
             buttonBack.innerHTML = "Back";
             buttonBack.id = "back-button";
@@ -684,15 +684,26 @@ class HeatMap {
 
         d3.select("#next-button").style("opacity", "0");
 
+        this.playerCompON = true;
+        }
+
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
-        d3.select(".slider-wrap").remove();
+        d3.selectAll(".slider-wrap").remove();
         
         this.drawYearBar(this.updateYearKobe);
+        this.slider2present = false;
+        this.drawYearBarPlayer(this.updateYearPlayer);
 
         this.shotData = this.resetData;
-        this.drawHeatMapRight(4,15);
-        this.drawHeatMapLeft(4,15);
+        if (this.playoffOn === true) {
+            this.drawHeatMapRight(8,5);
+            this.drawHeatMapLeft(8,5);
+        }
+        else if (this.playoffOn === false) {
+            this.drawHeatMapRight(4,15);
+            this.drawHeatMapLeft(4,15);
+        }
         //this.drawBrush();
 
     }
@@ -717,9 +728,6 @@ class HeatMap {
      */
     resetViz () {
 
-        d3.select("#next-button").remove();
-        d3.select("#back-button").remove();
-
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
 
@@ -730,17 +738,25 @@ class HeatMap {
         this.slider = false;
         this.slider2 = false;
 
-        d3.select(".slider-wrap").remove();
+        this.playerCompON = false;
+        
+        this.playoffOn = false;
+        this.slider2present = false;
 
-        if (this.storyON = true) {
+        d3.selectAll(".slider-wrap").remove();
+
+        if (this.storyON === true) {
+            d3.select("#next-button").remove();
+            d3.select("#back-button").remove();
             this.storyON = false;
             let pressed = false;
             this.storyTell(pressed);
         }
 
-        // this.shotData = this.resetData;
-        // this.drawHeatMapRight(4,15);
-        // this.drawHeatMapLeft(4,15);
+        this.shotData = this.resetData;
+        this.drawHeatMapRight(4,15);
+        this.drawHeatMapLeft(4,15);
+        this.drawYearBar(updateYearKobe);
     }
 
     // rotation function to use in draw brush to convert between pixel location and d.x d.y 
