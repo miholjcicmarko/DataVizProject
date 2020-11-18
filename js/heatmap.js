@@ -247,6 +247,7 @@ class HeatMap {
                 d3.select("#heatmap-svg-div").remove();
 
                 that.drawHeatMapRight(8,5);
+                that.leftShotData = that.resetLeftData;
                 that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
@@ -363,10 +364,6 @@ class HeatMap {
                 }
             }
         }
-        
-        if (this.slider2 === false && this.slider === false) {
-            this.resetLeftData = this.leftShots;
-        }
 
         this.binsL = hexbinL(this.leftShots);
         let svg = d3.select(".fullCourt");
@@ -476,7 +473,7 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text");
 
-        if (this.activeYear !== null || this.reset === true) {
+        if (this.activeYear !== null || this.reset === true || this.activeYear === null) {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYear);
 
@@ -543,8 +540,8 @@ class HeatMap {
             .append('svg').attr("id", "slider-text-playerComp");
 
             this.slider2present = true;
-
-        if (this.activeYearPlayer !== null && this.slider2present === true) {
+ 
+        if (this.activeYearPlayer !== null || this.slider2present === true) {
         //let sliderLabelpresent = d3.select('#slider-wrap-Comp');
         //let yearSlider = d3.select('#playerCompSlider');
         
@@ -671,6 +668,8 @@ class HeatMap {
             this.leftShotData.push(node);
 
         }
+
+        this.resetLeftData = this.leftShotData;
 
         d3.select("#heatmap-svg").remove();
         d3.select("#tooltip").remove();
