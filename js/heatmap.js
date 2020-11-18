@@ -247,7 +247,12 @@ class HeatMap {
                 d3.select("#heatmap-svg-div").remove();
 
                 that.drawHeatMapRight(8,5);
-                that.leftShotData = that.resetLeftData;
+                if (that.playerCompON === true) {
+                    that.leftShotData = that.resetLeftData;
+                }
+                // else {
+                //     that.leftShotData = that.resetLeftDataKobe;
+                // }
                 that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
@@ -363,6 +368,10 @@ class HeatMap {
                     this.leftShots.push(that.leftShotData[i]);
                 }
             }
+        }
+
+        if (this.slider === false && this.slider2 === false) {
+            that.resetLeftDataKobe = this.leftShotData;
         }
 
         this.binsL = hexbinL(this.leftShots);
