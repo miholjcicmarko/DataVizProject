@@ -711,8 +711,12 @@ class HeatMap {
         d3.select("#rightCourt").remove();
         d3.select(".slider-wrap").remove();
 
+        this.playerCompON = false;
+        this.playoffOn = false;
+
         this.slider = false;
         this.slider2 = false;
+        this.slider2present = false;
 
     }
 
