@@ -247,23 +247,36 @@ class HeatMap {
                 d3.select("#tooltip").remove();
                 d3.select("#heatmap-svg-div").remove();
 
-                if (slider === true && slider2 === true) {
+            if (that.playerComp === true) {
+
+                if (that.slider === true && that.slider2 === true) {
                     that.drawHeatMapRight(8,5);
                     that.drawHeatMapLeft(8,5);
                 }
-                else if (slider === true && slider2 === false) {
+                else if (that.slider === true && that.slider2 === false) {
                     that.drawHeatMapRight(8,5);
                     that.drawHeatMapLeft(4,15);
                 }
-                else if (slider === false && slider2 === true) {
+                else if (that.slider === false && that.slider2 === true) {
                     that.drawHeatMapRight(4,15);
                     that.drawHeatMapLeft(8,5);
                 }
-                else if (slider === false && slider2 === false) {
+                else if (that.slider === false && that.slider2 === false) {
                     that.drawHeatMapRight(4,15);
                     that.drawHeatMapLeft(4,15);
                 }
             }
+            else if (that.playerComp === false) {
+                if (that.slider === true) {
+                    that.drawHeatMapRight(8,5);
+                    that.drawHeatMapLeft(8,5);
+                }
+                else if (that.slider === false) {
+                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapLeft(4,15);
+                }
+            }
+        }
         })
 
         resetButton.on("click", function() {
