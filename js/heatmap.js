@@ -469,7 +469,7 @@ class HeatMap {
             .append('div').classed('slider-label', true)
             .append('svg').attr("id", "slider-text");
 
-        if (this.activeYear !== null) {
+        if (this.activeYear !== null || this.reset === true) {
         let sliderText = sliderLabel.append('text')
             .text(this.activeYear);
 
@@ -754,9 +754,12 @@ class HeatMap {
         }
 
         this.shotData = this.resetData;
+        this.leftShotData = this.resetLeftData;
         this.drawHeatMapRight(4,15);
         this.drawHeatMapLeft(4,15);
-        this.drawYearBar(updateYearKobe);
+        this.reset = true;
+        this.drawYearBar(this.updateYearKobe);
+        this.reset = false;
     }
 
     // rotation function to use in draw brush to convert between pixel location and d.x d.y 
