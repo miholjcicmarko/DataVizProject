@@ -8,9 +8,26 @@ Container stylings for the button and slider
     left: 5%;
     grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-template-rows: 1fr;
-    column-gap: 15%;
+    column-gap: 10%;
     
     grid-template-areas: "playoff-season-labelA checkbox playoff-season-labelB checkbox";
+}
+
+#heatmap-svg-div{
+    width: fit-content;
+}
+
+#heatmap-div{
+    width: fit-content;
+    margin: auto;
+}
+
+#header-wrap{
+    width: fit-content;
+}
+
+#Mamba-body{
+    background-color: white;
 }
 
 /* label stylings */
@@ -42,8 +59,11 @@ Container stylings for the button and slider
 }
 
 #dropdown {
-    padding-left: 10%;
+    padding-left: 6.5%;
     font-size: 25px;
+    /* position: absolute; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
 }
 
 #selectNow {
@@ -91,8 +111,7 @@ Styling for the buttons
     text-align: center;
     font-size: 25px;
 }
-
-button {
+#back-button{
     grid-area: "button";
     position: relative;
     background-color: rgb(253,185,39);
@@ -100,6 +119,22 @@ button {
     text-align: center;
     font-size: 25px;
 }
+#next-button{
+    grid-area: "button";
+    position: relative;
+    background-color: rgb(253,185,39);
+    padding: 1% 1%;
+    text-align: center;
+    font-size: 25px;
+}
+/* button {
+    grid-area: "button";
+    position: relative;
+    background-color: rgb(253,185,39);
+    padding: 1% 1%;
+    text-align: center;
+    font-size: 25px;
+} */
 
 .button:active {
     box-shadow: 0 5px rgb(253,185,39);
@@ -226,12 +261,6 @@ Styling for the container containing the story buttons and sliders
     z-index: -1;
 }
 
-#dropdown {
-    position: absolute;
-    left: 5%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: bold;
-}
 
 select {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -251,11 +280,14 @@ select {
     stroke: black;
 }
 
+.fullCourt{
+    z-index: -1;
+}
 /* sub vis styling */
 
 div.subVis {
     display: grid;
-    position: fixed;
+    position: absolute;
     align-self: center;
     width: 400px;
     height: 600px;
@@ -280,6 +312,13 @@ div.subVis {
 #subSVG-2 {
     grid-area: "subSVG-2";
     place-self: center;
+}
+
+.subvis-label{
+    text-anchor: middle;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .svg-text {
@@ -318,4 +357,69 @@ div.subVis {
     opacity: 0;
     font-size: 50px;
     color: rgb(255, 51, 0);
+}
+
+/* home page styling */
+#home-container{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "div";
+}
+
+#home-header{
+    position: absolute;
+    font-size: 32px;
+    left: 490px;
+    color: #948e65;
+    text-shadow: 2px 1px black;
+}
+
+#home-div {
+    width: 100%;
+    height: 100%;
+    min-width: 750px;
+    min-height: 750px;
+    grid-area: "div";
+    align-self: center;
+    justify-self: center;
+    /* background-image: url("./data/AlwaysLovetheHate.png"); */
+}
+
+#kobe-trib{
+    width: 100%;
+    height: auto;
+    z-index: 0;
+}
+
+#home-body{
+    background-color: black;
+}
+
+#about-button{
+    position: absolute;
+    background-color:#948e65;
+    padding: 1% 1%;
+    text-align: center;
+    font-size: 25px;
+    top: 825px;
+    left: 540px;
+    border-radius: 8px;
+    width: 225px;
+}
+
+#heatmap-button{
+    position: absolute;
+    background-color: #948e65;
+    padding: 1% 1%;
+    text-align: center;
+    font-size: 25px;
+    top: 825px;
+    left: 1120px;
+    border-radius: 8px;
+    width: 225px;
+}
+
+footer{
+    color: white;
 }

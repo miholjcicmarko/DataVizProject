@@ -84,17 +84,19 @@ class HeatMap {
         let yMax = d3.max(ylist);
         let yMin = d3.min(ylist);
 
-        this.vizHeight = 900;
-        this.svgWidth = 1200;
-        this.vizWidth = 1200;
+        this.vizHeight = 950;
+        this.svgWidth = 1750;
+        this.vizWidth = 1750;
         this.margin = 25;
+        this.xOffset = 495;
+        this.yOffset = -200;
 
         this.xScale = d3.scaleLinear()
             .domain([xMin, xMax])
-            .range([this.margin,(this.vizWidth+1.5*this.margin)/2]);
+            .range([this.margin,(this.vizWidth-282)/2]);
         this.yScale = d3.scaleLinear()
             .domain([yMin, yMax])
-            .range([this.margin,(this.vizHeight+100)]);
+            .range([this.margin,this.vizHeight+260]);
         this.scaleColor = d3.scaleOrdinal()
             .domain(this.typeList)
             .range(d3.schemeSet2);
@@ -183,7 +185,7 @@ class HeatMap {
            .data(this.binsR)
            .join("path")
             .attr("transform", function(d) {
-                return "rotate(90,"+that.vizWidth/2+","+that.vizHeight/2+") translate(277,-112)";
+                return "rotate(90,"+that.vizWidth/2+","+that.vizHeight/2+") translate("+that.xOffset+","+that.yOffset+")";
             })
             .attr("d",function(d) { return "M"+d.x+","+d.y+hexbin.hexagon();})
             .attr("fill",function(d,i){
@@ -285,15 +287,15 @@ class HeatMap {
                 }
                 else if (that.slider === true && that.slider2 === false) {
                     that.drawHeatMapRight(8,5);
-                    that.drawHeatMapLeft(4,15);
+                    that.drawHeatMapLeft(6,15);
                 }
                 else if (that.slider === false && that.slider2 === true) {
-                    that.drawHeatMapRight(4,15);
+                    that.drawHeatMapRight(6,15);
                     that.drawHeatMapLeft(8,5);
                 }
                 else if (that.slider === false && that.slider2 === false) {
-                    that.drawHeatMapRight(4,15);
-                    that.drawHeatMapLeft(4,15);
+                    that.drawHeatMapRight(6,15);
+                    that.drawHeatMapLeft(6,15);
                 }
             }
             else if (that.playerCompON === false) {
@@ -302,8 +304,8 @@ class HeatMap {
                     that.drawHeatMapLeft(8,5);
                 }
                 else if (that.slider === false) {
-                    that.drawHeatMapRight(4,15);
-                    that.drawHeatMapLeft(4,15);
+                    that.drawHeatMapRight(6,15);
+                    that.drawHeatMapLeft(6,15);
                 }
             }
         }
@@ -402,7 +404,7 @@ class HeatMap {
            .data(this.binsL)
            .join("path")
             .attr("transform", function(d) {
-                return "rotate(-90,"+that.vizWidth/2+","+that.vizHeight/2+") translate(277,-112)"
+                return "rotate(-90,"+that.vizWidth/2+","+that.vizHeight/2+") translate("+that.xOffset+","+that.yOffset+")";
             })
             .attr("d",function(d) { return "M"+d.x+","+d.y+hexbinL.hexagon();})
             .attr("fill",function(d){
@@ -633,7 +635,7 @@ class HeatMap {
             this.drawHeatMapLeft(8,5);
         }
         else if (this.playerCompON === true && this.slider2 === false) {
-            this.drawHeatMapLeft(4,15);
+            this.drawHeatMapLeft(6,15);
         }
         else if (this.playerCompON === true && this.slider2 === true) {
             this.drawHeatMapLeft(8,5);
@@ -668,7 +670,7 @@ class HeatMap {
         d3.select("#tooltip").remove();
 
         if (this.slider === false) {
-            this.drawHeatMapRight(4,15);
+            this.drawHeatMapRight(6,15);
         }
         else if (this.slider = true) {
             this.drawHeatMapRight(8,5);
@@ -711,8 +713,8 @@ class HeatMap {
             this.drawHeatMapLeft(8,5);
         }
         else if (this.playoffOn === false) {
-            this.drawHeatMapRight(4,15);
-            this.drawHeatMapLeft(4,15);
+            this.drawHeatMapRight(6,15);
+            this.drawHeatMapLeft(6,15);
         }
         //this.drawBrush();
 
@@ -780,8 +782,8 @@ class HeatMap {
 
         this.shotData = this.resetData;
         this.leftShotData = this.resetData;
-        this.drawHeatMapRight(4,15);
-        this.drawHeatMapLeft(4,15);
+        this.drawHeatMapRight(6,15);
+        this.drawHeatMapLeft(6,15);
         this.reset = true;
         this.drawYearBar(this.updateYearKobe);
         this.reset = false;
@@ -838,14 +840,14 @@ class HeatMap {
                     let [x2R,y2R] = [0,0];
 
                     if(x1 > that.vizWidth/2){
-                        [x1R,y1R] = that.rotate(600,450,x1,y1,90);
-                        [x2R,y2R] = that.rotate(600,450,x2,y2,90);
+                        [x1R,y1R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x1,y1,90);
+                        [x2R,y2R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x2,y2,90);
                     }
 
-                    let x1Rt = x1R-277;
-                    let x2Rt = x2R-277;
-                    let y1Rt = y1R+112;
-                    let y2Rt = y2R+112;
+                    let x1Rt = x1R-that.xOffset;
+                    let x2Rt = x2R-that.xOffset;
+                    let y1Rt = y1R-that.yOffset;
+                    let y2Rt = y2R-that.yOffset;
                     
                     brushBinsR.forEach((d,i) => {
                         if((d.x >= x1Rt && d.x <= x2Rt) &&
@@ -888,25 +890,6 @@ class HeatMap {
         // this.testTransform();
     }
 
-    // to figure out what tranformation exactly was necessary to make the brushing able to select correctly
-    testTransform(){
-        let x = 322;
-        let y = 78;
-       
-        let xt = x+277;
-        let yt = y-112;
-        let [xr,yr] = this.rotate(600,450,xt,yt,-90);
-    
-        console.log("x-test",x,xt,xr)
-        console.log("y-test",y,yt,yr)
-
-        let xrev = 1084;
-        let yrev = 450;
-        let [xrevr,yrevr] = this.rotate(600,450,xrev,yrev,90);
-        let xrevt = xrevr-277;
-        let yrevt = yrevr+112;
-        console.log("rev",xrevt,yrevt)
-    }
 
     /**
      * Calculates the average fg% for the region selected by year an displays it in the subVis div as
@@ -924,8 +907,18 @@ class HeatMap {
                 .append("div")
                 .attr("class","subVis")
                 .attr("id","subVis-div")
-                .style("left",(x+100)+"px")
-                .style("top", (y-(y/2)+100)+"px")
+                .style("left",function(){
+                    if(x>(0.7*that.vizWidth)){
+                        return (x-750)+"px"
+                    }
+                    else {return (x+100)+"px"}
+                })
+                .style("top", function(){
+                    if(y>(0.5*that.vizHeight)){
+                        return (y-200)+"px"
+                    }
+                    else {return (y+200)+"px"}
+                })
                 .style("opacity",1);
             d3.select("#subVis-div")
                 .append("svg")
@@ -949,9 +942,18 @@ class HeatMap {
         let selectBinsL = this.binsL.filter((_,i) => {
             return indL.includes(i);
         })
-
+       
         let subVis1 = d3.select("#subSVG-1");
         let subVis2 = d3.select("#subSVG-2");
+        
+        subVis1.append("text").data(selectBinsR).text(selectBinsR[0][0].name+": Fg% over time")
+            .attr("x",350/2)
+            .attr("y",that.margin)
+            .attr("class","subvis-label");
+        subVis2.append("text").data(selectBinsL).text(selectBinsL[0][0].name+": Fg% over time")
+            .attr("x",350/2)
+            .attr("y",that.margin)
+            .attr("class","subvis-label");
 
         let totalShotsR = 0;
         let totalMadeR = 0;
@@ -987,6 +989,12 @@ class HeatMap {
                 })   
             })
             yearAvgFgR.push((numMadeYear/numShotYear)*100);
+            subVis1.append("text")
+                .text(yearsListR[i])
+                .attr("x",((i+2)*20)+10)
+                .attr("y",225)
+                .attr("text-anchor","middle")
+                .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
 
             numShotYear = 0;
             numMadeYear = 0;
@@ -999,6 +1007,12 @@ class HeatMap {
                 })   
             })
             yearAvgFgL.push((numMadeYear/numShotYear)*100);
+            subVis2.append("text")
+                .text(yearsListL[i])
+                .attr("x",((i+2)*20)+10)
+                .attr("y",225)
+                .attr("text-anchor","middle")
+                .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
         }
 
         subVis1.selectAll("rect")
@@ -1007,7 +1021,7 @@ class HeatMap {
             .attr("height",d => d*2)
             .attr("width",19)
             .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-(d*2))
+            .attr("y", d => 250-that.margin-(d*2))
             .attr("fill",d => this.purples(d));
         subVis2.selectAll("rect")
             .data(yearAvgFgL)
@@ -1015,7 +1029,7 @@ class HeatMap {
             .attr("height",d => d*2)
             .attr("width",19)
             .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-(d*2))
+            .attr("y", d => 250-that.margin-(d*2))
             .attr("fill",d => this.grays(d));
         
         // console.log(yearsListR)
