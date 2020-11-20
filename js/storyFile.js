@@ -56,7 +56,7 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.55)
+                .attr("width", that.svgWidth/2.5)
                 .attr("height", that.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
 
@@ -75,6 +75,18 @@ class storyFile {
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary')
+                          .attr("width", that.svgWidth/2.55)
+                          .attr("height", that.vizHeight/5)
+                          .style("top", 840 + "px")
+                          .style("left", 65 + "px")
+                          .style("z-index", 2);
+
+            summary_div.style("background-color", "rgb(253,185,39)")
+                        .style("color", "black");
+
+            summary_div.html(that.story_summary(that.counter));
 
             }
             
@@ -189,5 +201,18 @@ class storyFile {
     removeStory () {
         d3.select("#storyID").remove();
         d3.select('#overlay').style("z-index", -1);
+    }
+
+    story_summary (counter) {
+
+        if (counter === 0) {
+            return "<h2>" + "Kobe's First Game Winning Buzzer Beater" + "<h2>" + 
+            "<p>" + "Date: February 22, 2002" + "</p>" + "<p>" +
+            "Bryant drills game winner over the outstretched arm of George Lynch"
+            + "</p>";
+        }
+
+
+
     }
 }

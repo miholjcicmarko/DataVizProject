@@ -73,7 +73,7 @@ Styling for the container below the shot chart
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-columns: 1fr 1fr 2fr; 
     grid-template-rows: 1fr;
     column-gap: 5%;
     
@@ -226,6 +226,18 @@ Styling for the container containing the story buttons and sliders
     z-index: -1;
 }
 
+#story-summary {
+    position: absolute;
+    padding: 0%;
+    width: 540px;
+    height: 175px;
+    top: 0;
+    left: 1.5%;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
 #dropdown {
     position: absolute;
     left: 5%;
@@ -298,7 +310,7 @@ div.subVis {
     width: 600px;
     height: 500px;
     top: 0%;
-    left: 4%;
+    left: 3%;
     right: 0;
     bottom: 0;
     z-index: -1;
