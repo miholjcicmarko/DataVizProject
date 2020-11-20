@@ -70,8 +70,8 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 880 + "px")
-                .style("left", 970+ "px")
+                .style("top", 968 + "px")
+                .style("left", 1388 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
