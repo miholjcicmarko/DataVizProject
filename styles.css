@@ -27,7 +27,7 @@ Container stylings for the button and slider
 }
 
 #Mamba-body{
-    background-color: white;
+    background-color: rgb(255, 255, 255);
 }
 
 /* label stylings */
@@ -321,6 +321,11 @@ div.subVis {
     font-size: 18px;
 }
 
+.year-label{
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
 .svg-text {
     text-anchor: middle;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -383,7 +388,6 @@ div.subVis {
     grid-area: "div";
     align-self: center;
     justify-self: center;
-    /* background-image: url("./data/AlwaysLovetheHate.png"); */
 }
 
 #kobe-trib{
@@ -422,4 +426,69 @@ div.subVis {
 
 footer{
     color: white;
+}
+
+/* About page styling */
+#about-header{
+    display: grid;
+    grid-template-columns: 100px 100px 1fr;
+    grid-template-rows: 30px;
+    grid-template-areas: "home" "heat" ".";
+}
+
+#aboutVid{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "video";
+}
+
+#aboutID{
+    grid-area: "video";
+    align-self: center;
+    justify-self: center;
+}
+
+#aboutText{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 95%;
+    height: fit-content;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 18px;
+}
+
+#about-home{
+    display: block;
+    grid-area: "home";
+    border-radius: 6px;
+    background-color: rgb(253,185,39);
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+}
+
+#about-heatmap{
+    display: block;
+    grid-area: "heat";
+    border-radius: 6px;
+    background-color: rgb(85,37,130);
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 24px;
+}
+
+.hyper{
+    color: white;
+}
+
+a{
+    text-decoration: none;
 }

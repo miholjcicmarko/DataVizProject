@@ -994,6 +994,7 @@ class HeatMap {
                 .attr("x",((i+2)*20)+10)
                 .attr("y",225)
                 .attr("text-anchor","middle")
+                .attr("class","year-label")
                 .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
 
             numShotYear = 0;
@@ -1012,6 +1013,7 @@ class HeatMap {
                 .attr("x",((i+2)*20)+10)
                 .attr("y",225)
                 .attr("text-anchor","middle")
+                .attr("class","year-label")
                 .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
         }
 
