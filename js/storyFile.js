@@ -46,17 +46,17 @@ class storyFile {
             });
 
             let story_div = d3.select('#overlay')
-                          .attr("width", that.svgWidth/2)
+                          .attr("width", that.svgWidth/2.25)
                           .attr("height", that.vizHeight/3)
-                          .style("top", 420 + "px")
-                          .style("left", 110 + "px")
+                          .style("top", 475 + "px")
+                          .style("left", 680 + "px")
                           .style("z-index", 2);
 
             // Hornets buzzer beater
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.5)
+                .attr("width", that.svgWidth/2.3)
                 .attr("height", that.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
 
@@ -64,14 +64,14 @@ class storyFile {
                 .style("z-index", 1);
 
             tv
-                .style("top", 380 +"px")
+                .style("top", 413 +"px")
                 .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 968 + "px")
-                .style("left", 1388 + "px")
+                .style("top", 995 + "px")
+                .style("left", 1720 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -79,8 +79,8 @@ class storyFile {
             let summary_div = d3.select('#story-summary')
                           .attr("width", that.svgWidth/2.55)
                           .attr("height", that.vizHeight/5)
-                          .style("top", 840 + "px")
-                          .style("left", 65 + "px")
+                          .style("top", 915 + "px")
+                          .style("left", 628 + "px")
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
@@ -106,10 +106,20 @@ class storyFile {
             story_div
             .append("iframe")
             .attr("id", "storyID")
-            .attr("width", this.svgWidth/2.1)
-            .attr("height", this.vizHeight/2)
-            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I")
-            .attr("allowfullscreen", true);
+            .attr("width", this.svgWidth/2.3)
+            .attr("height", this.vizHeight/3)
+            .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 995 + "px")
+                .style("left", 1720 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            summary_div.html(that.story_summary(that.counter));
         }
         else if (this.counter === 1) {
 
@@ -119,9 +129,18 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.3)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 715 + "px")
+                .style("left", 1545 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
         }
 
         else if (this.counter === 2) {
@@ -132,8 +151,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
         }
 
@@ -144,8 +163,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
         }
 
@@ -156,8 +175,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
         }
 
@@ -168,8 +187,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
         }
 
@@ -180,8 +199,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0"); 
         }
 
@@ -192,8 +211,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.1)
-                .attr("height", this.vizHeight/2)
+                .attr("width", this.svgWidth/2.5)
+                .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
         }
     }
@@ -201,6 +220,16 @@ class storyFile {
     removeStory () {
         d3.select("#storyID").remove();
         d3.select('#overlay').style("z-index", -1);
+
+        d3.select('#tv').style("z-index", -1);
+        let ball = d3.select("#ball");
+        
+        ball
+            .style("z-index", -1)
+            .style("opacity", 0);
+
+        d3.select('#story-summary').style("z-index", -1);
+
     }
 
     story_summary (counter) {

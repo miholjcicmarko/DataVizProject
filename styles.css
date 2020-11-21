@@ -264,8 +264,8 @@ Styling for the container containing the story buttons and sliders
 #story-summary {
     position: absolute;
     padding: 0%;
-    width: 540px;
-    height: 175px;
+    width: 647px;
+    height: 227px;
     top: 0;
     left: 1.5%;
     right: 0;
@@ -360,12 +360,12 @@ div.subVis {
     width: 600px;
     height: 500px;
     top: 0%;
-    left: 3%;
+    left: 25%;
     right: 0;
     bottom: 0;
     z-index: -1;
     opacity: 0;
-    font-size: 450px;
+    font-size: 490px;
 }
 
 #ball {
@@ -376,7 +376,7 @@ div.subVis {
     left: 4%;
     right: 0;
     bottom: 0;
-    z-index: 1;
+    z-index: -1;
     opacity: 0;
     font-size: 50px;
     color: rgb(255, 51, 0);
