@@ -121,6 +121,8 @@ class HeatMap {
             .text("Season Kobe")
             .attr("fill", "rgb(85,37,130)");
 
+        this.player_name = "Kobe Bryant";
+
     }   
 
     /**
@@ -316,6 +318,14 @@ class HeatMap {
         }
         })
 
+        if (this.player_name !== "Kobe Bryant" && this.playoffOn === true) {
+            let rightLabel = d3.select("#right-label");
+
+            rightLabel.selectAll("text")
+                .text("Playoff Kobe")
+                .attr("fill", "rgb(85,37,130)");
+        }
+
         resetButton.on("click", function() {
             that.resetViz();
         });
@@ -452,6 +462,16 @@ class HeatMap {
 
             if (this.playerCompON === true && this.slider2present === false) {
                 that.drawYearBarPlayer(this.updateYearPlayer);
+            }
+
+            if (this.player_name !== "Kobe Bryant" && this.playoffOn === true) {
+                let rightLabel = d3.select("#left-label");
+
+                let display = "Playoff" + this.player_name;
+    
+                rightLabel.selectAll("text")
+                    .text(display)
+                    .attr("fill", "rgb(85,37,130)");
             }
 
             that.tooltip(hexbins);
@@ -721,6 +741,31 @@ class HeatMap {
             this.drawHeatMapRight(6,15);
             this.drawHeatMapLeft(6,15);
         }
+
+        let leftLabel = d3.select("#left-label");
+
+        let player_name = this.leftShotData[0].name; 
+        
+        if (this.playoffOn === true) {
+            this.displays = "Playoff " + player_name;
+        }
+        else if (this.playoffOn === false) {
+            this.displays = "Regular " + player_name;
+        }
+
+        if (player_name !== "Giannis Antetokounmpo") {
+            leftLabel.selectAll("text")
+            .attr("transform", "translate(155,55)")
+            .style("font-size", "24px")
+            .text(this.displays);
+        }
+        else {
+            leftLabel.selectAll("text")
+            .attr("transform", "translate(155,55)")
+            .style("font-size", "16px")
+            .text(this.displays);
+        }
+
         //this.drawBrush();
 
     }
