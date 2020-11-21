@@ -234,8 +234,9 @@ class HeatMap {
 
                 that.playerCompON = true;
 
-                if (storyON === true) {
-                    that.resetViz():
+                if (that.storyON === true) {
+                    let pressed = false;
+                    that.storyTell(pressed);
                 }
 
                 if (player === '-') {

@@ -314,6 +314,9 @@ class storyFile {
 
         d3.select('#story-summary').style("z-index", -1);
 
+        d3.select("#back-button").remove();
+        d3.select("#next-button").remove();
+
     }
 
     story_summary (counter) {
