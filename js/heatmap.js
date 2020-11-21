@@ -234,6 +234,10 @@ class HeatMap {
 
                 that.playerCompON = true;
 
+                if (storyON === true) {
+                    that.resetViz():
+                }
+
                 if (player === '-') {
                     that.resetViz();
                 }
@@ -474,7 +478,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name+year+ "</br>"+ season_playoff+ "</h5>";
+            "<br/>"+ name + " " + year + "</br>"+ season_playoff+ "</h5>";
     }
 
     /**

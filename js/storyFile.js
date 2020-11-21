@@ -70,7 +70,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 995 + "px")
+                .style("top", 1000 + "px")
                 .style("left", 1720 + "px")
                 .style("z-index", 1);
 
@@ -113,13 +113,15 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 995 + "px")
+                .style("top", 1000 + "px")
                 .style("left", 1720 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
 
-            summary_div.html(that.story_summary(that.counter));
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
         else if (this.counter === 1) {
 
@@ -141,6 +143,10 @@ class storyFile {
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 2) {
@@ -151,9 +157,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 775 + "px")
+                .style("left", 1545 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 3) {
@@ -163,9 +182,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 595 + "px")
+                .style("left", 1520 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 4) {
@@ -175,9 +207,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 870 + "px")
+                .style("left", 1620 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 5) {
@@ -187,9 +232,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 790 + "px")
+                .style("left", 1470 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 6) {
@@ -199,9 +257,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
-                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0"); 
+                .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0");
+                
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 575 + "px")
+                .style("left", 1690 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
 
         else if (this.counter === 7) {
@@ -211,9 +282,22 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.5)
+                .attr("width", this.svgWidth/2.3)
                 .attr("height", this.vizHeight/3)
                 .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
+
+            let ball = d3.select("#ball")
+                .attr("width", this.svgWidth/5)
+                .attr("height", this.vizHeight/5)
+                .style("top", 420 + "px")
+                .style("left", 1775 + "px")
+                .style("z-index", 1);
+
+            ball.style("opacity", 1);
+
+            let summary_div = d3.select('#story-summary');
+
+            summary_div.html(this.story_summary(this.counter));
         }
     }
 
@@ -238,10 +322,49 @@ class storyFile {
             return "<h2>" + "Kobe's First Game Winning Buzzer Beater" + "<h2>" + 
             "<p>" + "Date: February 22, 2002" + "</p>" + "<p>" +
             "Bryant drills game winner over the outstretched arm of George Lynch"
-            + "</p>";
+            + "</p>" + "<p>" + "Hornets 94 Lakers 96";
         }
-
-
-
+        else if (counter === 1) {
+            return "<h2>" + "Kobe's Second Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: April 3, 2003" + "</p>" + "<p>" +
+            "Bryant knocks down the final shot of the game over Shane Battier"
+            + "</p>" + "<p>" + "Grizzlies 102 Lakers 101";
+        }
+        else if (counter === 2) {
+            return "<h2>" + "Kobe's Third Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: December 18, 2003" + "</p>" + "<p>" +
+            "Bryant pump fakes Jon Barry and drains the game winner"
+            + "</p>" + "<p>" + "Nuggets 99 Lakers 101";
+        }
+        else if (counter === 3) {
+            return "<h2>" + "Kobe's Fourth Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: April 13, 2004" + "</p>" + "<p>" +
+            "Bryant drills game winner over Theo Ratliff in the 2nd overtime"
+            + "</p>" + "<p>" + "Trail Blazers 104 Lakers 105";
+        }
+        else if (counter === 4) {
+            return "<h2>" + "Kobe's Fifth Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: April 29, 2006" + "</p>" + "<p>" +
+            "Bryant pulls up over Boris Diaw and Raja Bell to deliver a 1st Round, Game 4 playoff win"
+            + "</p>" + "<p>" + "Suns 98 Lakers 99";
+        }
+        else if (counter === 5) {
+            return "<h2>" + "Kobe's Sixth Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: December 3, 2009" + "</p>" + "<p>" +
+            "Bryant shoots over Dwyane Wade and banks in the game winner"
+            + "</p>" + "<p>" + "Heat 107 Lakers 108";
+        }
+        else if (counter === 6) {
+            return "<h2>" + "Kobe's Seventh Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: December 15, 2009" + "</p>" + "<p>" +
+            "Bryant hits a turnaround jumper over Charlie Bell for the win"
+            + "</p>" + "<p>" + "Bucks 106 Lakers 107";
+        }
+        else if (counter === 7) {
+            return "<h2>" + "Kobe's Eighth and Last Game Winning Buzzer Beater" + "<h2>" +
+            "<p>" + "Date: December 31, 2009" + "</p>" + "<p>" +
+            "Bryant drills a jumper to complete a Laker comeback victory"
+            + "</p>" + "<p>" + "Kings 108 Lakers 109";
+        }
     }
 }
