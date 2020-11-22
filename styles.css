@@ -521,3 +521,13 @@ footer{
 a{
     text-decoration: none;
 }
+
+.bubble-style {
+    fill: rgb(253,185,39);
+    stroke: rgb(85,37,130);
+    stroke-width: 3px;
+}
+
+.bubble-fill {
+    fill: rgb(85,37,130);
+}
