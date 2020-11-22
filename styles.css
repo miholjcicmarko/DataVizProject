@@ -530,4 +530,6 @@ a{
 
 .bubble-fill {
     fill: rgb(85,37,130);
+    stroke: rgb(253,185,39);
+    stroke-width: 3px;
 }

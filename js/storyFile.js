@@ -385,7 +385,7 @@ class storyFile {
         bubbles.selectAll("circle")
             .data(id_bubbles)
             .join("circle")
-            .attr("id", (d,i) => "cicle" + i)
+            .attr("id", (d,i) => "circle" + i)
             .attr("cx", d => d*25)
             .attr("cy", 15)
             .attr("r", 7);
@@ -394,24 +394,16 @@ class storyFile {
             .classed("bubble-style", true);
 
         if (counter === 0) {
-            let bubbles = d3.select("#bubbles-svg");
-
-            bubbles.selectAll("circle")
-                .classed("bubble-style", true);
 
             let circle = d3.select("#circle0");
 
             circle.classed("bubble-fill", true);
         }
         else if (counter === 1) {
-            let bubbles = d3.select("#bubbles-svg");
-
-            bubbles.selectAll("circle")
-                .classed("bubble-style", true);
 
             let circle = d3.select("#circle1");
 
-                circle.classed("bubble-fill", true);
+            circle.classed("bubble-fill", true);
         }
 
     }
