@@ -370,4 +370,8 @@ class storyFile {
             + "</p>" + "<p>" + "Kings 108 Lakers 109";
         }
     }
+
+    drawBubbles () {
+         
+    }
 }

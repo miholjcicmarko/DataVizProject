@@ -54,6 +54,7 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
+        this.sliderPresent = false;
         this.slider2present = false;
 
         this.data = data;
@@ -123,7 +124,16 @@ class HeatMap {
 
         this.player_name = "Kobe Bryant";
 
-        this.sliderPresent = false;
+        let sliderPlayer = d3.select("#sliderLabel2")
+                .append("svg").attr("id", "slider-label2")
+                .classed("svg-text", true);
+
+            let displays = "Choose year for " + this.player_name;
+    
+            sliderPlayer.append("text")
+                    .attr("transform", "translate(155,15)")
+                    .style("font-size", "18px")
+                    .text(displays);
     }   
 
     /**
@@ -275,7 +285,6 @@ class HeatMap {
 
         toggleStory.on("click", function() {
             if (that.storyON === false) {
-                d3.select("#slider-label").remove();
                 let pressed = true;
                 that.storyTell(pressed);
             }
@@ -291,9 +300,7 @@ class HeatMap {
                 if (that.playerCompON === true) {
                     that.leftShotData = that.resetLeftData;
                 }
-                // else {
-                //     that.leftShotData = that.resetLeftDataKobe;
-                // }
+               
                 that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
@@ -609,6 +616,7 @@ class HeatMap {
                             .range([30, 730]);
         
         if (this.slider2present === false) {
+
         let yearSlider = d3.select('#playerCompSlider')
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider2', true)
@@ -775,6 +783,18 @@ class HeatMap {
             .text(this.displays);
         }
 
+        d3.select("#slider-label2").remove();
+
+        let sliderPlayer = d3.select("#slider-label2");
+
+        let playerDisplays = "Choose year for " + this.player_name;
+
+        sliderPlayer.selectAll("text")
+            .attr("transform", "translate(155,15)")
+            .style("font-size", "18px")
+            .text(playerDisplays);
+        
+
         this.resetLeftData = this.leftShotData;
 
         d3.select("#heatmap-svg").remove();
@@ -809,12 +829,20 @@ class HeatMap {
         d3.select("#rightCourt").remove();
         d3.selectAll(".slider-wrap").remove();
 
+        d3.select("#slider-label").remove();
+        this.sliderPresent = false;
+
+        if (this.slider2present === true) {
+            d3.select("#slider-label2").remove();
+        }
+
         this.playerCompON = false;
         this.playoffOn = false;
 
         this.slider = false;
         this.slider2 = false;
         this.slider2present = false;
+        this.newSlider2 = false;
 
         document.getElementById("playoff-check").checked = false;
         document.getElementById("selectNow").selectedIndex = 0;
@@ -858,6 +886,7 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
+        this.newSlider2 = false;
         
         //if (this.playoffOn === true) {
             this.playoffOn = false;
@@ -869,7 +898,7 @@ class HeatMap {
             document.getElementById("selectNow").selectedIndex = 0;
         //}
 
-        this.slider2present = false;
+        d3.select("#slider-label2").remove();
 
         d3.selectAll(".slider-wrap").remove();
 

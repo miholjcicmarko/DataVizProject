@@ -248,19 +248,19 @@ Styling for the container containing the story buttons and sliders
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 25fr; 
+    grid-template-columns: 5fr 10fr 20fr; 
     grid-template-rows: 1fr;
     column-gap: 0%;
     
-    grid-template-areas: "bubbles slider-label2 slider";
+    grid-template-areas: "bubbles sliderLabel2 slider";
 }
 
 #bubbles {
     grid-area: "bubbles";
 }
 
-#slider-label2 {
-    grid-area: "slider-label2";
+#sliderLabel2 {
+    grid-area: "sliderLabel2";
 }
 
 #overlay {
