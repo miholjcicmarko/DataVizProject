@@ -124,16 +124,9 @@ class HeatMap {
 
         this.player_name = "Kobe Bryant";
 
-        let sliderPlayer = d3.select("#sliderLabel2")
+        d3.select("#sliderLabel2")
                 .append("svg").attr("id", "slider-label2")
                 .classed("svg-text", true);
-
-            let displays = "Choose year for " + this.player_name;
-    
-            sliderPlayer.append("text")
-                    .attr("transform", "translate(155,15)")
-                    .style("font-size", "18px")
-                    .text(displays);
     }   
 
     /**
@@ -785,16 +778,25 @@ class HeatMap {
 
         d3.select("#slider-label2").remove();
 
-        let sliderPlayer = d3.select("#slider-label2");
+        let sliderPlayer = d3.select("#sliderLabel2")
+                .append("svg").attr("id", "slider-label2")
+                .classed("svg-text", true);
 
         let playerDisplays = "Choose year for " + this.player_name;
 
-        sliderPlayer.selectAll("text")
+        if (this.player_name !== "Giannis Antetokounmpo") {
+            sliderPlayer.append("text")
             .attr("transform", "translate(155,15)")
             .style("font-size", "18px")
             .text(playerDisplays);
+        }
+        else {
+            sliderPlayer.append("text")
+            .attr("transform", "translate(155,15)")
+            .style("font-size", "14px")
+            .text(playerDisplays);
+        }
         
-
         this.resetLeftData = this.leftShotData;
 
         d3.select("#heatmap-svg").remove();
