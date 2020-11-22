@@ -123,6 +123,7 @@ class HeatMap {
 
         this.player_name = "Kobe Bryant";
 
+        this.sliderPresent = false;
     }   
 
     /**
@@ -249,6 +250,19 @@ class HeatMap {
                 }
             });
 
+        if (this.sliderPresent === false) {
+            let sliderKobe = d3.select("#sliderLabel")
+            .append("svg").attr("id", "slider-label")
+            .classed("svg-text", true);
+
+            sliderKobe.append("text")
+                .attr("transform", "translate(155,25)")
+                .style("font-size", "26px")
+                .text("Choose Year for Kobe");
+
+            this.sliderPresent = true;
+        }
+
         this.tooltip(hexbins);
 
         let toggleStory = d3.select("#story-button");
@@ -261,6 +275,7 @@ class HeatMap {
 
         toggleStory.on("click", function() {
             if (that.storyON === false) {
+                d3.select("#slider-label").remove();
                 let pressed = true;
                 that.storyTell(pressed);
             }

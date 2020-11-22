@@ -96,11 +96,12 @@ Styling for the container below the shot chart
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 2fr; 
+    height: 50px;
+    grid-template-columns: 3fr 2fr 1fr 1fr 1fr 2fr; 
     grid-template-rows: 1fr;
-    column-gap: 5%;
+    column-gap: 1%;
     
-    grid-template-areas: "button button sliderLabel slider";
+    grid-template-areas: "button button . . . sliderLabel slider";
 }
 
 /*
@@ -251,7 +252,15 @@ Styling for the container containing the story buttons and sliders
     grid-template-rows: 1fr;
     column-gap: 0%;
     
-    grid-template-areas: "button button slider";
+    grid-template-areas: "bubbles slider-label2 slider";
+}
+
+#bubbles {
+    grid-area: "bubbles";
+}
+
+#slider-label2 {
+    grid-area: "slider-label2";
 }
 
 #overlay {

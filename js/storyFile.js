@@ -364,7 +364,7 @@ class storyFile {
             + "</p>" + "<p>" + "Bucks 106 Lakers 107";
         }
         else if (counter === 7) {
-            return "<h2>" + "Kobe's Eighth and Last Game Winning Buzzer Beater" + "<h2>" +
+            return "<h2>" + "Kobe's Eighth and Final Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: December 31, 2009" + "</p>" + "<p>" +
             "Bryant drills a jumper to complete a Laker comeback victory"
             + "</p>" + "<p>" + "Kings 108 Lakers 109";
