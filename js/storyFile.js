@@ -48,7 +48,7 @@ class storyFile {
             let story_div = d3.select('#overlay')
                           .attr("width", that.svgWidth/2.25)
                           .attr("height", that.vizHeight/3)
-                          .style("top", 475 + "px")
+                          .style("top", 373 + "px")
                           .style("left", 680 + "px")
                           .style("z-index", 2);
 
@@ -64,13 +64,13 @@ class storyFile {
                 .style("z-index", 1);
 
             tv
-                .style("top", 413 +"px")
+                .style("top", 312 +"px")
                 .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 1000 + "px")
+                .style("top", 900 + "px")
                 .style("left", 1720 + "px")
                 .style("z-index", 1);
 
@@ -79,7 +79,7 @@ class storyFile {
             let summary_div = d3.select('#story-summary')
                           .attr("width", that.svgWidth/2.55)
                           .attr("height", that.vizHeight/5)
-                          .style("top", 915 + "px")
+                          .style("top", 813 + "px")
                           .style("left", 628 + "px")
                           .style("z-index", 2);
 
@@ -113,7 +113,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 1000 + "px")
+                .style("top", 900 + "px")
                 .style("left", 1720 + "px")
                 .style("z-index", 1);
 
@@ -138,7 +138,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 715 + "px")
+                .style("top", 615 + "px")
                 .style("left", 1545 + "px")
                 .style("z-index", 1);
 
@@ -164,7 +164,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 775 + "px")
+                .style("top", 675 + "px")
                 .style("left", 1545 + "px")
                 .style("z-index", 1);
 
@@ -189,7 +189,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 595 + "px")
+                .style("top", 495 + "px")
                 .style("left", 1520 + "px")
                 .style("z-index", 1);
 
@@ -214,7 +214,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 870 + "px")
+                .style("top", 770 + "px")
                 .style("left", 1620 + "px")
                 .style("z-index", 1);
 
@@ -239,7 +239,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 790 + "px")
+                .style("top", 690 + "px")
                 .style("left", 1470 + "px")
                 .style("z-index", 1);
 
@@ -264,7 +264,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 575 + "px")
+                .style("top", 475 + "px")
                 .style("left", 1690 + "px")
                 .style("z-index", 1);
 
@@ -289,7 +289,7 @@ class storyFile {
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 420 + "px")
+                .style("top", 320 + "px")
                 .style("left", 1775 + "px")
                 .style("z-index", 1);
 
