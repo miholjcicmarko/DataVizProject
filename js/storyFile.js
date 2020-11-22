@@ -320,6 +320,7 @@ class storyFile {
 
         d3.select("#back-button").remove();
         d3.select("#next-button").remove();
+        d3.selectAll("#bubbles-svg").remove();
 
     }
 
@@ -376,6 +377,8 @@ class storyFile {
     }
 
     drawBubbles (counter) {
+        d3.select("#bubbles-svg").remove();
+
         let bubbles = d3.select("#bubbles")
             .append("svg")
             .attr("id", "bubbles-svg");
@@ -394,17 +397,84 @@ class storyFile {
             .classed("bubble-style", true);
 
         if (counter === 0) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
 
             let circle = d3.select("#circle0");
 
             circle.classed("bubble-fill", true);
         }
         else if (counter === 1) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
 
             let circle = d3.select("#circle1");
 
             circle.classed("bubble-fill", true);
         }
+        else if (counter === 2) {
+            let bubbles = d3.select("#bubbles-svg");
 
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle2");
+
+            circle.classed("bubble-fill", true);
+        }
+        else if (counter === 3) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle3");
+
+            circle.classed("bubble-fill", true);
+        }
+        else if (counter === 4) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle4");
+
+            circle.classed("bubble-fill", true);
+        }
+        else if (counter === 5) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle5");
+
+            circle.classed("bubble-fill", true);
+        }
+        else if (counter === 6) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle6");
+
+            circle.classed("bubble-fill", true);
+        }
+        else if (counter === 7) {
+            let bubbles = d3.select("#bubbles-svg");
+
+            bubbles.selectAll("circle")
+                .classed("bubble-style", true);
+
+            let circle = d3.select("#circle7");
+
+            circle.classed("bubble-fill", true);
+        }
     }
 }
