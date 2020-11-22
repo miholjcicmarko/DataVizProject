@@ -325,7 +325,7 @@ class HeatMap {
                 .text("Playoff Kobe")
                 .attr("fill", "rgb(85,37,130)");
         }
-        else if (this.player_name === "Kobe Bryant" && this.playoffOn === false) {
+        else if (this.player_name !== "Kobe Bryant" && this.playoffOn === false) {
             let rightLabel = d3.select("#right-label");
 
             rightLabel.selectAll("text")
