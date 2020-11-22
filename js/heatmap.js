@@ -286,8 +286,8 @@ class HeatMap {
         playoffButton.on("click", function() {
             if (that.playoffOn === false) {
                 that.playoffOn = true;
-                d3.select("#tooltip").remove();
-                d3.select("#heatmap-svg-div").remove();
+                d3.selectAll("#tooltip").remove();
+                d3.selectAll("#heatmap-svg-div").remove();
 
                 that.drawHeatMapRight(8,5);
                 if (that.playerCompON === true) {
@@ -298,8 +298,8 @@ class HeatMap {
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
-                d3.select("#tooltip").remove();
-                d3.select("#heatmap-svg-div").remove();
+                d3.selectAll("#tooltip").remove();
+                d3.selectAll("#heatmap-svg-div").remove();
 
             if (that.playerCompON === true) {
 
@@ -680,8 +680,8 @@ class HeatMap {
 
         this.shotData = newData;
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         this.drawHeatMapRight(8,5);
 
@@ -721,8 +721,8 @@ class HeatMap {
         d3.select("#next").attr("width", "50px")
             .attr("height", "50px");
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         if (this.slider === false) {
             this.drawHeatMapRight(6,15);
@@ -799,8 +799,8 @@ class HeatMap {
         
         this.resetLeftData = this.leftShotData;
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
         d3.selectAll(".slider-wrap").remove();
         
         this.drawYearBar(this.updateYearKobe);
@@ -817,6 +817,7 @@ class HeatMap {
             this.drawHeatMapLeft(6,15);
         }
 
+        document.getElementById("playoff-check").disabled = false;
         //this.drawBrush();
 
     }
@@ -871,6 +872,7 @@ class HeatMap {
 
         this.player_name = "Kobe Bryant";
 
+        document.getElementById("playoff-check").disabled = true;
     }
 
     /**
@@ -941,6 +943,8 @@ class HeatMap {
             .attr("fill", "rgb(85,37,130)");
 
         this.player_name = "Kobe Bryant";
+
+        document.getElementById("playoff-check").disabled = false;
     }
 
     // rotation function to use in draw brush to convert between pixel location and d.x d.y 
