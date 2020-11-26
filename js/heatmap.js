@@ -839,15 +839,20 @@ class HeatMap {
                     let [x1R,y1R] = [0,0];
                     let [x2R,y2R] = [0,0];
 
-                    if(x1 > that.vizWidth/2){
-                        [x1R,y1R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x1,y1,90);
-                        [x2R,y2R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x2,y2,90);
-                    }
+                    [x1R,y1R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x1,y1,90);
+                    [x2R,y2R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x2,y2,90);
 
                     let x1Rt = x1R-that.xOffset;
                     let x2Rt = x2R-that.xOffset;
                     let y1Rt = y1R-that.yOffset;
                     let y2Rt = y2R-that.yOffset;
+
+                    if(x1 < that.vizWidth/2){
+                        x1Rt = x1Rt-brShiftX;
+                        x2Rt = x2Rt-brShiftX;
+                        y1Rt = y1Rt-brShiftY;
+                        y2Rt = y2Rt-brShiftY;
+                    }
                     
                     brushBinsR.forEach((d,i) => {
                         if((d.x >= x1Rt && d.x <= x2Rt) &&

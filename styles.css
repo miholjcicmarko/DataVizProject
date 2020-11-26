@@ -393,7 +393,7 @@ div.subVis {
 #home-header{
     position: absolute;
     font-size: 32px;
-    left: 490px;
+    left: 25.5%;
     color: #948e65;
     text-shadow: 2px 1px black;
 }
@@ -424,8 +424,8 @@ div.subVis {
     padding: 1% 1%;
     text-align: center;
     font-size: 25px;
-    top: 825px;
-    left: 540px;
+    top: 80%;
+    left: 29%;
     border-radius: 8px;
     width: 225px;
 }
@@ -436,8 +436,8 @@ div.subVis {
     padding: 1% 1%;
     text-align: center;
     font-size: 25px;
-    top: 825px;
-    left: 1120px;
+    top: 80%;
+    left: 58%;
     border-radius: 8px;
     width: 225px;
 }
