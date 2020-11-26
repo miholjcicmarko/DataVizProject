@@ -20,6 +20,10 @@
 </head>
 
 <body id = "Mamba-body">
+    <div id="background-pic-jersey">
+        <image id = "kobe-jersey" src="./data/Kobe-Bryant-jerseys-retired.jpg"></image>
+    </div>
+
     <div id="header-wrap">
         <header>
             <a href = "index.html">
@@ -29,6 +33,23 @@
             <div>Name: Marko Miholjcic; E-Mail: u0984549@utah.edu</div>
         </header>
     </div>
+
+    <form id = "dropdown">Choose A Player For Comparison
+        <select id="selectNow">
+            <option> - </option>
+            <option>Stephen Curry</option>
+            <option>James Harden</option>
+            <option>Luka Doncic</option>
+            <option>LeBron James</option>
+            <option>Anthony Davis</option>
+            <option>Kawhi Leonard</option>
+            <option>Kemba Walker</option>
+            <option>Giannis Antetokounmpo</option>
+            <option>Pascal Siakam</option>
+            <option>Trae Young</option>
+            <option>Devin Booker</option>
+         </select>
+    </form>
 
     <div class="containerA">
 
@@ -52,23 +73,6 @@
         
     </div> 
 
-    <form id = "dropdown">Choose A Player For Comparison
-        <select id="selectNow">
-            <option> - </option>
-            <option>Stephen Curry</option>
-            <option>James Harden</option>
-            <option>Luka Doncic</option>
-            <option>LeBron James</option>
-            <option>Anthony Davis</option>
-            <option>Kawhi Leonard</option>
-            <option>Kemba Walker</option>
-            <option>Giannis Antetokounmpo</option>
-            <option>Pascal Siakam</option>
-            <option>Trae Young</option>
-            <option>Devin Booker</option>
-         </select>
-    </form>
-
     <div id = "overlay"></div>
     <div id = "tv"> <i class="fa fa-television"></i></div>
     <div id = "ball"> <i class = "fas fa-basketball-ball"></i></div>
@@ -85,6 +89,10 @@
             <button class = "button" id = "reset-button">Reset to Default</button>
         </span>
 
+        <div id="sliderLabel">
+            
+        </div>
+
         <div id= "slider">
 
         </div>
@@ -98,6 +106,12 @@
         <div id = "front">
 
         </div>
+
+        <div id = "bubbles">
+
+        </div>
+
+        <div id = "sliderLabel2"></div>
 
         <div id= "playerCompSlider">
 

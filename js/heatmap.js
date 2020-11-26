@@ -54,6 +54,7 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
+        this.sliderPresent = false;
         this.slider2present = false;
 
         this.data = data;
@@ -121,6 +122,11 @@ class HeatMap {
             .text("Season Kobe")
             .attr("fill", "rgb(85,37,130)");
 
+        this.player_name = "Kobe Bryant";
+
+        d3.select("#sliderLabel2")
+                .append("svg").attr("id", "slider-label2")
+                .classed("svg-text", true);
     }   
 
     /**
@@ -234,6 +240,11 @@ class HeatMap {
 
                 that.playerCompON = true;
 
+                if (that.storyON === true) {
+                    let pressed = false;
+                    that.storyTell(pressed);
+                }
+
                 if (player === '-') {
                     that.resetViz();
                 }
@@ -241,6 +252,19 @@ class HeatMap {
                     that.playerComp(player);
                 }
             });
+
+        if (this.sliderPresent === false) {
+            let sliderKobe = d3.select("#sliderLabel")
+            .append("svg").attr("id", "slider-label")
+            .classed("svg-text", true);
+
+            sliderKobe.append("text")
+                .attr("transform", "translate(155,25)")
+                .style("font-size", "26px")
+                .text("Choose Year for Kobe");
+
+            this.sliderPresent = true;
+        }
 
         this.tooltip(hexbins);
 
@@ -262,22 +286,20 @@ class HeatMap {
         playoffButton.on("click", function() {
             if (that.playoffOn === false) {
                 that.playoffOn = true;
-                d3.select("#tooltip").remove();
-                d3.select("#heatmap-svg-div").remove();
+                d3.selectAll("#tooltip").remove();
+                d3.selectAll("#heatmap-svg-div").remove();
 
                 that.drawHeatMapRight(8,5);
                 if (that.playerCompON === true) {
                     that.leftShotData = that.resetLeftData;
                 }
-                // else {
-                //     that.leftShotData = that.resetLeftDataKobe;
-                // }
+               
                 that.drawHeatMapLeft(8,5);
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
-                d3.select("#tooltip").remove();
-                d3.select("#heatmap-svg-div").remove();
+                d3.selectAll("#tooltip").remove();
+                d3.selectAll("#heatmap-svg-div").remove();
 
             if (that.playerCompON === true) {
 
@@ -310,6 +332,21 @@ class HeatMap {
             }
         }
         })
+
+        if (this.player_name !== "Kobe Bryant" && this.playoffOn === true) {
+            let rightLabel = d3.select("#right-label");
+
+            rightLabel.selectAll("text")
+                .text("Playoff Kobe")
+                .attr("fill", "rgb(85,37,130)");
+        }
+        else if (this.player_name !== "Kobe Bryant" && this.playoffOn === false) {
+            let rightLabel = d3.select("#right-label");
+
+            rightLabel.selectAll("text")
+                .text("Season Kobe")
+                .attr("fill", "rgb(85,37,130)");
+        }
 
         resetButton.on("click", function() {
             that.resetViz();
@@ -449,6 +486,23 @@ class HeatMap {
                 that.drawYearBarPlayer(this.updateYearPlayer);
             }
 
+            if (this.player_name !== "Kobe Bryant" && this.playoffOn === true) {
+                let leftLabel = d3.select("#left-label");
+
+                let display = "Playoff" + " " + this.player_name;
+    
+                leftLabel.selectAll("text")
+                    .text(display);
+            }
+            else if (this.player_name !== "Kobe Bryant" && this.playoffOn === false) {
+                let leftLabel = d3.select("#left-label");
+
+                let display = "Season" + " " + this.player_name;
+    
+                leftLabel.selectAll("text")
+                    .text(display);
+            }
+          
             that.tooltip(hexbins);
     }
 
@@ -474,7 +528,7 @@ class HeatMap {
         return "<h5>" + percent + "%" + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
             "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name+year+ "</br>"+ season_playoff+ "</h5>";
+            "<br/>"+ name + " " + year + "</br>"+ season_playoff+ "</h5>";
     }
 
     /**
@@ -555,6 +609,7 @@ class HeatMap {
                             .range([30, 730]);
         
         if (this.slider2present === false) {
+
         let yearSlider = d3.select('#playerCompSlider')
             .append('div').classed('slider-wrap', true).attr('id', 'slider-wrap-Comp')
             .append('input').classed('slider2', true)
@@ -625,8 +680,8 @@ class HeatMap {
 
         this.shotData = newData;
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         this.drawHeatMapRight(8,5);
 
@@ -666,8 +721,8 @@ class HeatMap {
         d3.select("#next").attr("width", "50px")
             .attr("height", "50px");
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
 
         if (this.slider === false) {
             this.drawHeatMapRight(6,15);
@@ -697,10 +752,55 @@ class HeatMap {
 
         }
 
+        let leftLabel = d3.select("#left-label");
+
+        this.player_name = this.leftShotData[0].name; 
+        
+        if (this.playoffOn === true) {
+            this.displays = "Playoff " + this.player_name;
+        }
+        else if (this.playoffOn === false) {
+            this.displays = "Season " + this.player_name;
+        }
+
+        if (this.player_name !== "Giannis Antetokounmpo") {
+            leftLabel.selectAll("text")
+            .attr("transform", "translate(155,55)")
+            .style("font-size", "24px")
+            .text(this.displays);
+        }
+        else {
+            leftLabel.selectAll("text")
+            .attr("transform", "translate(155,55)")
+            .style("font-size", "16px")
+            .text(this.displays);
+        }
+
+        d3.select("#slider-label2").remove();
+
+        let sliderPlayer = d3.select("#sliderLabel2")
+                .append("svg").attr("id", "slider-label2")
+                .classed("svg-text", true);
+
+        let playerDisplays = "Choose year for " + this.player_name;
+
+        if (this.player_name !== "Giannis Antetokounmpo") {
+            sliderPlayer.append("text")
+            .attr("transform", "translate(155,15)")
+            .style("font-size", "18px")
+            .text(playerDisplays);
+        }
+        else {
+            sliderPlayer.append("text")
+            .attr("transform", "translate(155,15)")
+            .style("font-size", "14px")
+            .text(playerDisplays);
+        }
+        
         this.resetLeftData = this.leftShotData;
 
-        d3.select("#heatmap-svg").remove();
-        d3.select("#tooltip").remove();
+        d3.selectAll("#heatmap-svg").remove();
+        d3.selectAll("#tooltip").remove();
         d3.selectAll(".slider-wrap").remove();
         
         this.drawYearBar(this.updateYearKobe);
@@ -716,6 +816,8 @@ class HeatMap {
             this.drawHeatMapRight(6,15);
             this.drawHeatMapLeft(6,15);
         }
+
+        document.getElementById("playoff-check").disabled = false;
         //this.drawBrush();
 
     }
@@ -730,16 +832,47 @@ class HeatMap {
         d3.select("#rightCourt").remove();
         d3.selectAll(".slider-wrap").remove();
 
+        d3.select("#slider-label").remove();
+        this.sliderPresent = false;
+
+        if (this.slider2present === true) {
+            d3.select("#slider-label2").remove();
+        }
+
         this.playerCompON = false;
         this.playoffOn = false;
 
         this.slider = false;
         this.slider2 = false;
         this.slider2present = false;
+        this.newSlider2 = false;
 
         document.getElementById("playoff-check").checked = false;
         document.getElementById("selectNow").selectedIndex = 0;
 
+        d3.select("#left-label").remove();
+        d3.select("#right-label").remove();
+
+        let leftLabel = d3.select("#playoff-season-labelA")
+                .append("svg").attr("id", "left-label")
+                .classed("svg-text", true);
+        
+        leftLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Playoff Kobe");
+
+        let rightLabel = d3.select("#playoff-season-labelB")
+            .append("svg").attr("id", "right-label")
+            .classed("svg-text", true);
+
+        rightLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Season Kobe")
+            .attr("fill", "rgb(85,37,130)");
+
+        this.player_name = "Kobe Bryant";
+
+        document.getElementById("playoff-check").disabled = true;
     }
 
     /**
@@ -757,6 +890,7 @@ class HeatMap {
 
         this.slider = false;
         this.slider2 = false;
+        this.newSlider2 = false;
         
         //if (this.playoffOn === true) {
             this.playoffOn = false;
@@ -768,7 +902,7 @@ class HeatMap {
             document.getElementById("selectNow").selectedIndex = 0;
         //}
 
-        this.slider2present = false;
+        d3.select("#slider-label2").remove();
 
         d3.selectAll(".slider-wrap").remove();
 
@@ -787,6 +921,30 @@ class HeatMap {
         this.reset = true;
         this.drawYearBar(this.updateYearKobe);
         this.reset = false;
+
+        d3.select("#left-label").remove();
+        d3.select("#right-label").remove();
+
+        let leftLabel = d3.select("#playoff-season-labelA")
+                .append("svg").attr("id", "left-label")
+                .classed("svg-text", true);
+        
+        leftLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Playoff Kobe");
+
+        let rightLabel = d3.select("#playoff-season-labelB")
+            .append("svg").attr("id", "right-label")
+            .classed("svg-text", true);
+
+        rightLabel.append("text")
+            .attr("transform", "translate(155,55)")
+            .text("Season Kobe")
+            .attr("fill", "rgb(85,37,130)");
+
+        this.player_name = "Kobe Bryant";
+
+        document.getElementById("playoff-check").disabled = false;
     }
 
     // rotation function to use in draw brush to convert between pixel location and d.x d.y 

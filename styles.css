@@ -5,8 +5,10 @@ Container stylings for the button and slider
 .containerA {
     display: grid;
     position: relative;
-    left: 5%;
-    grid-template-columns: 1fr 1fr 1fr 1fr; 
+    left: 25%;
+    height: 50px;
+    width: fit-content;
+    grid-template-columns: 1fr 1fr 2fr 2fr; 
     grid-template-rows: 1fr;
     column-gap: 10%;
     
@@ -33,6 +35,7 @@ Container stylings for the button and slider
 /* label stylings */
 #playoff-season-labelA {
     grid-area: "playoff-season-labelA";
+    left: 10%;
 }
 
 #playoff-season-labelB {
@@ -44,7 +47,6 @@ Container stylings for the button and slider
 .toggle-button {
     display: block;
     position: relative;
-    cursor: pointer;
     padding-top: 5%;
     font-size: 35px;
     font-weight: bold;
@@ -53,7 +55,6 @@ Container stylings for the button and slider
 .toggle-button input {
     position: absolute;
     opacity: 1;
-    cursor: pointer;
     height: 30px;
     width: 30px;
 }
@@ -76,7 +77,7 @@ Styling for the wrapper containing the svg
 */
 .wrapper {
     display: grid;
-    width: 100%;
+    width: fit-content;
     margin: auto;
     height: fit-content;
     display: inline-block;
@@ -93,11 +94,12 @@ Styling for the container below the shot chart
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 2fr; 
+    height: 50px;
+    grid-template-columns: 3fr 2fr 1fr 1fr 1fr 2fr; 
     grid-template-rows: 1fr;
-    column-gap: 5%;
+    column-gap: 1%;
     
-    grid-template-areas: "button button slider";
+    grid-template-areas: "button button . . . sliderLabel slider";
 }
 
 /*
@@ -141,6 +143,10 @@ Styling for the buttons
     transform: translateY(4px);
 }
 
+#sliderLabel {
+    grid-area: "sliderLabel";
+}
+
 /* 
 tool tip stylings
 */
@@ -178,7 +184,6 @@ div.tooltip {
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-    margin-left: 20px
 }
 
 .slider2 {
@@ -192,7 +197,6 @@ div.tooltip {
     opacity: 0.7;
     -webkit-transition: .2s;
     transition: opacity .2s;
-    margin-left: 20px
 }
 
 .slider::-webkit-slider-thumb,
@@ -233,7 +237,6 @@ div.tooltip {
     display: inline-block;
     /* float: left; */
     width: 750px;
-    margin-left: 50px;
 }
 
 /* 
@@ -243,11 +246,19 @@ Styling for the container containing the story buttons and sliders
     display: grid;
     position: relative;
     left: 0%;
-    grid-template-columns: 1fr 1fr 25fr; 
+    grid-template-columns: 1fr 1fr 4.75fr 2.4fr 10fr; 
     grid-template-rows: 1fr;
     column-gap: 0%;
     
-    grid-template-areas: "button button slider";
+    grid-template-areas: "button button bubbles sliderLabel2 slider";
+}
+
+#bubbles {
+    grid-area: "bubbles";
+}
+
+#sliderLabel2 {
+    grid-area: "sliderLabel2";
 }
 
 #overlay {
@@ -348,7 +359,7 @@ div.subVis {
     text-anchor: middle;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
-    font-size: 45px;
+    font-size: 40px;
 }
 
 .no-display {
@@ -509,4 +520,32 @@ footer{
 
 a{
     text-decoration: none;
+}
+
+.bubble-style {
+    fill: rgb(253,185,39);
+    stroke: rgb(85,37,130);
+    stroke-width: 3px;
+}
+
+.bubble-fill {
+    fill: rgb(85,37,130);
+    stroke: rgb(253,185,39);
+    stroke-width: 3px;
+}
+
+#kobe-jersey{
+    width: 100%;
+    height: auto;
+    z-index: -2;
+    opacity: 0.2;
+}
+
+#background-pic-jersey {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    z-index: -2;
 }
