@@ -297,7 +297,8 @@ class storyFile {
 
             ball.style("opacity", 1);
 
-            let summary_div = d3.select('#story-summary');
+            let summary_div = d3.select('#story-summary')
+                .style("z-index", 1);
 
             summary_div.html(this.story_summary(this.counter));
         }
