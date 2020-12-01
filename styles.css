@@ -172,7 +172,8 @@ div.tooltip {
 
 .tooltip h5 {
     margin: auto;
-    font: 10px sans-serif;
+    font: 14px sans-serif;
+    font-weight: bold;
 }
 
 .hovered{
@@ -352,6 +353,11 @@ div.subVis {
     font-family: sans-serif;
     font-weight: bold;
     font-size: 16px;
+}
+
+.subVisTip{
+    font-family: sans-serif;
+    font-size: 24px;
 }
 
 .year-label{

@@ -219,16 +219,9 @@ class HeatMap {
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                    if(i  == 3){d.flag = "This is the test Hex"};
                 // defines colorscale for heatmap and applies it to any bins with made shots
                 that.purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([0,80]);
-                if(d.fg_perc > 0){
-                    return that.purples(d.fg_perc);
-                }
-                else{
-                    return that.purples(d.fg_perc);
-                    return "none";
-                }
+                return that.purples(d.fg_perc);
             })
             .attr("stroke",function(d){
                 // defines color scale for stroke based off number of shots
@@ -242,12 +235,13 @@ class HeatMap {
             })
             .attr("opacity",function(d){
                 if(d[0].zone !== "Backcourt"){
-                    if(d.length >= 3){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else if(d.length >= 3){
                         return 1;
                     }
-                    else{
-                        return 0.85;
-                    }
+                    else{return 0.8;}
                 }
                 else{
                     return 0;
@@ -492,33 +486,38 @@ class HeatMap {
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
                 that.grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([0,80]);
-                if(d.fg_perc > 0 & d.length > 2){
-                    return that.grays(d.fg_perc);
-                }
-                else if (d.fg_perc > 0 & d.length <= 2){
-                    return that.grays(d.fg_perc);
-                }
-                else{
-                    return "none";
-                }
+                return that.grays(d.fg_perc);
             })
             .attr("stroke",function(d){
+                that.strokeColorG = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"])
+                    .domain([0,strokeLim]).clamp(true);
                 return that.strokeColorG(d.num_shots);
             })
             .attr("opacity",function(d){
-                if(d.length >= 7){
-                    return 1;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else if(d.length >= 3){
+                        return 1;
+                    }
+                    else{return 0.8;}
                 }
                 else{
-                    return 0.7;
+                    return 0;
                 }
             })
             .attr("stroke-opacity",function(d){
-                if(d.fg_perc == 0){
-                    return 0;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else{
+                        return d.length/4;
+                    }
                 }
                 else{
-                    return 1;
+                    return 0;
                 }
             });
 
@@ -628,13 +627,25 @@ class HeatMap {
             .labelFormat("0.0f")
             .ascending(true)
             .labels(function({d,i}){
-                if(that.slider == true){
-                    let labels = [0,1,3,4,"5+"];
-                    return `${labels[i]} shots`;
+                if(that.playerCompON == true){
+                    if(that.slider2 == true){
+                        let labels = [0,1,3,4,"5+"];
+                        return `${labels[i]} shots`;
+                    }
+                    else{
+                        let labels = [0,4,8,11,"15+"];
+                        return `${labels[i]} shots`;
+                    }
                 }
                 else{
-                    let labels = [0,4,8,11,"15+"];
-                    return `${labels[i]} shots`;
+                    if(that.slider == true){
+                        let labels = [0,1,3,4,"5+"];
+                        return `${labels[i]} shots`;
+                    }
+                    else{
+                        let labels = [0,4,8,11,"15+"];
+                        return `${labels[i]} shots`;
+                    }
                 }
             })
             .title("Shot Volume");
@@ -1125,11 +1136,12 @@ class HeatMap {
                 let selectedIndicesL = [];
                 let [x1,y1] = [0,0];
                 let [x2,y2] = [0,0];
-                
+                let [x1B,x2B] = [0,0];
                 if(brSelect){
                     [x1,y1] = brSelect[0];
                     [x2,y2] = brSelect[1];
-
+                    x1B = x1;
+                    x2B = x2;
                     if(x1 > 0){
                         d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",true)
                     }
@@ -1182,11 +1194,13 @@ class HeatMap {
                     .classed("selectedHex",true).classed("not-selected",false);
                 }
                 // calls draw subvis and inputs the selected bins as their indices
-                that.drawSubVis(selectedIndicesR,selectedIndicesL,x2,y1);
+                if(x1B>that.vizWidth/2 || x2B>that.vizWidth/2){
+                    that.drawSubVis(selectedIndicesR,selectedIndicesL,x1B,y1);
+                }
+                else{
+                    that.drawSubVis(selectedIndicesR,selectedIndicesL,x2B,y1);
+                }
             })
-            .on("end",function(){
-
-            });
         // defines the secondary brush that is a reflection of the main across the origin
         let courtBrush2 = d3.brush().extent([[that.margin,that.margin],
             [that.vizWidth-that.margin,that.vizHeight-that.margin]]);
@@ -1227,12 +1241,12 @@ class HeatMap {
         let barSpace = this.subSVGwidth-this.axisBuff;
         this.subSVGheight = 250;
 
-        if(indR.length === 0 && indL.length === 0){
+        if((indR.length === 0 && indL.length === 0)||(typeof indR === "undefined")){
             d3.select(".subVis").remove();
             that.subVisOn = false;
         }
         else{
-            if(x > 0 && that.subVisOn === false && that.slider == false && that.slider2 == false){
+            if(x > 0 && that.subVisOn === false){
                 that.subVisOn = true;
                 d3.select("#heatmap-div")
                     .append("div")
@@ -1262,31 +1276,36 @@ class HeatMap {
                     .append("g")
                     .attr("class","subVis2rects");
             }
-            let subVis1 = d3.select("#subSVG-1");
-            let subVisG1 = d3.select(".subVis1rects");
-            let subVis2 = d3.select("#subSVG-2");
-            let subVisG2 = d3.select(".subVis2rects");
+        let subVis1 = d3.select("#subSVG-1");
+        let subVisG1 = d3.select(".subVis1rects");
+        let subVis2 = d3.select("#subSVG-2");
+        let subVisG2 = d3.select(".subVis2rects");
 
-        this.subVisPlots(indR,barSpace,subVis1,subVisG1,this.binsR);
-        this.subVisPlots(indL,barSpace,subVis2,subVisG2,this.binsL)
-
-        if(x<that.vizWidth/2){
-            x = -x;
+        if(this.slider == false){
+            this.subVisPlots(indR,barSpace,subVis1,subVisG1,this.binsR);
         }
-    
+        else{
+            this.subVisTips(subVis1,indR,this.binsR,that.purples,that.strokeColorR);
+        }
+        
+        if(this.slider == true && this.playerCompON == false){
+            this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG,true);
+        }
+        else if(this.slider2 == false){
+            this.subVisPlots(indL,barSpace,subVis2,subVisG2,this.binsL);
+        }
+        else{
+            this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG);
+        }
+
         d3.select("#subVis-div")
             .style("left",function(){
-                if(x>(0.7*that.vizWidth)){
-                    return (x-750)+"px"
+                if(x>(0.5*that.vizWidth)){
+                    return (x-600)+"px"
                 }
-                else {return (x+100)+"px"}
+                else {return (x+150)+"px"}
             })
-            .style("top", function(){
-                if(y>(0.5*that.vizHeight)){
-                    return (y-200)+"px"
-                }
-                else {return (y+200)+"px"}
-            })
+            .style("top", (this.vizHeight/2.5)+"px")
     }
     
 }
@@ -1299,75 +1318,151 @@ class HeatMap {
      * @ param svg: d3 selection of the subvis svg to draw plots too
      * @ param subVisG: the group in the chosen svg for subvis
      * @ param data: either this.binsR or this.binsL depending 
-     * @ param x: the current x location of the right edge of the brush
-     * @ param y: the current y location of the top edge of the brush
     */
 subVisPlots(bins,barSpace,svg,subVisG,data){
-    let that = this;
-    
-    let selectBins = data.filter((_,i) => {
-        return bins.includes(i);
-    })
-    
-    svg.selectAll("text").remove();
+        let that = this;
+        
+        let selectBins = data.filter((_,i) => {
+            return bins.includes(i);
+        })
+        
+        svg.selectAll("text").remove();
 
-    svg.append("text").data(selectBins).text(selectBins[0][0].name+": Fg% over time")
-        .attr("x",this.subSVGwidth/2)
-        .attr("y",that.margin)
-        .attr("class","subvis-label");
+        svg.append("text").data(selectBins).text(selectBins[0][0].name+": Fg% over time")
+            .attr("x",this.subSVGwidth/2)
+            .attr("y",that.margin)
+            .attr("class","subvis-label");
 
-    let totalShots = 0;
-    let totalMade = 0;
-    selectBins.forEach(function(d){
-        totalShots = totalShots+d.num_shots;
-        totalMade = totalMade+d.made_shots;
-    })
-    
-    let yearsList = [];
-    for(let i = selectBins[0][0].firstYear; i <= selectBins[0][0].lastYear; i++){
-        yearsList.push(i);
-    }
-    let rectWidth = Math.floor(barSpace/yearsList.length);
-    let yearAvgFg = [];
-    for(let i = 0; i < yearsList.length; i++){
-        let numShotYear = 0;
-        let numMadeYear = 0;
+        let totalShots = 0;
+        let totalMade = 0;
         selectBins.forEach(function(d){
-            d.forEach(function(d){
-                if(d.year == yearsList[i]){
-                    numShotYear = numShotYear+1;
-                    numMadeYear = numMadeYear+d.shotFlag;
+            totalShots = totalShots+d.num_shots;
+            totalMade = totalMade+d.made_shots;
+        })
+        
+        let yearsList = [];
+        for(let i = selectBins[0][0].firstYear; i <= selectBins[0][0].lastYear; i++){
+            yearsList.push(i);
+        }
+        let rectWidth = Math.floor(barSpace/yearsList.length);
+        let yearAvgFg = [];
+        for(let i = 0; i < yearsList.length; i++){
+            let numShotYear = 0;
+            let numMadeYear = 0;
+            selectBins.forEach(function(d){
+                d.forEach(function(d){
+                    if(d.year == yearsList[i]){
+                        numShotYear = numShotYear+1;
+                        numMadeYear = numMadeYear+d.shotFlag;
+                    }
+                })   
+            })
+            yearAvgFg.push((numMadeYear/numShotYear)*100);
+            svg.append("text")
+                .text(yearsList[i])
+                .attr("x",((i)*rectWidth)+(this.axisBuff+32+(rectWidth/2)))
+                .attr("y",225)
+                .attr("text-anchor","middle")
+                .attr("class","year-label")
+                .attr("transform","rotate(-90,"+((i*rectWidth)+(this.axisBuff+32+(rectWidth/2)))+",250)");
+        }
+        subVisG.selectAll("rect")
+            .data(yearAvgFg)
+            .join("rect")
+            .attr("height",d => d*2)
+            .attr("width",rectWidth-1)
+            .attr("x",(d,i) => (i*rectWidth)+1)
+            .attr("y", d => 250-that.margin-(d*2))
+            .attr("fill",function(d){
+                if(data == that.binsR){
+                    return that.purples(d);
                 }
-            })   
-        })
-        yearAvgFg.push((numMadeYear/numShotYear)*100);
-        svg.append("text")
-            .text(yearsList[i])
-            .attr("x",((i)*rectWidth)+(this.axisBuff+32+(rectWidth/2)))
-            .attr("y",225)
-            .attr("text-anchor","middle")
-            .attr("class","year-label")
-            .attr("transform","rotate(-90,"+((i*rectWidth)+(this.axisBuff+32+(rectWidth/2)))+",250)");
+                else{
+                    return that.grays(d);
+                }
+            })
+            .attr("transform","translate("+this.axisBuff+",0)");
+        
+        let fgScale = d3.scaleLinear().domain([100,0]).range([0,200]);
+        let fgAxis = d3.axisLeft(fgScale).ticks(5).tickFormat(d=> d+"%");
+        svg.append("g").attr("class","axis").call(fgAxis).attr("transform","translate(45,25)");
     }
-    subVisG.selectAll("rect")
-        .data(yearAvgFg)
-        .join("rect")
-        .attr("height",d => d*2)
-        .attr("width",rectWidth-1)
-        .attr("x",(d,i) => (i*rectWidth)+1)
-        .attr("y", d => 250-that.margin-(d*2))
-        .attr("fill",function(d){
-            if(data == that.binsR){
-                return that.purples(d);
-            }
-            else{
-                return that.grays(d);
-            }
+
+    /**
+     * Calculates the average fg% for the region selected for the year and displays it like a tooltip
+     * @ param bins: the indices of the bins being selected in the right heatmap (indR or indL)
+     * @ param svg: d3 selection of the subvis svg to draw plots too
+     * @ param data: either this.binsR or this.binsL depending 
+     * @ param color: colorscale to use for bullet points - uses fg%
+     * @ param strokeC: colorscale to use for stroke of bullet points
+     * @ param kobePlayoff: true for one specific case
+    */
+    subVisTips(svg,bins,data,color,strokeC,kobePlayoff){
+        let that = this;
+
+        let selectBins = data.filter((_,i) => {
+            return bins.includes(i);
         })
-        .attr("transform","translate("+this.axisBuff+",0)");
-    
-    let fgScale = d3.scaleLinear().domain([100,0]).range([0,200]);
-    let fgAxis = d3.axisLeft(fgScale).ticks(5).tickFormat(d=> d+"%");
-    svg.append("g").attr("class","axis").call(fgAxis).attr("transform","translate(45,25)");
+
+        let totalShots = 0;
+        let totalMade = 0;
+        selectBins.forEach(function(d){
+            totalShots = totalShots+d.num_shots;
+            totalMade = totalMade+d.made_shots;
+        })
+        let yearAvgFg = ((totalMade/totalShots)*100);
+
+        // svg.selectAll("text").remove();
+        let season = selectBins[0][0].season;
+        if(season == "Regular"){
+            season = season+" Season"
+        }
+
+        let tipData = [selectBins[0][0].name+":",selectBins[0][0].year+" - "+season,
+            "Field Goal Percentage: "+yearAvgFg.toFixed(2)+"%","Attempted Shots: "+totalShots,"Made Shots: "+totalMade];
+
+        svg.selectAll("text").data(tipData)
+            .join("text")
+            .text(d => d)
+            .attr("x",function(d,i){
+                if(i == 0){
+                    return 50;
+                }
+                else{
+                    return 100;
+                }
+            })
+            .attr("y",(d,i) => 50+(i*30))
+            .style("font-weight",function(d,i){
+                if(i == 0){
+                    return "bold"
+                }
+            })
+            .attr("class","subVisTip");
+        svg.selectAll("circle").data(tipData)
+            .join("circle")
+            .attr("cx",function(d,i){
+                if(i == 0) {return 40;}
+                else {return 85;}
+            })
+            .attr("cy",(d,i) => 42+(i*30))
+            .attr("r",function(d,i){
+                if(i == 0){
+                    return 0;
+                }
+                else{
+                    return 8;
+                }
+            })
+            .attr("fill", color(yearAvgFg))
+            .attr("stroke-width",3)
+            .attr("stroke", function(){
+                if(that.playoffOn == true || (kobePlayoff == true)){
+                    return strokeC(totalShots/5);
+                }
+                else{
+                    return strokeC(totalShots/82);
+                }
+                });
     }
 }
