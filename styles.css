@@ -32,6 +32,12 @@ Container stylings for the button and slider
     background-color: rgb(255, 255, 255);
 }
 
+.legend{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 /* label stylings */
 #playoff-season-labelA {
     grid-area: "playoff-season-labelA";
@@ -318,8 +324,6 @@ div.subVis {
     display: grid;
     position: absolute;
     align-self: center;
-    width: 400px;
-    height: 600px;
     padding: 2px;
     background: rgb(253, 232, 185);
     border-style: solid;
@@ -347,12 +351,17 @@ div.subVis {
     text-anchor: middle;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .year-label{
     font-family: sans-serif;
     font-weight: bold;
+}
+
+.axis{
+    font-family: sans-serif;
+    font-size: 14px;
 }
 
 .svg-text {
@@ -538,7 +547,7 @@ a{
     width: 100%;
     height: auto;
     z-index: -2;
-    opacity: 0.2;
+    opacity: 0.3;
 }
 
 #background-pic-jersey {
