@@ -1298,9 +1298,9 @@ class HeatMap {
             this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG);
         }
 
+
         d3.select("#subVis-div")
             .style("left",function(){
-                console.log(x)
                 if(x > 625 && x < 1125){
                     if(x>(0.5*that.vizWidth)){
                         return (x-500)+"px"
