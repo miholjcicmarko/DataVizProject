@@ -32,6 +32,12 @@ Container stylings for the button and slider
     background-color: rgb(255, 255, 255);
 }
 
+.legend{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+}
+
 /* label stylings */
 #playoff-season-labelA {
     grid-area: "playoff-season-labelA";
@@ -166,12 +172,14 @@ div.tooltip {
 
 .tooltip h5 {
     margin: auto;
-    font: 10px sans-serif;
+    font: 14px sans-serif;
+    font-weight: bold;
 }
 
 .hovered{
-    fill: rgb(253,185,39);
-    stroke: white;
+    fill: rgb(255, 0, 0);
+    stroke: rgb(255, 0, 0);
+    opacity: 1;
 }
 
 .slider {
@@ -318,8 +326,6 @@ div.subVis {
     display: grid;
     position: absolute;
     align-self: center;
-    width: 400px;
-    height: 600px;
     padding: 2px;
     background: rgb(253, 232, 185);
     border-style: solid;
@@ -347,12 +353,22 @@ div.subVis {
     text-anchor: middle;
     font-family: sans-serif;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.subVisTip{
+    font-family: sans-serif;
+    font-size: 24px;
 }
 
 .year-label{
     font-family: sans-serif;
     font-weight: bold;
+}
+
+.axis{
+    font-family: sans-serif;
+    font-size: 14px;
 }
 
 .svg-text {
@@ -404,7 +420,7 @@ div.subVis {
 #home-header{
     position: absolute;
     font-size: 32px;
-    left: 490px;
+    left: 25.5%;
     color: #948e65;
     text-shadow: 2px 1px black;
 }
@@ -435,8 +451,8 @@ div.subVis {
     padding: 1% 1%;
     text-align: center;
     font-size: 25px;
-    top: 825px;
-    left: 540px;
+    top: 80%;
+    left: 29%;
     border-radius: 8px;
     width: 225px;
 }
@@ -447,8 +463,8 @@ div.subVis {
     padding: 1% 1%;
     text-align: center;
     font-size: 25px;
-    top: 825px;
-    left: 1120px;
+    top: 80%;
+    left: 58%;
     border-radius: 8px;
     width: 225px;
 }
@@ -542,7 +558,7 @@ a{
     width: 100%;
     height: 100%;
     z-index: -2;
-    opacity: 0.2;
+    opacity: 0.3;
 }
 
 #background-pic-jersey {

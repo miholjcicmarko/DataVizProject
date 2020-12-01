@@ -23,6 +23,9 @@ class ShotData{
          this.year = +stringyear;
          this.season = SEASON;
          this.name = NAME;
+         this.firstYear = 0;
+         this.lastYear = 0;
+         
 
         //  let stringyear = GAME_DATE.slice(0,4);
         //  let yearnumber = +stringyear;
@@ -51,6 +54,12 @@ class HeatMap {
         this.playerCompON = false;
         this.storyON = false;
         this.playoffOn = false;
+        this.selecting = false;
+        this.subVisOn = false;
+        this.hexRadCareer = 6;
+        this.hexRadYear = 9;
+        this.strokeLimC = 15;
+        this.strokeLimY = 5;
 
         this.slider = false;
         this.slider2 = false;
@@ -64,6 +73,7 @@ class HeatMap {
         let ylist = [];
         let typeList = [];
         let distList = [];
+        let yearList = [];
         for(let i = 0; i < this.data.length; i++){
             let node = new ShotData(this.data[i].LOC_X,
                 this.data[i].LOC_Y,this.data[i].EVENT_TYPE,
@@ -76,8 +86,16 @@ class HeatMap {
             ylist.push(+this.data[i].LOC_Y);
             typeList.push(this.data[i].SHOT_ZONE_BASIC);
             distList.push(this.data[i].SHOT_ZONE_RANGE);
-
+            yearList.push(this.shotData[i].year);
         }
+        yearList = [...new Set(yearList)];
+        let [first,last] = [yearList[0],yearList[yearList.length-1]];
+        let that = this;
+        this.shotData.forEach(function(d,i) {
+            that.shotData[i].firstYear = first;
+            that.shotData[i].lastYear = last;
+        })
+
         this.typeList = [...new Set(typeList)];
         this.distList = [...new Set(distList)];
         let xMax = d3.max(xlist);
@@ -185,7 +203,7 @@ class HeatMap {
         // renders hexagonal heatmap into specific group of SVG
         let hexbins = svg.append("g")
             .attr("class","hexbins")
-            .attr("stroke-width",hexRad/4)
+            .attr("stroke-width",hexRad/3)
             .attr("id", "rightCourt")
            .selectAll("path")
            .data(this.binsR)
@@ -201,36 +219,45 @@ class HeatMap {
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                    if(i  == 3){d.flag = "This is the test Hex"};
                 // defines colorscale for heatmap and applies it to any bins with made shots
-                that.purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([-10,75]);
-                if(d.fg_perc > 0){
-                    return that.purples(d.fg_perc);
-                }
-                else{
-                    return "none";
-                }
+                that.purples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(85,37,130)"]).domain([0,80]);
+                return that.purples(d.fg_perc);
             })
             .attr("stroke",function(d){
                 // defines color scale for stroke based off number of shots
-                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"])
+                // that.strokeColorR = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"])
+                //     .domain([0,strokeLim]).clamp(true);
+                that.strokeColorR = d3.scaleSequential().range(["rgb(0,0,0)","rgb(00,255,255)"])
                     .domain([0,strokeLim]).clamp(true);
-                return strokeColor(d.num_shots);
+                that.strokeColorG = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"])
+                    .domain([0,strokeLim]).clamp(true);
+                return that.strokeColorR(d.num_shots);
             })
             .attr("opacity",function(d){
-                if(d.length >= 3){
-                    return 1;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else if(d.length >= 3){
+                        return 1;
+                    }
+                    else{return 0.8;}
                 }
                 else{
-                    return 0.7;
+                    return 0;
                 }
             })
             .attr("stroke-opacity",function(d){
-                if(d.fg_perc == 0){
-                    return 0;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else{
+                        return d.length/4;
+                    }
                 }
                 else{
-                    return d.length/4;
+                    return 0;
                 }
             });
 
@@ -284,17 +311,18 @@ class HeatMap {
         });
 
         playoffButton.on("click", function() {
+            that.removeBrush(true);
             if (that.playoffOn === false) {
                 that.playoffOn = true;
                 d3.selectAll("#tooltip").remove();
                 d3.selectAll("#heatmap-svg-div").remove();
 
-                that.drawHeatMapRight(8,5);
+                that.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
                 if (that.playerCompON === true) {
                     that.leftShotData = that.resetLeftData;
                 }
                
-                that.drawHeatMapLeft(8,5);
+                that.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
             }
             else if (that.playoffOn === true) {
                 that.playoffOn = false;
@@ -304,30 +332,30 @@ class HeatMap {
             if (that.playerCompON === true) {
 
                 if (that.slider === true && that.slider2 === true) {
-                    that.drawHeatMapRight(8,5);
-                    that.drawHeatMapLeft(8,5);
+                    that.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
+                    that.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
                 }
                 else if (that.slider === true && that.slider2 === false) {
-                    that.drawHeatMapRight(8,5);
-                    that.drawHeatMapLeft(6,15);
+                    that.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
+                    that.drawHeatMapLeft(that.hexRadCareer,that.strokeLimC);
                 }
                 else if (that.slider === false && that.slider2 === true) {
-                    that.drawHeatMapRight(6,15);
-                    that.drawHeatMapLeft(8,5);
+                    that.drawHeatMapRight(that.hexRadCareer,that.strokeLimC);
+                    that.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
                 }
                 else if (that.slider === false && that.slider2 === false) {
-                    that.drawHeatMapRight(6,15);
-                    that.drawHeatMapLeft(6,15);
+                    that.drawHeatMapRight(that.hexRadCareer,that.strokeLimC);
+                    that.drawHeatMapLeft(that.hexRadCareer,that.strokeLimC);
                 }
             }
             else if (that.playerCompON === false) {
                 if (that.slider === true) {
-                    that.drawHeatMapRight(8,5);
-                    that.drawHeatMapLeft(8,5);
+                    that.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
+                    that.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
                 }
                 else if (that.slider === false) {
-                    that.drawHeatMapRight(6,15);
-                    that.drawHeatMapLeft(6,15);
+                    that.drawHeatMapRight(that.hexRadCareer,that.strokeLimC);
+                    that.drawHeatMapLeft(that.hexRadCareer,that.strokeLimC);
                 }
             }
         }
@@ -353,9 +381,16 @@ class HeatMap {
         });
 
         regionSelect.on("change", function(){
-            that.drawBrush();
-        })
-        
+            if(that.selecting == false){
+                that.selecting = true;
+                that.drawBrush();
+            }
+            else if(that.selecting == true){
+                that.selecting = false;
+                that.removeBrush(false);
+            };
+        });
+        this.drawLegends();
     }
 
     /**
@@ -369,8 +404,8 @@ class HeatMap {
         // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
 
-            let pageX = d.clientX;
-            let pageY = d.clientY + 5;
+            let pageX = d.clientX+15;
+            let pageY = d.clientY + 15;
             
             d3.select(this).classed("hovered",true);
 
@@ -436,7 +471,7 @@ class HeatMap {
         let hexbins = svg.append("g")
             .attr("class","hexbins")
             .attr("id", "leftCourt")
-            .attr("stroke-width",hexRad/4)
+            .attr("stroke-width",hexRad/3)
            .selectAll("path")
            .data(this.binsL)
            .join("path")
@@ -450,35 +485,39 @@ class HeatMap {
                     d.fg_perc = (sumFlag/d.length)*100;
                     d.made_shots = sumFlag;
                     d.num_shots = d.length;
-                that.grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([-10,75]);
-                if(d.fg_perc > 0 & d.length > 2){
-                    return that.grays(d.fg_perc);
-                }
-                else if (d.fg_perc > 0 & d.length <= 2){
-                    return that.grays(d.fg_perc);
-                }
-                else{
-                    return "none";
-                }
+                that.grays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(16,25,25)"]).domain([0,80]);
+                return that.grays(d.fg_perc);
             })
             .attr("stroke",function(d){
-                let strokeColor = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"]).domain([0,strokeLim]).clamp(true);
-                return strokeColor(d.num_shots);
+                that.strokeColorG = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"])
+                    .domain([0,strokeLim]).clamp(true);
+                return that.strokeColorG(d.num_shots);
             })
             .attr("opacity",function(d){
-                if(d.length >= 7){
-                    return 1;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else if(d.length >= 3){
+                        return 1;
+                    }
+                    else{return 0.8;}
                 }
                 else{
-                    return 0.7;
+                    return 0;
                 }
             })
             .attr("stroke-opacity",function(d){
-                if(d.fg_perc == 0){
-                    return 0;
+                if(d[0].zone !== "Backcourt"){
+                    if(d.fg_perc == 0){
+                        return 0.5;
+                    }
+                    else{
+                        return d.length/4;
+                    }
                 }
                 else{
-                    return 1;
+                    return 0;
                 }
             });
 
@@ -504,6 +543,10 @@ class HeatMap {
             }
           
             that.tooltip(hexbins);
+
+            if(this.selecting == true){
+                that.drawBrush();
+            }
     }
 
     /**
@@ -525,10 +568,104 @@ class HeatMap {
             shot_range = "< 8 ft."
         }
 
-        return "<h5>" + percent + "%" + "<br/>" + 
+        return "<h5>" + name + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
-            "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name + " " + year + "</br>"+ season_playoff+ "</h5>";
+            "Shot Percentage: " + percent +"% <br/>" +
+            "Made: "+made+" <br/> Attempted: "+attempts;
+    }
+
+    drawLegends(){
+        let that = this;
+        let legPurples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(43,0,99)"]).domain([0,100]);
+        let legGrays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(0,0,0)"]).domain([0,100]);
+
+        let legendPurple = d3.legendColor()
+            .scale(legPurples)
+            .shapePadding(0)
+            .shapeWidth(25)
+            .shapeHeight(25)
+            .labelOffset(10)
+            .labelFormat("0.0f")
+            .ascending(true)
+            .cells(11)
+            .title("Field Goal%");
+        let legendGray = d3.legendColor()
+            .scale(legGrays)
+            .shapePadding(0)
+            .shapeWidth(25)
+            .shapeHeight(25)
+            .labelOffset(-60)
+            .labelFormat("0.0f")
+            .ascending(true)
+            .cells(11)
+            .title("Field Goal%");
+        let legendRed = d3.legendColor()
+            .scale(this.strokeColorR)
+            .shapePadding(0)
+            .shapeWidth(25)
+            .shapeHeight(25)
+            .labelOffset(10)
+            .labelFormat("0.0f")
+            .ascending(true)
+            .labels(function({d,i}){
+                if(that.slider == true){
+                    let labels = [0,1,3,4,"5+"];
+                    return `${labels[i]} shots`;
+                }
+                else{
+                    let labels = [0,4,8,11,"15+"];
+                    return `${labels[i]} shots`;
+                }
+            })
+            .title("Shot Volume");
+        let legendGold = d3.legendColor()
+            .scale(this.strokeColorG)
+            .shapePadding(0)
+            .shapeWidth(25)
+            .shapeHeight(25)
+            .labelOffset(-105)
+            .labelFormat("0.0f")
+            .ascending(true)
+            .labels(function({d,i}){
+                if(that.playerCompON == true){
+                    if(that.slider2 == true){
+                        let labels = [0,1,3,4,"5+"];
+                        return `${labels[i]} shots`;
+                    }
+                    else{
+                        let labels = [0,4,8,11,"15+"];
+                        return `${labels[i]} shots`;
+                    }
+                }
+                else{
+                    if(that.slider == true){
+                        let labels = [0,1,3,4,"5+"];
+                        return `${labels[i]} shots`;
+                    }
+                    else{
+                        let labels = [0,4,8,11,"15+"];
+                        return `${labels[i]} shots`;
+                    }
+                }
+            })
+            .title("Shot Volume");
+        let svg = d3.select(".fullCourt");
+        svg.append("g")
+            .attr("class","legend")
+            .attr("transform","translate(1600,100)")
+            .call(legendPurple);
+        svg.append("g")
+            .attr("class","legend")
+            .attr("transform","translate(1600,500)")
+            .call(legendRed);
+        svg.append("g")
+            .attr("class","legend")
+            .attr("transform","translate(75,100)")
+            .call(legendGray);
+        svg.append("g")
+            .attr("class","legend")
+            .attr("transform","translate(55,500)")
+            .call(legendGold);
     }
 
     /**
@@ -536,7 +673,6 @@ class HeatMap {
      */
     drawYearBar () {
         let that = this;
-
         this.slider = false;
 
         let yearScale = d3.scaleLinear()
@@ -667,6 +803,8 @@ class HeatMap {
      * @param {year} year - the year inputted using the slider
      */
     updateChartKobe (year) {
+        let that = this;
+        this.removeBrush(true);
 
         this.shotData = this.resetData;
 
@@ -683,19 +821,19 @@ class HeatMap {
         d3.selectAll("#heatmap-svg").remove();
         d3.selectAll("#tooltip").remove();
 
-        this.drawHeatMapRight(8,5);
+        this.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
 
         if (this.playerCompON === false) {
             this.leftShotData = newData;
-            this.drawHeatMapLeft(8,5);
+            this.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
         }
         else if (this.playerCompON === true && this.slider2 === false) {
-            this.drawHeatMapLeft(6,15);
+            this.drawHeatMapLeft(that.hexRadCareer,that.strokeLimC);
         }
         else if (this.playerCompON === true && this.slider2 === true) {
-            this.drawHeatMapLeft(8,5);
+            this.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
         }
-
+        
     }
 
     /**
@@ -703,6 +841,9 @@ class HeatMap {
     * @param {year} year - the year inputted using the slider
     */ 
     updateChartPlayer (year) {
+        this.removeBrush(true);
+
+        let that = this;
         this.leftShotData = this.resetLeftData;
 
         let newData = [];
@@ -725,13 +866,12 @@ class HeatMap {
         d3.selectAll("#tooltip").remove();
 
         if (this.slider === false) {
-            this.drawHeatMapRight(6,15);
+            this.drawHeatMapRight(that.hexRadCareer,that.strokeLimC);
         }
         else if (this.slider = true) {
-            this.drawHeatMapRight(8,5);
+            this.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
         }
-        this.drawHeatMapLeft(8,5);
-
+        this.drawHeatMapLeft(this.hexRadYear,this.strokeLimY);
     }
 
     /**
@@ -739,9 +879,10 @@ class HeatMap {
      * @param {newData} newData 
      */
     playerCompChart(newData) {
+        this.removeBrush(true);
 
         this.leftShotData = [];
-
+        let yearList = [];
         for(let i = 0; i < newData.length; i++){
             let node = new ShotData(newData[i].LOC_X,
                 newData[i].LOC_Y,newData[i].EVENT_TYPE,
@@ -749,8 +890,15 @@ class HeatMap {
                 newData[i].SHOT_ZONE_RANGE, newData[i].GAME_DATE, newData[i].Season, 
                 newData[i].PLAYER_NAME);
             this.leftShotData.push(node);
-
+            yearList.push(this.leftShotData[i].year);
         }
+        yearList = [...new Set(yearList)];
+        let [first,last] = [yearList[0],yearList[yearList.length-1]];
+        let that = this;
+        this.leftShotData.forEach(function(d,i) {
+            that.leftShotData[i].firstYear = first;
+            that.leftShotData[i].lastYear = last;
+        })
 
         let leftLabel = d3.select("#left-label");
 
@@ -809,12 +957,12 @@ class HeatMap {
 
         this.shotData = this.resetData;
         if (this.playoffOn === true) {
-            this.drawHeatMapRight(8,5);
-            this.drawHeatMapLeft(8,5);
+            this.drawHeatMapRight(that.hexRadYear,that.strokeLimY);
+            this.drawHeatMapLeft(that.hexRadYear,that.strokeLimY);
         }
         else if (this.playoffOn === false) {
-            this.drawHeatMapRight(6,15);
-            this.drawHeatMapLeft(6,15);
+            this.drawHeatMapRight(that.hexRadCareer,that.strokeLimC);
+            this.drawHeatMapLeft(that.hexRadCareer,that.strokeLimC);
         }
 
         document.getElementById("playoff-check").disabled = false;
@@ -873,12 +1021,15 @@ class HeatMap {
         this.player_name = "Kobe Bryant";
 
         document.getElementById("playoff-check").disabled = true;
+
+        this.removeBrush(false);
     }
 
     /**
      * This function resets the entire visualization to its default state. 
      */
     resetViz () {
+        this.removeBrush(false);
 
         d3.selectAll("#heatmap-svg-div").remove();
         d3.selectAll("#heatmap-svg").remove();
@@ -916,8 +1067,8 @@ class HeatMap {
 
         this.shotData = this.resetData;
         this.leftShotData = this.resetData;
-        this.drawHeatMapRight(6,15);
-        this.drawHeatMapLeft(6,15);
+        this.drawHeatMapRight(this.hexRadCareer,this.strokeLimC);
+        this.drawHeatMapLeft(this.hexRadCareer,this.strokeLimC);
         this.reset = true;
         this.drawYearBar(this.updateYearKobe);
         this.reset = false;
@@ -964,13 +1115,19 @@ class HeatMap {
     drawBrush(){
         let that = this;
         
-        let brush1 = d3.select(".fullCourt").classed("brush",true);
+        d3.select(".fullCourt").append("g").attr("class","fullCourtBrush1");
+        let brush1 = d3.select(".fullCourtBrush1").classed("brush",true);
         let brushBinsR = [...this.binsR];
         let brushBinsL = [...this.binsL];
+
+        let activeBrush = null;
+        let activeBrushNode = null;
+
     // defines the primary brush and performs the selection of bins within brush boundaries
         let courtBrush = d3.brush().extent([[that.margin,that.margin],[that.vizWidth-that.margin,that.vizHeight-that.margin]])
             .on("start",function(){
                 d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",false);
+                that.drawSubVis(0,0);
             })
             .on("brush",function(){
                 let brSelect = d3.brushSelection(this);
@@ -979,11 +1136,12 @@ class HeatMap {
                 let selectedIndicesL = [];
                 let [x1,y1] = [0,0];
                 let [x2,y2] = [0,0];
-                
+                let [x1B,x2B] = [0,0];
                 if(brSelect){
                     [x1,y1] = brSelect[0];
                     [x2,y2] = brSelect[1];
-
+                    x1B = x1;
+                    x2B = x2;
                     if(x1 > 0){
                         d3.select(".fullCourt").selectAll("path").classed("selectedHex",false).classed("not-selected",true)
                     }
@@ -997,10 +1155,15 @@ class HeatMap {
                     let [x1R,y1R] = [0,0];
                     let [x2R,y2R] = [0,0];
 
-                    if(x1 > that.vizWidth/2){
-                        [x1R,y1R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x1,y1,90);
-                        [x2R,y2R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x2,y2,90);
+                    if(x1 < that.vizWidth/2){
+                        x1 = x1+brShiftX;
+                        x2 = x2+brShiftX;
+                        y1 = y1+brShiftY;
+                        y2 = y2+brShiftY;
                     }
+
+                    [x1R,y1R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x1,y1,90);
+                    [x2R,y2R] = that.rotate(that.vizWidth/2,that.vizHeight/2,x2,y2,90);
 
                     let x1Rt = x1R-that.xOffset;
                     let x2Rt = x2R-that.xOffset;
@@ -1031,23 +1194,35 @@ class HeatMap {
                     .classed("selectedHex",true).classed("not-selected",false);
                 }
                 // calls draw subvis and inputs the selected bins as their indices
-                that.drawSubVis(selectedIndicesR,selectedIndicesL,x2,y1);
+                if(x1B>that.vizWidth/2 || x2B>that.vizWidth/2){
+                    that.drawSubVis(selectedIndicesR,selectedIndicesL,x1B,y1);
+                }
+                else{
+                    that.drawSubVis(selectedIndicesR,selectedIndicesL,x2B,y1);
+                }
             })
-            .on("end",function(){
-
-            });
         // defines the secondary brush that is a reflection of the main across the origin
         let courtBrush2 = d3.brush().extent([[that.margin,that.margin],
             [that.vizWidth-that.margin,that.vizHeight-that.margin]]);
-        d3.select(".fullCourt").append("g").attr("class","fullCourt2");
+        d3.select(".fullCourt").append("g").attr("class","fullCourtBrush2");
         let brush2 = d3.select(".fullCourt2").classed("brush",true);
         
         brush1.call(courtBrush).call(courtBrush.move,[0,0])
         brush2.call(courtBrush2).call(courtBrush2.move,[0,0]);
         
-        // this.testTransform();
     }
 
+    removeBrush(contSelect){
+        if(contSelect == false){
+            this.selecting = false;
+            document.getElementById("brush-check").checked = false;
+        }
+        this.subVisOn = false; 
+        d3.select(".fullCourtBrush1").remove();
+        d3.select(".fullCourtBruhs2").remove();
+        d3.select(".subVis").style("opacity",0);
+        d3.select(".fullCourt").selectAll("path").classed("not-selected",false).classed("selectedHex",false);
+    }
 
     /**
      * Calculates the average fg% for the region selected by year an displays it in the subVis div as
@@ -1059,141 +1234,239 @@ class HeatMap {
     */
     drawSubVis(indR,indL,x,y){
         let that = this;
-        d3.select(".subVis").remove();
-        if(x > 0){
-            d3.select("#heatmap-div")
-                .append("div")
-                .attr("class","subVis")
-                .attr("id","subVis-div")
-                .style("left",function(){
-                    if(x>(0.7*that.vizWidth)){
-                        return (x-750)+"px"
-                    }
-                    else {return (x+100)+"px"}
-                })
-                .style("top", function(){
-                    if(y>(0.5*that.vizHeight)){
-                        return (y-200)+"px"
-                    }
-                    else {return (y+200)+"px"}
-                })
-                .style("opacity",1);
-            d3.select("#subVis-div")
-                .append("svg")
-                .attr("height",250)
-                .attr("width",350)
-                .attr("x",that.margin)
-                .attr("y",that.margin)
-                .attr("id","subSVG-1");
-            d3.select("#subVis-div")
-                .append("svg")
-                .attr("height",250)
-                .attr("width",350)
-                .attr("x",that.margin)
-                .attr("y",300+that.margin)
-                .attr("id","subSVG-2")
+        this.subDivWidth = 500;
+        this.subDivHeight= 600;
+        this.axisBuff = 47;
+        this.subSVGwidth = this.subDivWidth-25;
+        let barSpace = this.subSVGwidth-this.axisBuff;
+        this.subSVGheight = 250;
+
+        if((indR.length === 0 && indL.length === 0)||(typeof indR === "undefined")){
+            d3.select(".subVis").remove();
+            that.subVisOn = false;
+        }
+        else{
+            if(x > 0 && that.subVisOn === false){
+                that.subVisOn = true;
+                d3.select("#heatmap-div")
+                    .append("div")
+                    .attr("class","subVis")
+                    .attr("id","subVis-div")
+                    .attr("height",that.subDivHeight)
+                    .attr("width",that.subDivWidth)
+                    .style("opacity",1);
+                d3.select("#subVis-div")
+                    .append("svg")
+                    .attr("height",that.subSVGheight)
+                    .attr("width",that.subSVGwidth)
+                    .attr("x",that.margin)
+                    .attr("y",that.margin)
+                    .attr("id","subSVG-1");
+                d3.select("#subSVG-1")
+                    .append("g")
+                    .attr("class","subVis1rects");
+                d3.select("#subVis-div")
+                    .append("svg")
+                    .attr("height",that.subSVGheight)
+                    .attr("width",that.subSVGwidth)
+                    .attr("x",that.margin)
+                    .attr("y",(that.subDivHeight/2)+that.margin)
+                    .attr("id","subSVG-2");
+                d3.select("#subSVG-2")
+                    .append("g")
+                    .attr("class","subVis2rects");
+            }
+        let subVis1 = d3.select("#subSVG-1");
+        let subVisG1 = d3.select(".subVis1rects");
+        let subVis2 = d3.select("#subSVG-2");
+        let subVisG2 = d3.select(".subVis2rects");
+
+        if(this.slider == false){
+            this.subVisPlots(indR,barSpace,subVis1,subVisG1,this.binsR);
+        }
+        else{
+            this.subVisTips(subVis1,indR,this.binsR,that.purples,that.strokeColorR);
+        }
+        
+        if(this.slider == true && this.playerCompON == false){
+            this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG,true);
+        }
+        else if(this.slider2 == false){
+            this.subVisPlots(indL,barSpace,subVis2,subVisG2,this.binsL);
+        }
+        else{
+            this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG);
         }
 
-        let selectBinsR = this.binsR.filter((_,i) => {
-            return indR.includes(i);
-        })
-        let selectBinsL = this.binsL.filter((_,i) => {
-            return indL.includes(i);
-        })
-       
-        let subVis1 = d3.select("#subSVG-1");
-        let subVis2 = d3.select("#subSVG-2");
+        d3.select("#subVis-div")
+            .style("left",function(){
+                console.log(x)
+                if(x > 625 && x < 1125){
+                    if(x>(0.5*that.vizWidth)){
+                        return (x-500)+"px"
+                    }
+                    else {return (x+150)+"px"}
+                }
+                else{return 710+"px"}
+            })
+            .style("top", (this.vizHeight/2.5)+"px")
+    }
+    
+}
+
+/**
+     * Calculates the average fg% for the region selected by year an displays it in the subVis div as
+     * a barchart
+     * @ param bins: the indices of the bins being selected in the right heatmap (indR or indL)
+     * @ param barSpace: room available to draw bars
+     * @ param svg: d3 selection of the subvis svg to draw plots too
+     * @ param subVisG: the group in the chosen svg for subvis
+     * @ param data: either this.binsR or this.binsL depending 
+    */
+subVisPlots(bins,barSpace,svg,subVisG,data){
+        let that = this;
         
-        subVis1.append("text").data(selectBinsR).text(selectBinsR[0][0].name+": Fg% over time")
-            .attr("x",350/2)
-            .attr("y",that.margin)
-            .attr("class","subvis-label");
-        subVis2.append("text").data(selectBinsL).text(selectBinsL[0][0].name+": Fg% over time")
-            .attr("x",350/2)
+        let selectBins = data.filter((_,i) => {
+            return bins.includes(i);
+        })
+        
+        svg.selectAll("text").remove();
+
+        svg.append("text").data(selectBins).text(selectBins[0][0].name+": Fg% over time")
+            .attr("x",this.subSVGwidth/2)
             .attr("y",that.margin)
             .attr("class","subvis-label");
 
-        let totalShotsR = 0;
-        let totalMadeR = 0;
-        let yearsListR = [];
-        selectBinsR.forEach(function(d){
-            totalShotsR = totalShotsR+d.num_shots;
-            totalMadeR = totalMadeR+d.made_shots;
-            yearsListR.push(d[0].year);
+        let totalShots = 0;
+        let totalMade = 0;
+        selectBins.forEach(function(d){
+            totalShots = totalShots+d.num_shots;
+            totalMade = totalMade+d.made_shots;
         })
-        yearsListR = [...new Set(yearsListR)];
-
-        let totalShotsL = 0;
-        let totalMadeL = 0;
-        let yearsListL = [];
-        selectBinsL.forEach(function(d){
-            totalShotsL = totalShotsL+d.num_shots;
-            totalMadeL = totalMadeL+d.made_shots;
-            yearsListL.push(d[0].year);
-        })
-        yearsListL = [...new Set(yearsListL)];
         
-        let yearAvgFgR = [];
-        let yearAvgFgL = [];
-        for(let i = 0; i < yearsListR.length; i++){
+        let yearsList = [];
+        for(let i = selectBins[0][0].firstYear; i <= selectBins[0][0].lastYear; i++){
+            yearsList.push(i);
+        }
+        let rectWidth = Math.floor(barSpace/yearsList.length);
+        let yearAvgFg = [];
+        for(let i = 0; i < yearsList.length; i++){
             let numShotYear = 0;
             let numMadeYear = 0;
-            selectBinsR.forEach(function(d){
+            selectBins.forEach(function(d){
                 d.forEach(function(d){
-                    if(d.year == yearsListR[i]){
+                    if(d.year == yearsList[i]){
                         numShotYear = numShotYear+1;
                         numMadeYear = numMadeYear+d.shotFlag;
                     }
                 })   
             })
-            yearAvgFgR.push((numMadeYear/numShotYear)*100);
-            subVis1.append("text")
-                .text(yearsListR[i])
-                .attr("x",((i+2)*20)+10)
+            yearAvgFg.push((numMadeYear/numShotYear)*100);
+            svg.append("text")
+                .text(yearsList[i])
+                .attr("x",((i)*rectWidth)+(this.axisBuff+32+(rectWidth/2)))
                 .attr("y",225)
                 .attr("text-anchor","middle")
                 .attr("class","year-label")
-                .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
-
-            numShotYear = 0;
-            numMadeYear = 0;
-            selectBinsL.forEach(function(d){
-                d.forEach(function(d){
-                    if(d.year == yearsListL[i]){
-                        numShotYear = numShotYear+1;
-                        numMadeYear = numMadeYear+d.shotFlag;
-                    }
-                })   
-            })
-            yearAvgFgL.push((numMadeYear/numShotYear)*100);
-            subVis2.append("text")
-                .text(yearsListL[i])
-                .attr("x",((i+2)*20)+10)
-                .attr("y",225)
-                .attr("text-anchor","middle")
-                .attr("class","year-label")
-                .attr("transform","rotate(-90,"+(((i+2)*20)+10)+",250)");
+                .attr("transform","rotate(-90,"+((i*rectWidth)+(this.axisBuff+32+(rectWidth/2)))+",250)");
         }
-
-        subVis1.selectAll("rect")
-            .data(yearAvgFgR)
+        subVisG.selectAll("rect")
+            .data(yearAvgFg)
             .join("rect")
             .attr("height",d => d*2)
-            .attr("width",19)
-            .attr("x",(d,i) => (i*20)+10)
+            .attr("width",rectWidth-1)
+            .attr("x",(d,i) => (i*rectWidth)+1)
             .attr("y", d => 250-that.margin-(d*2))
-            .attr("fill",d => this.purples(d));
-        subVis2.selectAll("rect")
-            .data(yearAvgFgL)
-            .join("rect")
-            .attr("height",d => d*2)
-            .attr("width",19)
-            .attr("x",(d,i) => (i*20)+10)
-            .attr("y", d => 250-that.margin-(d*2))
-            .attr("fill",d => this.grays(d));
+            .attr("fill",function(d){
+                if(data == that.binsR){
+                    return that.purples(d);
+                }
+                else{
+                    return that.grays(d);
+                }
+            })
+            .attr("transform","translate("+this.axisBuff+",0)");
         
-        // console.log(yearsListR)
-        // console.log(yearAvgFg)
+        let fgScale = d3.scaleLinear().domain([100,0]).range([0,200]);
+        let fgAxis = d3.axisLeft(fgScale).ticks(5).tickFormat(d=> d+"%");
+        svg.append("g").attr("class","axis").call(fgAxis).attr("transform","translate(45,25)");
     }
 
+    /**
+     * Calculates the average fg% for the region selected for the year and displays it like a tooltip
+     * @ param bins: the indices of the bins being selected in the right heatmap (indR or indL)
+     * @ param svg: d3 selection of the subvis svg to draw plots too
+     * @ param data: either this.binsR or this.binsL depending 
+     * @ param color: colorscale to use for bullet points - uses fg%
+     * @ param strokeC: colorscale to use for stroke of bullet points
+     * @ param kobePlayoff: true for one specific case
+    */
+    subVisTips(svg,bins,data,color,strokeC,kobePlayoff){
+        let that = this;
+
+        let selectBins = data.filter((_,i) => {
+            return bins.includes(i);
+        })
+
+        let totalShots = 0;
+        let totalMade = 0;
+        selectBins.forEach(function(d){
+            totalShots = totalShots+d.num_shots;
+            totalMade = totalMade+d.made_shots;
+        })
+        let yearAvgFg = ((totalMade/totalShots)*100);
+
+        // svg.selectAll("text").remove();
+        let season = selectBins[0][0].season;
+        if(season == "Regular"){
+            season = season+" Season"
+        }
+
+        let tipData = [selectBins[0][0].name+":",selectBins[0][0].year+" - "+season,
+            "Field Goal Percentage: "+yearAvgFg.toFixed(2)+"%","Attempted Shots: "+totalShots,"Made Shots: "+totalMade];
+
+        svg.selectAll("text").data(tipData)
+            .join("text")
+            .text(d => d)
+            .attr("x",function(d,i){
+                if(i == 0){
+                    return 50;
+                }
+                else{
+                    return 100;
+                }
+            })
+            .attr("y",(d,i) => 50+(i*30))
+            .style("font-weight",function(d,i){
+                if(i == 0){
+                    return "bold"
+                }
+            })
+            .attr("class","subVisTip");
+        svg.selectAll("circle").data(tipData)
+            .join("circle")
+            .attr("cx",function(d,i){
+                if(i == 0) {return 40;}
+                else {return 85;}
+            })
+            .attr("cy",(d,i) => 42+(i*30))
+            .attr("r",function(d,i){
+                if(i == 0){
+                    return 0;
+                }
+                else{
+                    return 8;
+                }
+            })
+            .attr("fill", color(yearAvgFg))
+            .attr("stroke-width",3)
+            .attr("stroke", function(){
+                if(that.playoffOn == true || (kobePlayoff == true)){
+                    return strokeC(totalShots/5);
+                }
+                else{
+                    return strokeC(totalShots/82);
+                }
+                });
+    }
 }

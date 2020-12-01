@@ -145,8 +145,8 @@ Promise.all([kobe,compData]).then(data => {
     let heatMap = new HeatMap(Kobedata, updateYearKobe, 
         storyTell, playerComp, updateYearPlayer);
     //let heatMap = new HeatMap(data,updateYearKobe);
-    heatMap.drawHeatMapRight(6,12);
-    heatMap.drawHeatMapLeft(6,12);
+    heatMap.drawHeatMapRight(6,15);
+    heatMap.drawHeatMapLeft(6,15);
 
 })
 
