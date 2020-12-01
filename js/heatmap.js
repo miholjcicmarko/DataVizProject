@@ -404,8 +404,8 @@ class HeatMap {
         // tooltip for the hexagons
         hexbins.on('mouseover', function(d,i) {
 
-            let pageX = d.clientX;
-            let pageY = d.clientY + 5;
+            let pageX = d.clientX+15;
+            let pageY = d.clientY + 15;
             
             d3.select(this).classed("hovered",true);
 
@@ -568,10 +568,10 @@ class HeatMap {
             shot_range = "< 8 ft."
         }
 
-        return "<h5>" + percent + "%" + "<br/>" + 
+        return "<h5>" + name + "<br/>" + 
             "Distance: " + shot_range +" <br/>" +
-            "Made: "+made+" Attempted: "+attempts+
-            "<br/>"+ name + " " + year + "</br>"+ season_playoff+ "</h5>";
+            "Shot Percentage: " + percent +"% <br/>" +
+            "Made: "+made+" <br/> Attempted: "+attempts;
     }
 
     drawLegends(){
@@ -1300,10 +1300,14 @@ class HeatMap {
 
         d3.select("#subVis-div")
             .style("left",function(){
-                if(x>(0.5*that.vizWidth)){
-                    return (x-600)+"px"
+                console.log(x)
+                if(x > 625 && x < 1125){
+                    if(x>(0.5*that.vizWidth)){
+                        return (x-500)+"px"
+                    }
+                    else {return (x+150)+"px"}
                 }
-                else {return (x+150)+"px"}
+                else{return 710+"px"}
             })
             .style("top", (this.vizHeight/2.5)+"px")
     }

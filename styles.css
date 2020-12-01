@@ -177,8 +177,9 @@ div.tooltip {
 }
 
 .hovered{
-    fill: rgb(253,185,39);
-    stroke: white;
+    fill: rgb(255, 0, 0);
+    stroke: rgb(255, 0, 0);
+    opacity: 1;
 }
 
 .slider {
