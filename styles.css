@@ -388,15 +388,15 @@ div.subVis {
 
 #tv {
     position: absolute;
-    width: 600px;
-    height: 500px;
+    width: 8%;
+    height: 8%;
     top: 0%;
-    left: 25%;
+    left: 20%;
     right: 0;
     bottom: 0;
     z-index: -1;
     opacity: 0;
-    font-size: 600px;
+    font-size: 660px;
 }
 
 #ball {

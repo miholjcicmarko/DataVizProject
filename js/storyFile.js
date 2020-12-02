@@ -48,30 +48,30 @@ class storyFile {
             let story_div = d3.select('#overlay')
                           .attr("width", that.svgWidth/2.25)
                           .attr("height", that.vizHeight/3)
-                          .style("top", 373 + "px")
-                          .style("left", 680 + "px")
+                          .style("top", 20 + "%")
+                          .style("left", 22.5 + "%")
                           .style("z-index", 2);
 
             // Hornets buzzer beater
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", that.svgWidth/2.3)
-                .attr("height", that.vizHeight/3)
+                .attr("width", that.svgWidth/1.7)
+                .attr("height", that.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
 
             let tv = d3.select('#tv')
                 .style("z-index", 1);
 
             tv
-                .style("top", 312 +"px")
+                .style("top", 15 +"%")
                 .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 900 + "px")
-                .style("left", 1720 + "px")
+                .style("top", 68.5 + "%")
+                .style("left", 70 + "%")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -79,8 +79,8 @@ class storyFile {
             let summary_div = d3.select('#story-summary')
                           .attr("width", that.svgWidth/2.55)
                           .attr("height", that.vizHeight/5)
-                          .style("top", 813 + "px")
-                          .style("left", 628 + "px")
+                          .style("top", 68 + "%")
+                          .style("left", 24 + "%")
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
