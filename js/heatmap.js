@@ -1305,11 +1305,11 @@ class HeatMap {
             .style("left",function(){
                 if(x > 625 && x < 1125){
                     if(x>(0.5*that.vizWidth)){
-                        return (x-500)+"px"
+                        return ((x/.75)-500)+"px"
                     }
-                    else {return (x+150)+"px"}
+                    else {return ((x/.75)+150)+"px"}
                 }
-                else{return 710+"px"}
+                else{return 960+"px"}
             })
             .style("top", (this.vizHeight/2.5)+"px")
     }
