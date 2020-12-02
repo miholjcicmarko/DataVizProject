@@ -563,3 +563,7 @@ a{
     justify-self: center;
     z-index: -2;
 }
+
+#footerMamba {
+    color: black;
+}
