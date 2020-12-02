@@ -349,7 +349,7 @@ class storyFile {
             return "<h2>" + "Kobe's Second Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: April 3, 2003" + "</p>" + "<p>" +
             "Bryant knocks down the final shot of the game over Shane Battier"
-            + "</p>" + "<p>" + "Grizzlies 102 Lakers 101";
+            + "</p>" + "<p>" + "Grizzlies 101 Lakers 102";
         }
         else if (counter === 2) {
             return "<h2>" + "Kobe's Third Game Winning Buzzer Beater" + "<h2>" +
