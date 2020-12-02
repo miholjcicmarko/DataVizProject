@@ -540,6 +540,8 @@ a{
     text-decoration: none;
 }
 
+/* Story bubble styling */
+
 .bubble-style {
     fill: rgb(253,185,39);
     stroke: rgb(85,37,130);
@@ -552,9 +554,11 @@ a{
     stroke-width: 3px;
 }
 
+/* Background picture styling */
+
 #kobe-jersey{
     width: 100%;
-    height: auto;
+    height: 100%;
     z-index: -2;
     opacity: 0.3;
 }
