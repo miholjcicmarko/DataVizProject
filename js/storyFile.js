@@ -312,6 +312,9 @@ class storyFile {
         d3.select('#overlay').style("z-index", -1);
 
         d3.select('#tv').style("z-index", -1);
+
+        d3.select("#tv").style("opacity", 0);
+
         let ball = d3.select("#ball");
         
         ball
