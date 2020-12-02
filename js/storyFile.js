@@ -48,8 +48,8 @@ class storyFile {
             let story_div = d3.select('#overlay')
                           .attr("width", that.svgWidth/2.25)
                           .attr("height", that.vizHeight/3)
-                          .style("top", 20 + "%")
-                          .style("left", 22.5 + "%")
+                          .style("top", 17 + "%")
+                          .style("left", 25.5 + "%")
                           .style("z-index", 2);
 
             // Hornets buzzer beater
@@ -64,14 +64,14 @@ class storyFile {
                 .style("z-index", 1);
 
             tv
-                .style("top", 15 +"%")
+                .style("top", 13 +"%")
                 .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 68.5 + "%")
-                .style("left", 70 + "%")
+                .style("top", 60 + "%")
+                .style("left", 67.5 + "%")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -79,8 +79,8 @@ class storyFile {
             let summary_div = d3.select('#story-summary')
                           .attr("width", that.svgWidth/2.55)
                           .attr("height", that.vizHeight/5)
-                          .style("top", 68 + "%")
-                          .style("left", 24 + "%")
+                          .style("top", 57.5 + "%")
+                          .style("left", 26 + "%")
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
