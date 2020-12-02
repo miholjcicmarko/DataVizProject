@@ -1247,6 +1247,18 @@ class HeatMap {
         let subVis2 = d3.select("#subSVG-2");
         let subVisG2 = d3.select(".subVis2rects");
 
+        d3.select("#subVis-div")
+        .style("left",function(){
+            if(x > (625) && x < (1125)){
+                if(x>(0.5*that.vizWidth)){
+                    return ((x/.69)-600)+"px"
+                }
+                else {return ((x/.69)+150)+"px"}
+            }
+            else{return 1030+"px"}
+        })
+        .style("top", (this.vizHeight/2.5)+"px")
+
         if(this.slider == false){
             this.subVisPlots(indR,barSpace,subVis1,subVisG1,this.binsR);
         }
@@ -1264,18 +1276,6 @@ class HeatMap {
             this.subVisTips(subVis2,indL,this.binsL,that.grays,that.strokeColorG);
         }
 
-
-        d3.select("#subVis-div")
-            .style("left",function(){
-                if(x > 625 && x < 1125){
-                    if(x>(0.5*that.vizWidth)){
-                        return (x-500)+"px"
-                    }
-                    else {return (x+150)+"px"}
-                }
-                else{return 710+"px"}
-            })
-            .style("top", (this.vizHeight/2.5)+"px")
     }
     
 }
