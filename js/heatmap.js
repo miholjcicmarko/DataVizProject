@@ -1303,13 +1303,13 @@ class HeatMap {
 
         d3.select("#subVis-div")
             .style("left",function(){
-                if(x > 625 && x < 1125){
+                if(x > (625) && x < (1125)){
                     if(x>(0.5*that.vizWidth)){
-                        return ((x/.75)-500)+"px"
+                        return ((x/.7)-600)+"px"
                     }
-                    else {return ((x/.75)+150)+"px"}
+                    else {return ((x/.7)+150)+"px"}
                 }
-                else{return 960+"px"}
+                else{return 1030+"px"}
             })
             .style("top", (this.vizHeight/2.5)+"px")
     }

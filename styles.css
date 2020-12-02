@@ -5,13 +5,13 @@ Container stylings for the button and slider
 .containerA {
     display: grid;
     position: relative;
-    left: 17.5%;
+    left: 25%;
     height: 50px;
     /* min-width: 75px; */
     /* max-width: 10% */
     grid-template-columns: 15% 15% 15% 15%; 
     grid-template-rows: 1fr;
-    column-gap: 7.5%;
+    column-gap: 2.5%;
     
     grid-template-areas: "brushButton playoff-season-labelA playoffButton playoff-season-labelB";
 }
