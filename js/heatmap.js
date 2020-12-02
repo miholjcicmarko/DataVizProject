@@ -145,6 +145,8 @@ class HeatMap {
         d3.select("#sliderLabel2")
                 .append("svg").attr("id", "slider-label2")
                 .classed("svg-text", true);
+
+        d3.select("#story-summary").style("border-style","none");
     }   
 
     /**
