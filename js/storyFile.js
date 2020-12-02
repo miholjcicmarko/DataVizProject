@@ -48,8 +48,8 @@ class storyFile {
             let story_div = d3.select('#overlay')
                           .attr("width", that.svgWidth/2.25)
                           .attr("height", that.vizHeight/3)
-                          .style("top", 17 + "%")
-                          .style("left", 25.5 + "%")
+                          .style("top", 240 + "px")
+                          .style("left", 650 + "px")
                           .style("z-index", 2);
 
             // Hornets buzzer beater
@@ -64,14 +64,14 @@ class storyFile {
                 .style("z-index", 1);
 
             tv
-                .style("top", 13 +"%")
+                .style("top", 180 +"px")
                 .style("opacity", 1);
 
             let ball = d3.select("#ball")
                 .attr("width", that.svgWidth/5)
                 .attr("height", that.vizHeight/5)
-                .style("top", 60 + "%")
-                .style("left", 67.5 + "%")
+                .style("top", 860 + "px")
+                .style("left", 1720 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -79,13 +79,12 @@ class storyFile {
             let summary_div = d3.select('#story-summary')
                           .attr("width", that.svgWidth/2.55)
                           .attr("height", that.vizHeight/5)
-                          .style("top", 57.5 + "%")
-                          .style("left", 26 + "%")
+                          .style("top", 845 + "px")
+                          .style("left", 670 + "px")
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
-                        .style("color", "black")
-                        .style("border-style","solid");
+                        .style("color", "black");
 
             summary_div.html(that.story_summary(that.counter));
 
@@ -311,9 +310,9 @@ class storyFile {
         d3.select("#storyID").remove();
         d3.select('#overlay').style("z-index", -1);
 
-        d3.select('#tv').style("z-index", -1);
+        d3.select('#tv').style("z-index", -1)
+            .style("opacity", "0");
 
-        d3.select("#tv").style("opacity", 0);
 
         let ball = d3.select("#ball");
         
@@ -335,49 +334,49 @@ class storyFile {
             return "<h2>" + "Kobe's First Game Winning Buzzer Beater" + "<h2>" + 
             "<p>" + "Date: February 22, 2002" + "</p>" + "<p>" +
             "Bryant drills game winner over the outstretched arm of George Lynch"
-            + "</p>" + "<p>" + "Hornets: 94 Lakers: 96";
+            + "</p>" + "<p>" + "Hornets 94 Lakers 96";
         }
         else if (counter === 1) {
             return "<h2>" + "Kobe's Second Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: April 3, 2003" + "</p>" + "<p>" +
             "Bryant knocks down the final shot of the game over Shane Battier"
-            + "</p>" + "<p>" + "Grizzlies: 102 Lakers: 101";
+            + "</p>" + "<p>" + "Grizzlies 102 Lakers 101";
         }
         else if (counter === 2) {
             return "<h2>" + "Kobe's Third Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: December 18, 2003" + "</p>" + "<p>" +
             "Bryant pump fakes Jon Barry and drains the game winner"
-            + "</p>" + "<p>" + "Nuggets: 99 Lakers: 101";
+            + "</p>" + "<p>" + "Nuggets 99 Lakers 101";
         }
         else if (counter === 3) {
             return "<h2>" + "Kobe's Fourth Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: April 13, 2004" + "</p>" + "<p>" +
             "Bryant drills game winner over Theo Ratliff in the 2nd overtime"
-            + "</p>" + "<p>" + "Trail Blazers: 104 Lakers: 105";
+            + "</p>" + "<p>" + "Trail Blazers 104 Lakers 105";
         }
         else if (counter === 4) {
             return "<h2>" + "Kobe's Fifth Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: April 29, 2006" + "</p>" + "<p>" +
             "Bryant pulls up over Boris Diaw and Raja Bell to deliver a 1st Round, Game 4 playoff win"
-            + "</p>" + "<p>" + "Suns: 98 Lakers: 99";
+            + "</p>" + "<p>" + "Suns 98 Lakers 99";
         }
         else if (counter === 5) {
             return "<h2>" + "Kobe's Sixth Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: December 3, 2009" + "</p>" + "<p>" +
             "Bryant shoots over Dwyane Wade and banks in the game winner"
-            + "</p>" + "<p>" + "Heat: 107 Lakers: 108";
+            + "</p>" + "<p>" + "Heat 107 Lakers 108";
         }
         else if (counter === 6) {
             return "<h2>" + "Kobe's Seventh Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: December 15, 2009" + "</p>" + "<p>" +
             "Bryant hits a turnaround jumper over Charlie Bell for the win"
-            + "</p>" + "<p>" + "Bucks: 106 Lakers: 107";
+            + "</p>" + "<p>" + "Bucks 106 Lakers 107";
         }
         else if (counter === 7) {
             return "<h2>" + "Kobe's Eighth and Final Game Winning Buzzer Beater" + "<h2>" +
             "<p>" + "Date: December 31, 2009" + "</p>" + "<p>" +
             "Bryant drills a jumper to complete a Laker comeback victory"
-            + "</p>" + "<p>" + "Kings: 108 Lakers: 109";
+            + "</p>" + "<p>" + "Kings 108 Lakers 109";
         }
     }
 
