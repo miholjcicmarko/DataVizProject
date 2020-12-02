@@ -25,23 +25,7 @@ class ShotData{
          this.name = NAME;
          this.firstYear = 0;
          this.lastYear = 0;
-         
-
-        //  let stringyear = GAME_DATE.slice(0,4);
-        //  let yearnumber = +stringyear;
-        //  let stringmonth = +GAME_DATE.slice(4,6);
-        //     if (stringmonth > 7) {
-        //         yearnumber = yearnumber+1;
-        //         let yearnumberstring = "" + yearnumber
-        //         let yearnumberstringformatted = yearnumberstring.slice(2,4);
-        //         this.year = stringyear + "-" + yearnumberstringformatted;
-        //     }
-        //     else if (stringmonth < 7) {
-        //         yearnumber = yearnumber-1;
-        //         let yearnumberstring = "" + yearnumber
-        //         let yearnumberstringformatted = stringyear.slice(2,3);
-        //         this.year = yearnumberstring + "-" + yearnumberstringformatted;
-        //     }
+   
     }
 }
 
@@ -712,16 +696,6 @@ class HeatMap {
 
         })
         
-        // yearSlider.on('click', function() {
-        //     that.slider = true;
-
-        //     sliderText
-        //         .text(this.value)
-        //         .attr('x', yearScale(this.value))
-        //         .attr('y', 25); 
-
-        //     that.updateYearKobe(this.value);
-        // })
         }
     }
 
@@ -784,16 +758,6 @@ class HeatMap {
     
             })
             
-            // yearSlider.on('click', function() {
-            //     that.slider2 = true;
-                
-            //     sliderText
-            //         .text(this.value)
-            //         .attr('x', yearScale(this.value))
-            //         .attr('y', 25); 
-    
-            //     that.updateYearPlayer(this.value);
-            // })
         }
         }
         
