@@ -84,7 +84,9 @@ class storyFile {
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
-                        .style("color", "black");
+                        .style("color", "black")
+                        .style("border","solid")
+                        .style("border-color", "rgb(228, 169, 42)");
 
             summary_div.html(that.story_summary(that.counter));
 
