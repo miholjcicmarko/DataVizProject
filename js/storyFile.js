@@ -110,14 +110,14 @@ class storyFile {
             story_div
             .append("iframe")
             .attr("id", "storyID")
-            .attr("width", this.svgWidth/2.3)
-            .attr("height", this.vizHeight/3)
+            .attr("width", this.svgWidth/1.7)
+            .attr("height", this.vizHeight/2)
             .attr("src", "https://www.youtube.com/embed/3cGTf57VV7I");
 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 900 + "px")
+                .style("top", 860 + "px")
                 .style("left", 1720 + "px")
                 .style("z-index", 1);
 
@@ -135,8 +135,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/ZZJ9Qc2lrRU");
 
             let ball = d3.select("#ball")
@@ -161,8 +161,8 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/gUDWxiBn6k0");
 
             let ball = d3.select("#ball")
@@ -186,15 +186,15 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/lgSmpCAq4-4");
 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
                 .style("top", 495 + "px")
-                .style("left", 1520 + "px")
+                .style("left", 1510 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -211,14 +211,14 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/v9rtbKzpXDY");
 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 770 + "px")
+                .style("top", 740 + "px")
                 .style("left", 1620 + "px")
                 .style("z-index", 1);
 
@@ -236,15 +236,15 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/Bbdt-ZL_S1M");
 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 690 + "px")
-                .style("left", 1470 + "px")
+                .style("top", 650 + "px")
+                .style("left", 1475 + "px")
                 .style("z-index", 1);
 
             ball.style("opacity", 1);
@@ -261,14 +261,14 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/i871mbuJ2I0");
                 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 475 + "px")
+                .style("top", 445 + "px")
                 .style("left", 1690 + "px")
                 .style("z-index", 1);
 
@@ -286,14 +286,14 @@ class storyFile {
             story_div
                 .append("iframe")
                 .attr("id", "storyID")
-                .attr("width", this.svgWidth/2.3)
-                .attr("height", this.vizHeight/3)
+                .attr("width", this.svgWidth/1.7)
+                .attr("height", this.vizHeight/2)
                 .attr("src", "https://www.youtube.com/embed/j6nBQQ5LC88"); 
 
             let ball = d3.select("#ball")
                 .attr("width", this.svgWidth/5)
                 .attr("height", this.vizHeight/5)
-                .style("top", 320 + "px")
+                .style("top", 280 + "px")
                 .style("left", 1775 + "px")
                 .style("z-index", 1);
 
@@ -314,7 +314,6 @@ class storyFile {
 
         d3.select('#tv').style("z-index", -1)
             .style("opacity", "0");
-
 
         let ball = d3.select("#ball");
         
