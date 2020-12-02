@@ -1,6 +1,3 @@
-html {
-    zoom: 0.75;
-}
 
 /* 
 Container stylings for the button and slider
@@ -8,18 +5,27 @@ Container stylings for the button and slider
 .containerA {
     display: grid;
     position: relative;
-    left: 25%;
+    left: 17.5%;
     height: 50px;
-    width: fit-content;
-    grid-template-columns: 1fr 1fr 2fr 2fr; 
+    /* min-width: 75px; */
+    /* max-width: 10% */
+    grid-template-columns: 15% 15% 15% 15%; 
     grid-template-rows: 1fr;
-    column-gap: 10%;
+    column-gap: 7.5%;
     
-    grid-template-areas: "playoff-season-labelA checkbox playoff-season-labelB checkbox";
+    grid-template-areas: "brushButton playoff-season-labelA playoffButton playoff-season-labelB";
 }
 
 #heatmap-svg-div{
     width: fit-content;
+}
+
+#playoff-button{
+    grid-area: "playoffButton";
+}
+
+#brush-button{
+    grid-area: "brushButton";
 }
 
 #heatmap-div{
