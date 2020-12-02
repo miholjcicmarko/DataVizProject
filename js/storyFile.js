@@ -83,6 +83,7 @@ class storyFile {
                           .attr("height", that.vizHeight/5)
                           .style("top", 845 + "px")
                           .style("left", 670 + "px")
+                          .style("opacity", 1)
                           .style("z-index", 2);
 
             summary_div.style("background-color", "rgb(253,185,39)")
@@ -303,7 +304,8 @@ class storyFile {
             ball.style("opacity", 1);
 
             let summary_div = d3.select('#story-summary')
-                .style("z-index", 1);
+                .style("z-index", 1)
+                .style("opacity", 1);
 
             summary_div.html(this.story_summary(this.counter));
         }
@@ -324,7 +326,8 @@ class storyFile {
             .style("z-index", -1)
             .style("opacity", 0);
 
-        d3.select('#story-summary').style("z-index", -1);
+        d3.select('#story-summary').style("z-index", -1)
+            .style("opacity", 0);
 
         d3.select("#back-button").remove();
         d3.select("#next-button").remove();
