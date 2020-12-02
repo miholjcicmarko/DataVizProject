@@ -3,6 +3,8 @@ class storyFile {
 
         this.storyOn = storyOn;
 
+        // counter for the story to help the viewer know which story they are 
+        // looking at
         this.counter = 0;
 
         this.vizHeight = 900;
@@ -96,6 +98,7 @@ class storyFile {
         
     }
 
+    // changes the divs to display different Buzzer Beaters
     alterStory() {
 
         d3.select("#storyID").remove();
@@ -327,6 +330,8 @@ class storyFile {
 
     }
 
+    // writes the summary into the div 
+    // it explains the video that is playing
     story_summary (counter) {
 
         if (counter === 0) {
@@ -379,6 +384,7 @@ class storyFile {
         }
     }
 
+    // draws the bubbles to indicate which video in the story they are watching
     drawBubbles (counter) {
         d3.select("#bubbles-svg").remove();
 

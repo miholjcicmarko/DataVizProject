@@ -1,10 +1,5 @@
 // load in the Kobe dataset
 
-// Promise.all([d3.json('./data/Kobedata.json')]).then( dataJson =>
-//     {
-//         console.log(dataJson)
-//     })
-
 // reading in as csv results in much more useful data structure
 async function loadCompData() {
 
@@ -99,11 +94,6 @@ Promise.all([kobe,compData]).then(data => {
             let story = new storyFile(boolean);
                 story.removeStory();
 
-            // let heatMap = new HeatMap(Kobedata, updateYearKobe, 
-            //     storyTell, playerComp, updateYearPlayer);
-
-            // heatMap.drawHeatMapRight(4,12);
-            // heatMap.drawHeatMapLeft(4,12);
          }
          else if (boolean === true) {
             if (that.storyOn === false) {
@@ -123,28 +113,12 @@ Promise.all([kobe,compData]).then(data => {
         that.playerCompON = true;
         let playerData = playerCompData[name];
         heatMap.playerCompChart(playerData);
-        
-        // if (name === "Stephen Curry") {
-        //     that.playerCompON = true;
-        //     let playerData = data[1];
-        //     heatMap.playerCompChart(playerData);
-        // }
-        // else if (name === "James Harden") {
-        //     that.playerCompON = true;
-        //     let playerData = data[2];
-        //     heatMap.playerCompChart(playerData);
-        // }
-        // else if (name === "Luka Doncic") {
-        //     that.playerCompON = true;
-        //     let playerData = data[3];
-        //     heatMap.playerCompChart(playerData);
-        // }
 
     }
 
     let heatMap = new HeatMap(Kobedata, updateYearKobe, 
         storyTell, playerComp, updateYearPlayer);
-    //let heatMap = new HeatMap(data,updateYearKobe);
+  
     heatMap.drawHeatMapRight(6,15);
     heatMap.drawHeatMapLeft(6,15);
 
