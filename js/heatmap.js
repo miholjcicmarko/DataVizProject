@@ -149,6 +149,7 @@ class HeatMap {
 
         let rightShotData = [];
 
+        // defines which data should be used to define heatmap
         if (that.playoffOn === true && that.playerCompON === true) {
             for (let i = 0; i < that.shotData.length; i++) {
                 if (that.shotData[i].season === "Playoffs") {
@@ -211,8 +212,6 @@ class HeatMap {
             })
             .attr("stroke",function(d){
                 // defines color scale for stroke based off number of shots
-                // that.strokeColorR = d3.scaleSequential().range(["rgb(0,0,0)","rgb(255,0,0)"])
-                //     .domain([0,strokeLim]).clamp(true);
                 that.strokeColorR = d3.scaleSequential().range(["rgb(0,0,0)","rgb(00,255,255)"])
                     .domain([0,strokeLim]).clamp(true);
                 that.strokeColorG = d3.scaleSequential().range(["rgb(0,0,0)","rgb(253,185,39)"])
@@ -220,6 +219,8 @@ class HeatMap {
                 return that.strokeColorR(d.num_shots);
             })
             .attr("opacity",function(d){
+                // hides backcourt shots from view to avoid cluttering the typical shot area
+                // also lowers opacity to bins with low number of shots or all misses
                 if(d[0].zone !== "Backcourt"){
                     if(d.fg_perc == 0){
                         return 0.5;
@@ -234,6 +235,8 @@ class HeatMap {
                 }
             })
             .attr("stroke-opacity",function(d){
+                // hides backcourt shots and changes stroke opacity depending on volume of shots so low numbers
+                // don't stand out so much
                 if(d[0].zone !== "Backcourt"){
                     if(d.fg_perc == 0){
                         return 0.5;
@@ -246,7 +249,7 @@ class HeatMap {
                     return 0;
                 }
             });
-
+// the rest of this function initiates listeners and defines what should happen when different elements are interacted with
         let dropdown = d3.select("#selectNow");
             dropdown.on("change", function () {
                 let player = this.value;
@@ -413,7 +416,9 @@ class HeatMap {
         });
     }
 
-    // same as drawHeatMapRight w/o the function calls and without appending things like divs/svgs
+    /** 
+     * same as drawHeatMapRight w/o the function calls and without appending things like divs/svgs
+     * */ 
     drawHeatMapLeft(hexRad,strokeLim){
         let that = this;
 
@@ -548,8 +553,7 @@ class HeatMap {
         let attempts = data.currentTarget.__data__.num_shots;
         let made = data.currentTarget.__data__.made_shots;
         let name = data.currentTarget.__data__[0].name;
-        let year = data.currentTarget.__data__[0].year;
-        let season_playoff = data.currentTarget.__data__[0].season;
+
         if (shot_range === "Less Than 8 ft.") {
             shot_range = "< 8 ft."
         }
@@ -560,8 +564,13 @@ class HeatMap {
             "Made: "+made+" <br/> Attempted: "+attempts;
     }
 
+    /**
+     * draws a legend for each of the four colorscales used in the visualization
+     */
     drawLegends(){
         let that = this;
+        // defines new colorscales to follow the overshoot that occurs in the original colorscales when 
+        // field goal percentage happens to make it over 80%
         let legPurples = d3.scaleSequential().range(["rgb(255,255,255)","rgb(43,0,99)"]).domain([0,100]);
         let legGrays = d3.scaleSequential().range(["rgb(255,255,255)","rgb(0,0,0)"]).domain([0,100]);
 
@@ -594,6 +603,7 @@ class HeatMap {
             .labelFormat("0.0f")
             .ascending(true)
             .labels(function({d,i}){
+                // defines the labels depeding on whether the upper limit is 15 or 5 so that + is added
                 if(that.slider == true){
                     let labels = [0,1,3,4,"5+"];
                     return `${labels[i]} shots`;
@@ -613,6 +623,7 @@ class HeatMap {
             .labelFormat("0.0f")
             .ascending(true)
             .labels(function({d,i}){
+                // defines the labels depeding on whether the upper limit is 15 or 5 so that + is added
                 if(that.playerCompON == true){
                     if(that.slider2 == true){
                         let labels = [0,1,3,4,"5+"];
@@ -1063,9 +1074,15 @@ class HeatMap {
 
         document.getElementById("playoff-check").disabled = false;
     }
-
-    // rotation function to use in draw brush to convert between pixel location and d.x d.y 
-    // this rotates in the opposite direction of d3's rotation transform
+    /**
+     * rotation function to use in draw brush to convert between pixel location and d.x d.y 
+     * this rotates in the opposite direction of d3's rotation transform
+     * @param {*} cx center of rotation x location
+     * @param {*} cy center of rotation y location
+     * @param {*} x location of point being rotated
+     * @param {*} y location of point being rotated
+     * @param {*} angle amount to be rotated by - degrees
+     */
     rotate(cx, cy, x, y, angle) {
         var radians = (Math.PI / 180) * angle,
             cos = Math.cos(radians),
@@ -1177,7 +1194,11 @@ class HeatMap {
         brush2.call(courtBrush2).call(courtBrush2.move,[0,0]);
         
     }
-
+    
+    /**
+     * removes subvis and brush from court
+     * @param {*} contSelect if false, will remove the groups holding the brush, if true will only remove subvis
+     */
     removeBrush(contSelect){
         if(contSelect == false){
             this.selecting = false;
@@ -1258,7 +1279,7 @@ class HeatMap {
             else{return 1030+"px"}
         })
         .style("top", (this.vizHeight/2.5)+"px")
-
+        // determines which style of subvis will be called to each of the SVGs
         if(this.slider == false){
             this.subVisPlots(indR,barSpace,subVis1,subVisG1,this.binsR);
         }
@@ -1314,7 +1335,9 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
         for(let i = selectBins[0][0].firstYear; i <= selectBins[0][0].lastYear; i++){
             yearsList.push(i);
         }
-        let rectWidth = Math.floor(barSpace/yearsList.length);
+        // identifies how wide the bars can be for a given player
+        let rectWidth = Math.floor(barSpace/yearsList.length); 
+        // calculates the fg% withinthat region for the years in career
         let yearAvgFg = [];
         for(let i = 0; i < yearsList.length; i++){
             let numShotYear = 0;
@@ -1328,6 +1351,7 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
                 })   
             })
             yearAvgFg.push((numMadeYear/numShotYear)*100);
+            // adds year labels to the chart
             svg.append("text")
                 .text(yearsList[i])
                 .attr("x",((i)*rectWidth)+(this.axisBuff+32+(rectWidth/2)))
@@ -1336,6 +1360,7 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
                 .attr("class","year-label")
                 .attr("transform","rotate(-90,"+((i*rectWidth)+(this.axisBuff+32+(rectWidth/2)))+",250)");
         }
+        // sizes and colors the rects
         subVisG.selectAll("rect")
             .data(yearAvgFg)
             .join("rect")
@@ -1352,7 +1377,7 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
                 }
             })
             .attr("transform","translate("+this.axisBuff+",0)");
-        
+        // adds axis to subvis
         let fgScale = d3.scaleLinear().domain([100,0]).range([0,200]);
         let fgAxis = d3.axisLeft(fgScale).ticks(5).tickFormat(d=> d+"%");
         svg.append("g").attr("class","axis").call(fgAxis).attr("transform","translate(45,25)");
@@ -1382,12 +1407,11 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
         })
         let yearAvgFg = ((totalMade/totalShots)*100);
 
-        // svg.selectAll("text").remove();
         let season = selectBins[0][0].season;
         if(season == "Regular"){
             season = season+" Season"
         }
-
+        // defines the text to be appended to the subvis
         let tipData = [selectBins[0][0].name+":",selectBins[0][0].year+" - "+season,
             "Field Goal Percentage: "+yearAvgFg.toFixed(2)+"%","Attempted Shots: "+totalShots,"Made Shots: "+totalMade];
 
@@ -1409,6 +1433,7 @@ subVisPlots(bins,barSpace,svg,subVisG,data){
                 }
             })
             .attr("class","subVisTip");
+        // adds bullets points to subvis with fill based off fg% matching heatmap and stroke color based off shot volume
         svg.selectAll("circle").data(tipData)
             .join("circle")
             .attr("cx",function(d,i){
