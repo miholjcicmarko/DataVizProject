@@ -6,4 +6,4 @@ The visualization offers a story mode to the user at the push of a button. In th
 
 Additionally, the visualization offers the ability to compare Kobe Bryant to other current players. The selection of players includes the 2020 All Star Starters, Devin Booker, and Stephen Curry. 
 
-All of the code in this project has been completed by Jordan Hendriksen and Marko Miholjcic. The videos shown in this visualization have been gathered from YouTube and are not owned by the creators of this visualization. 
+All of the code in this project has been completed by Jordan Hendriksen and Marko Miholjcic. Hexbin and Legend are d3 packages that were imported into this visualization. The videos shown in this visualization have been gathered from YouTube and are not owned by the creators of this visualization. 

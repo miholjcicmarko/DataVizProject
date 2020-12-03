@@ -1,3 +1,7 @@
+/**
+ * This creates a story file class that provides a counter
+ * for the story mode.
+ */
 class storyFile {
     constructor(storyOn) {
 
@@ -12,6 +16,9 @@ class storyFile {
 
     }
 
+    /**
+     * draws story mode onto the court
+     */
     drawStory () {
         let that = this;
 
@@ -101,7 +108,10 @@ class storyFile {
         
     }
 
-    // changes the divs to display different Buzzer Beaters
+    /**
+     * this function changes the video that is embedded into the television 
+     * and moves the basketball
+     */
     alterStory() {
 
         d3.select("#storyID").remove();
@@ -313,6 +323,9 @@ class storyFile {
         this.drawBubbles(this.counter);
     }
 
+    /**
+     * This hides the story from the viewer
+     */
     removeStory () {
         d3.select("#storyID").remove();
         d3.select('#overlay').style("z-index", -1);
@@ -335,8 +348,11 @@ class storyFile {
 
     }
 
-    // writes the summary into the div 
-    // it explains the video that is playing
+    /**
+     * This draws the story summary under the visualization
+     * @param {counter} counter the counter keeps track of which video
+     * should be displayed
+     */
     story_summary (counter) {
 
         if (counter === 0) {
@@ -389,7 +405,12 @@ class storyFile {
         }
     }
 
-    // draws the bubbles to indicate which video in the story they are watching
+    /**
+     * This draws the bubbles under the visualization to indicate where in the 
+     * story mode the user is at
+     * @param {counter} counter the counter keeps track of which stage in the 
+     * story the user is at
+     */
     drawBubbles (counter) {
         d3.select("#bubbles-svg").remove();
 

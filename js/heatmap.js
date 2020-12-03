@@ -1,3 +1,7 @@
+/**
+ * This creates a ShotData class that provides a data structure 
+ * for the shot that is read in from the csv files.
+ */
 class ShotData{
     /**
      * @param LOC_X x-location on court
@@ -29,6 +33,10 @@ class ShotData{
     }
 }
 
+/**
+ * This creates a constructor for the HeatMap class that provides 
+ * the heatmap visualization. 
+ */
 class HeatMap {
     constructor(data, updateYearKobe, storyTell, playerComp, updateYearPlayer){
         this.updateYearKobe = updateYearKobe;
@@ -417,7 +425,8 @@ class HeatMap {
     }
 
     /** 
-     * same as drawHeatMapRight w/o the function calls and without appending things like divs/svgs
+     * same as drawHeatMapRight w/o the function calls 
+     * and without appending things like divs/svgs
      * */ 
     drawHeatMapLeft(hexRad,strokeLim){
         let that = this;
@@ -748,8 +757,6 @@ class HeatMap {
             this.slider2present = true;
  
         if (this.activeYearPlayer !== null || this.slider2present === true) {
-        //let sliderLabelpresent = d3.select('#slider-wrap-Comp');
-        //let yearSlider = d3.select('#playerCompSlider');
         
         let sliderText = sliderLabel.append('text')
             .text(this.activeYearPlayer);
@@ -1020,15 +1027,13 @@ class HeatMap {
         this.slider2 = false;
         this.newSlider2 = false;
         
-        //if (this.playoffOn === true) {
             this.playoffOn = false;
             document.getElementById("playoff-check").checked = false;
-        //}
         
-        //if (this.playerCompON === true) {
+
             this.playerCompON = false;
             document.getElementById("selectNow").selectedIndex = 0;
-        //}
+        
 
         d3.select("#slider-label2").remove();
 
@@ -1074,6 +1079,7 @@ class HeatMap {
 
         document.getElementById("playoff-check").disabled = false;
     }
+    
     /**
      * rotation function to use in draw brush to convert between pixel location and d.x d.y 
      * this rotates in the opposite direction of d3's rotation transform
